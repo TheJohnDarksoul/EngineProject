@@ -67,3 +67,4 @@
 .x64/
 /libraries/include/SDL3
 /x64/Debug
+/lib
