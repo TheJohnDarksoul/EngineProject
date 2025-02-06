@@ -60,3 +60,10 @@
 *.vcxproj
 *.filters
 *.user
+
+.libraries/
+.libraries/include/SDL3/
+.lib/
+.x64/
+/libraries/include/SDL3
+/x64/Debug
