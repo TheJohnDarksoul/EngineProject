@@ -1,6 +1,8 @@
 #include <iostream>
 #include <SDL.h>
 
+#include "Game.h"
+
 int main(int argc, char* args[])
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) 
@@ -9,7 +11,12 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
-	std::cout << "SDL3 is working!\n";
+	Game game;
+
+	while (game.getIsOpen()) 
+	{
+
+	}
 
 	SDL_Quit();
 
