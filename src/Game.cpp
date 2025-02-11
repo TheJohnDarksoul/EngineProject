@@ -25,6 +25,19 @@ Game::~Game()
 	SDL_DestroyWindow(window);
 }
 
+void Game::update()
+{
+	SDL_Event e;
+
+	while (SDL_PollEvent(&e)) 
+	{
+		if (e.type == SDL_EVENT_QUIT) 
+		{
+			isOpen = false;
+		}
+	}
+}
+
 bool Game::getIsOpen()
 {
 	return isOpen;

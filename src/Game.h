@@ -16,6 +16,8 @@ public:
 	Game();
 	~Game();
 
+	void update();
+
 	bool getIsOpen();
 
 };

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <SDL.h>
 
-#include "Game.h"
+#include "GameWindow.h"
 
 int main(int argc, char* args[])
 {
@@ -11,11 +11,11 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
-	Game game;
+	GameWindow window;
 
-	while (game.getIsOpen()) 
+	while (1) 
 	{
-
+		window.render();
 	}
 
 	SDL_Quit();
