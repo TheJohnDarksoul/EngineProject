@@ -1,0 +1,43 @@
+1/28/25
+[In class]
+Created repo
+Found youtube series on a similar project https://www.youtube.com/watch?v=kapLub9XSBU
+Discovered the graph edit node
+Graph edit node might not work, more research is needed
+https://www.reddit.com/r/godot/comments/kcio8l/made_a_level_editor_in_godot/
+Implemented node spawning on mouse click
+TODO: figure out how to make line segments clickable
+[After class]
+Spend 1.5 hours researching a good way to send data between an instantiated
+object and the main scene
+
+1/30/25
+[In class]
+Added deselecting nodes
+Verts can now be connected
+Made segments selectable
+[After class]
+Added color change on selecting segments
+https://www.someguyordude.com/portfolio-development-process/doom-style-level-editor
+
+2/3/25
+https://www.youtube.com/watch?v=p7f9p9nDsmc
+~2 hours
+Reasearching WAD file format and implementing modified versions of its data structures
+Discovered how to use class_name in Godot
+
+2/4/25
+[In class]
+https://web.archive.org/web/20100905085854/http://the-stable.lancs.ac.uk/~esasb1/doom/uds/ch2.html
+Restructured some code to use Doom style data structures
+Added hotkeys for UI buttons
+Adjusted clickable line hitboxes
+
+2/6/25
+Started the C++ project and hooked up SDL3, researched some of the changes
+
+2/11/25
+[In class]
+Implemented graph structure base
+Reasearch
+

@@ -37,3 +37,34 @@ Vector2 Segment::getEnd()
 {
 	return end;
 }
+
+Sector::Sector()
+{
+	floorHeight = 0.f;
+	ceilingHeight = 0.f;
+
+	floorTexture = nullptr;
+	ceilingTexture = nullptr;
+}
+
+Sector::~Sector()
+{
+
+}
+
+
+Node::Node()
+{
+	front = nullptr;
+	back = nullptr;
+
+	splitterStart.x = 0.f;
+	splitterStart.y = 0.f;
+	splitterEnd.x = 0.f;
+	splitterEnd.y = 0.f;
+}
+
+Node::~Node()
+{
+
+}
