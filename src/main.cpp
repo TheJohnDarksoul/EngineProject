@@ -25,6 +25,14 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
+	InputMap inputMap;
+
+	inputMap.p_foreward = SDLK_W;
+	inputMap.p_backward = SDLK_S;
+	inputMap.p_left = SDLK_A;
+	inputMap.p_right = SDLK_D;
+	inputMap.p_use = SDLK_E;
+
 	GameWindow window;
 
 	bool isOpen = true;
@@ -38,6 +46,19 @@ int main(int argc, char* args[])
 			if (e.type == SDL_EVENT_QUIT) 
 			{
 				isOpen = false;
+			}
+			else if (e.type == SDL_EVENT_KEY_DOWN) 
+			{
+				//Test code
+				//Can't use a switch on a non-const value
+				if (e.key.key == inputMap.p_foreward) 
+				{
+					std::cout << "Foreward pressed!\n";
+				}
+				else if (e.key.key == inputMap.p_backward) 
+				{
+					std::cout << "Backward pressed!\n";
+				}
 			}
 		}
 

@@ -42,4 +42,5 @@ Implemented graph structure base
 Reasearch
 [After class]
 Got lines rendering in 2d
+Added an input map to allow key remapping
 

@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+//Default constructor
 GameWindow::GameWindow()
 {
 	window = SDL_CreateWindow("Engine", 640, 360, 0);
@@ -22,37 +23,39 @@ GameWindow::GameWindow()
 	}
 }
 
+//Destructor
 GameWindow::~GameWindow()
 {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 }
 
+//Returns a ppointer to the SDL_Window
 SDL_Window* GameWindow::getWindow()
 {
 	return window;
 }
 
+//Returns a pointer to the SDL_Renderer
 SDL_Renderer* GameWindow::getRenderer()
 {
 	return renderer;
 }
 
-void GameWindow::render()
+//Sets the GameWindow title
+void GameWindow::setTitle(const char* title)
 {
-	SDL_SetRenderDrawColor(renderer, 0xb2, 0xb2, 0xff, 255);
-	SDL_RenderClear(renderer);
-
-	SDL_RenderPresent(renderer);
-	SDL_UpdateWindowSurface(window);
+	SDL_SetWindowTitle(window, title);
 }
 
+//Clears out the window, should be called before you start rendering each frame
 void GameWindow::clearRenderer()
 {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 }
 
+//Presents your changes to the screen, called at end of frame
 void GameWindow::presentRenderer()
 {
 	SDL_RenderPresent(renderer);

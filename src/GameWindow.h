@@ -16,7 +16,7 @@ public:
 	SDL_Window* getWindow();
 	SDL_Renderer* getRenderer();
 
-	void render();
+	void setTitle(const char* title);
 
 	void clearRenderer();
 	void presentRenderer();
