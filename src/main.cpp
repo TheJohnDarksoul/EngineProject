@@ -5,6 +5,8 @@
 #include "datastructs.h"
 #include "levelcomponents.h"
 
+#include "Camera.h"
+
 Vector2 testPoints[] = { {10.0, 10.0}, {70.0, 10.0}, {70.0, 80.0}, {10.0, 80.0},
 						 {50.0, 20.0}, {40.0, 40.0}, {50.0, 60.0}, {60.0, 40.0},
 						 {18.0, 18.0}, {18.0, 42.0}, {35.0, 42.0}, {35.0, 18.0},
@@ -25,6 +27,8 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
+	Camera testCam;
+
 	InputMap inputMap;
 
 	inputMap.p_foreward = SDLK_W;
@@ -32,6 +36,8 @@ int main(int argc, char* args[])
 	inputMap.p_left = SDLK_A;
 	inputMap.p_right = SDLK_D;
 	inputMap.p_use = SDLK_E;
+
+	unsigned int pressedActions = 0;
 
 	GameWindow window;
 
@@ -54,10 +60,26 @@ int main(int argc, char* args[])
 				if (e.key.key == inputMap.p_foreward) 
 				{
 					std::cout << "Foreward pressed!\n";
+					pressedActions |= 0b00000001;
 				}
 				else if (e.key.key == inputMap.p_backward) 
 				{
 					std::cout << "Backward pressed!\n";
+					pressedActions |= 0b00000010;
+				}
+			}
+			else if (e.type == SDL_EVENT_KEY_UP) 
+			{
+				//Also test code
+				if (e.key.key == inputMap.p_foreward)
+				{
+					std::cout << "Foreward released!\n";
+					pressedActions &= 0b11111110;
+				}
+				else if (e.key.key == inputMap.p_backward) 
+				{
+					std::cout << "Backward released!\n";
+					pressedActions &= 0b11111101;
 				}
 			}
 		}
@@ -70,6 +92,8 @@ int main(int argc, char* args[])
 		{
 			testSegments[i].render2d(window.getRenderer());
 		}
+
+		testCam.render2d(window.getRenderer());
 
 		window.presentRenderer();
 	}
