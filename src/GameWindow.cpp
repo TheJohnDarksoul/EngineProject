@@ -46,3 +46,15 @@ void GameWindow::render()
 	SDL_RenderPresent(renderer);
 	SDL_UpdateWindowSurface(window);
 }
+
+void GameWindow::clearRenderer()
+{
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	SDL_RenderClear(renderer);
+}
+
+void GameWindow::presentRenderer()
+{
+	SDL_RenderPresent(renderer);
+	SDL_UpdateWindowSurface(window);
+}

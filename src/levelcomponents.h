@@ -10,16 +10,21 @@ private:
 	Vector2 start;
 	Vector2 end;
 
+	Vector2 vec;
+
 	//int frontSectorId;
 	//int backSectorId;
 
 public:
 	Segment();
 	Segment(float startX, float startY, float endX, float endY);
+	Segment(Vector2 start, Vector2 end);
 	~Segment();
 
 	Vector2 getStart();
 	Vector2 getEnd();
+
+	void render2d(SDL_Renderer* renderer);
 };
 
 //The area enclosed by segments
@@ -47,6 +52,8 @@ private:
 
 	Vector2 splitterStart;
 	Vector2 splitterEnd;
+
+	Vector2 splitterVec;
 
 public:
 	Node();

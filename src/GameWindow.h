@@ -18,5 +18,8 @@ public:
 
 	void render();
 
+	void clearRenderer();
+	void presentRenderer();
+
 };
 

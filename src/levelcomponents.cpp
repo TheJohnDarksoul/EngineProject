@@ -1,6 +1,7 @@
 #include "levelcomponents.h"
 
 #include <iostream>
+#include <SDL.h>
 
 Segment::Segment() 
 {
@@ -10,6 +11,9 @@ Segment::Segment()
 
 	end.x = 0.f;
 	end.y = 0.f;
+
+	vec.x = end.x - start.x;
+	vec.y = end.y - start.y;
 }
 
 Segment::Segment(float startX, float startY, float endX, float endY)
@@ -19,6 +23,18 @@ Segment::Segment(float startX, float startY, float endX, float endY)
 
 	end.x = endX;
 	end.y = endY;
+
+	vec.x = end.x - start.x;
+	vec.y = end.y - start.y;
+}
+
+Segment::Segment(Vector2 start, Vector2 end)
+{
+	this->start = start;
+	this->end = end;
+
+	vec.x = end.x - start.x;
+	vec.y = end.y - start.y;
 }
 
 Segment::~Segment()
@@ -36,6 +52,12 @@ Vector2 Segment::getStart()
 Vector2 Segment::getEnd()
 {
 	return end;
+}
+
+//Renders segments as 2d lines, could be used later for an automap feature
+void Segment::render2d(SDL_Renderer* renderer)
+{
+	SDL_RenderLine(renderer, start.x, start.y, end.x, end.y);
 }
 
 Sector::Sector()

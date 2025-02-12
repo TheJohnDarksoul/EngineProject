@@ -40,4 +40,6 @@ Started the C++ project and hooked up SDL3, researched some of the changes
 [In class]
 Implemented graph structure base
 Reasearch
+[After class]
+Got lines rendering in 2d
 
