@@ -44,3 +44,9 @@ Reasearch
 Got lines rendering in 2d
 Added an input map to allow key remapping
 
+2/12/25
+Added some stuff to my camera and messed around with bitflag input storage
+
+2/13/25
+[In class]
+Full key remapping implemented for all implemented actions

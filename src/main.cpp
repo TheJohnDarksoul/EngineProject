@@ -7,6 +7,17 @@
 
 #include "Camera.h"
 
+#define FOREWARD_PRESSED 0b1
+#define FOREWARD_RELEASED FOREWARD_PRESSED ^ UINT_MAX
+#define BACKWARD_PRESSED 0b10
+#define BACKWARD_RELEASED BACKWARD_PRESSED ^ UINT_MAX
+#define LEFT_PRESSED 0b100
+#define LEFT_RELEASED LEFT_PRESSED ^ UINT_MAX
+#define RIGHT_PRESSED 0b1000
+#define RIGHT_RELEASED RIGHT_PRESSED ^ UINT_MAX
+#define USE_PRESSED 0b10000
+#define USE_RELEASED USE_PRESSED ^ UINT_MAX
+
 Vector2 testPoints[] = { {10.0, 10.0}, {70.0, 10.0}, {70.0, 80.0}, {10.0, 80.0},
 						 {50.0, 20.0}, {40.0, 40.0}, {50.0, 60.0}, {60.0, 40.0},
 						 {18.0, 18.0}, {18.0, 42.0}, {35.0, 42.0}, {35.0, 18.0},
@@ -28,6 +39,7 @@ int main(int argc, char* args[])
 	}
 
 	Camera testCam;
+	testCam.setPosition(100.f, 100.f);
 
 	InputMap inputMap;
 
@@ -42,6 +54,9 @@ int main(int argc, char* args[])
 	GameWindow window;
 
 	bool isOpen = true;
+
+	//Test message box
+	//SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Test", "This is a test", window.getWindow());
 
 	while (isOpen) 
 	{
@@ -60,12 +75,32 @@ int main(int argc, char* args[])
 				if (e.key.key == inputMap.p_foreward) 
 				{
 					std::cout << "Foreward pressed!\n";
-					pressedActions |= 0b00000001;
+					pressedActions |= FOREWARD_PRESSED;
+					std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_backward) 
 				{
 					std::cout << "Backward pressed!\n";
-					pressedActions |= 0b00000010;
+					pressedActions |= BACKWARD_PRESSED;
+					std::cout << pressedActions << "\n";
+				}
+				else if (e.key.key == inputMap.p_left) 
+				{
+					std::cout << "Left pressed!\n";
+					pressedActions |= LEFT_PRESSED;
+					std::cout << pressedActions << "\n";
+				}
+				else if (e.key.key == inputMap.p_right) 
+				{
+					std::cout << "Right pressed!\n";
+					pressedActions |= RIGHT_PRESSED;
+					std::cout << pressedActions << "\n";
+				}
+				else if (e.key.key == inputMap.p_use) 
+				{
+					std::cout << "Use pressed!\n";
+					pressedActions |= USE_PRESSED;
+					std::cout << pressedActions << "\n";
 				}
 			}
 			else if (e.type == SDL_EVENT_KEY_UP) 
@@ -74,12 +109,32 @@ int main(int argc, char* args[])
 				if (e.key.key == inputMap.p_foreward)
 				{
 					std::cout << "Foreward released!\n";
-					pressedActions &= 0b11111110;
+					pressedActions &= FOREWARD_RELEASED;
+					std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_backward) 
 				{
 					std::cout << "Backward released!\n";
-					pressedActions &= 0b11111101;
+					pressedActions &= BACKWARD_RELEASED;
+					std::cout << pressedActions << "\n";
+				}
+				else if (e.key.key == inputMap.p_left) 
+				{
+					std::cout << "Left released!\n";
+					pressedActions &= LEFT_RELEASED;
+					std::cout << pressedActions << "\n";
+				}
+				else if (e.key.key == inputMap.p_right)
+				{
+					std::cout << "Right released!\n";
+					pressedActions &= RIGHT_RELEASED;
+					std::cout << pressedActions << "\n";
+				}
+				else if (e.key.key == inputMap.p_use) 
+				{
+					std::cout << "Use released!\n";
+					pressedActions &= USE_RELEASED;
+					std::cout << pressedActions << "\n";
 				}
 			}
 		}

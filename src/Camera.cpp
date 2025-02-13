@@ -1,5 +1,8 @@
 #include "Camera.h"
 
+#include "Utils.h"
+#include <math.h>
+
 Camera::Camera()
 {
 	position.x = 0.f;
@@ -51,5 +54,14 @@ void Camera::render2d(SDL_Renderer* renderer)
 	rect.w = 10.f;
 
 	SDL_SetRenderDrawColor(renderer, 0xff, 0xb2, 0xb2, 0xff);
+
 	SDL_RenderFillRect(renderer, &rect);
+
+	SDL_SetRenderDrawColor(renderer, 0xb2, 0xff, 0xb2, 0xff);
+
+	//Camera fov visualization
+	SDL_RenderLine(renderer, position.x, position.y, position.x + 50 * cosf(Utils::degToRad(angle + 45)), 
+		position.y + 50 * sinf(Utils::degToRad(angle + fov / 2)));
+	SDL_RenderLine(renderer, position.x, position.y, position.x + 50 * cosf(Utils::degToRad(angle - 45)),
+		position.y + 50 * sinf(Utils::degToRad(angle - fov / 2)));
 }
