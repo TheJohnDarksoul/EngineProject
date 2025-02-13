@@ -9,17 +9,16 @@ GameWindow::GameWindow()
 
 	if (window == nullptr)
 	{
-		std::cout << "Window failed to init!\n";
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Window Creation Error", "Window failed to init", NULL);
 	}
 
 	drawSurface = SDL_GetWindowSurface(window);
 
 	renderer = SDL_CreateSoftwareRenderer(drawSurface);
-	//renderer = SDL_CreateRenderer(window, NULL);
 
 	if (renderer == nullptr)
 	{
-		std::cout << "Renderer failed to init!\n" << SDL_GetError() << "\n";
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Renderer Creation Error", "Renderer failed to init", window);
 	}
 }
 

@@ -50,3 +50,4 @@ Added some stuff to my camera and messed around with bitflag input storage
 2/13/25
 [In class]
 Full key remapping implemented for all implemented actions
+Implemented error messageboxes

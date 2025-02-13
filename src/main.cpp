@@ -32,9 +32,10 @@ Segment testSegments[] = {{testPoints[4], testPoints[5]}, {testPoints[5], testPo
 
 int main(int argc, char* args[])
 {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) 
+	if (SDL_Init(SDL_INIT_VIDEO) == false) 
 	{
-		std::cout << "Video failed to init!\n";
+		//std::cout << "Video failed to init!\n";
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "SDL Init Failure", "SDL video failed to init", NULL);
 		return 1;
 	}
 
@@ -55,8 +56,7 @@ int main(int argc, char* args[])
 
 	bool isOpen = true;
 
-	//Test message box
-	//SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Test", "This is a test", window.getWindow());
+	SDL_HideCursor();
 
 	while (isOpen) 
 	{
@@ -74,33 +74,33 @@ int main(int argc, char* args[])
 				//Can't use a switch on a non-const value
 				if (e.key.key == inputMap.p_foreward) 
 				{
-					std::cout << "Foreward pressed!\n";
+					//std::cout << "Foreward pressed!\n";
 					pressedActions |= FOREWARD_PRESSED;
-					std::cout << pressedActions << "\n";
+					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_backward) 
 				{
-					std::cout << "Backward pressed!\n";
+					//std::cout << "Backward pressed!\n";
 					pressedActions |= BACKWARD_PRESSED;
-					std::cout << pressedActions << "\n";
+					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_left) 
 				{
-					std::cout << "Left pressed!\n";
+					//std::cout << "Left pressed!\n";
 					pressedActions |= LEFT_PRESSED;
-					std::cout << pressedActions << "\n";
+					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_right) 
 				{
-					std::cout << "Right pressed!\n";
+					//std::cout << "Right pressed!\n";
 					pressedActions |= RIGHT_PRESSED;
-					std::cout << pressedActions << "\n";
+					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_use) 
 				{
-					std::cout << "Use pressed!\n";
+					//std::cout << "Use pressed!\n";
 					pressedActions |= USE_PRESSED;
-					std::cout << pressedActions << "\n";
+					//std::cout << pressedActions << "\n";
 				}
 			}
 			else if (e.type == SDL_EVENT_KEY_UP) 
@@ -108,37 +108,38 @@ int main(int argc, char* args[])
 				//Also test code
 				if (e.key.key == inputMap.p_foreward)
 				{
-					std::cout << "Foreward released!\n";
+					//std::cout << "Foreward released!\n";
 					pressedActions &= FOREWARD_RELEASED;
-					std::cout << pressedActions << "\n";
+					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_backward) 
 				{
-					std::cout << "Backward released!\n";
+					//std::cout << "Backward released!\n";
 					pressedActions &= BACKWARD_RELEASED;
-					std::cout << pressedActions << "\n";
+					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_left) 
 				{
-					std::cout << "Left released!\n";
+					//std::cout << "Left released!\n";
 					pressedActions &= LEFT_RELEASED;
-					std::cout << pressedActions << "\n";
+					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_right)
 				{
-					std::cout << "Right released!\n";
+					//std::cout << "Right released!\n";
 					pressedActions &= RIGHT_RELEASED;
-					std::cout << pressedActions << "\n";
+					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_use) 
 				{
-					std::cout << "Use released!\n";
+					//std::cout << "Use released!\n";
 					pressedActions &= USE_RELEASED;
-					std::cout << pressedActions << "\n";
+					//std::cout << pressedActions << "\n";
 				}
 			}
 		}
 
+		//Start of rendering frame
 		window.clearRenderer();
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xb2, 0xb2, 0xff, 0xff);
@@ -150,6 +151,7 @@ int main(int argc, char* args[])
 
 		testCam.render2d(window.getRenderer());
 
+		//End of rendering frame
 		window.presentRenderer();
 	}
 
