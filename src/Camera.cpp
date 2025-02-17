@@ -17,6 +17,11 @@ Camera::~Camera()
 
 }
 
+float Camera::getAngle()
+{
+	return angle;
+}
+
 //Sets the camera position to the passed x y values
 void Camera::setPosition(float x, float y)
 {
@@ -41,6 +46,19 @@ void Camera::setPosition(float x, float y, float height)
 void Camera::setAngle(float angle)
 {
 	this->angle = angle;
+}
+
+//Should not be used ingame, only for testing
+void Camera::move(float x, float y, float h, float dt)
+{
+	position.x += x * dt;
+	position.y += y * dt;
+	height += h * dt;
+}
+
+void Camera::rotate(float delta)
+{
+	angle += delta;
 }
 
 //For use in testing, don't use in game

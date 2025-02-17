@@ -15,10 +15,15 @@ public:
 	Camera();
 	~Camera();
 
+	float getAngle();
+
 	void setPosition(float x, float y);
 	void setHeight(float height);
 	void setPosition(float x, float y, float height);
 	void setAngle(float angle);
+
+	void move(float x, float y, float h, float dt);
+	void rotate(float delta);
 
 	void render2d(SDL_Renderer* renderer);
 };

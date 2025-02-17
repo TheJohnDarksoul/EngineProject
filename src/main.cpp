@@ -4,6 +4,7 @@
 #include "GameWindow.h"
 #include "datastructs.h"
 #include "levelcomponents.h"
+#include "Utils.h"
 
 #include "Camera.h"
 
@@ -137,6 +138,28 @@ int main(int argc, char* args[])
 					//std::cout << pressedActions << "\n";
 				}
 			}
+		}
+
+		//Do updates
+		//Test code
+		if ((pressedActions & RIGHT_PRESSED) == RIGHT_PRESSED) 
+		{
+			testCam.rotate(0.1f);
+			//std::cout << "rotate right\n";
+		}
+		if ((pressedActions & LEFT_PRESSED) == LEFT_PRESSED) 
+		{
+			testCam.rotate(-0.1f);
+			//std::cout << "rotate left\n";
+		}
+
+		if ((pressedActions & FOREWARD_PRESSED) == FOREWARD_PRESSED) 
+		{
+			testCam.move(0.1 * cosf(Utils::degToRad(testCam.getAngle())), 0.1 * sinf(Utils::degToRad(testCam.getAngle())), 0, 1);
+		}
+		if ((pressedActions & BACKWARD_PRESSED) == BACKWARD_PRESSED)
+		{
+			testCam.move(-0.1 * cosf(Utils::degToRad(testCam.getAngle())), -0.1 * sinf(Utils::degToRad(testCam.getAngle())), 0, 1);
 		}
 
 		//Start of rendering frame
