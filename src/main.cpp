@@ -59,6 +59,8 @@ int main(int argc, char* args[])
 
 	SDL_HideCursor();
 
+	uint64_t currentTime = SDL_GetTicks();
+
 	while (isOpen) 
 	{
 		SDL_Event e;
@@ -140,26 +142,33 @@ int main(int argc, char* args[])
 			}
 		}
 
+		//Change to fixed timestep later
+		uint64_t newTime = SDL_GetTicks();
+
+		float delta = (newTime - currentTime) / 1000.f;
+
+		currentTime = newTime;
+
 		//Do updates
 		//Test code
 		if ((pressedActions & RIGHT_PRESSED) == RIGHT_PRESSED) 
 		{
-			testCam.rotate(0.1f);
+			testCam.rotate(90.f * delta);
 			//std::cout << "rotate right\n";
 		}
 		if ((pressedActions & LEFT_PRESSED) == LEFT_PRESSED) 
 		{
-			testCam.rotate(-0.1f);
+			testCam.rotate(-90.f * delta);
 			//std::cout << "rotate left\n";
 		}
 
 		if ((pressedActions & FOREWARD_PRESSED) == FOREWARD_PRESSED) 
 		{
-			testCam.move(0.1 * cosf(Utils::degToRad(testCam.getAngle())), 0.1 * sinf(Utils::degToRad(testCam.getAngle())), 0, 1);
+			testCam.move(100 * cosf(Utils::degToRad(testCam.getAngle())), 100 * sinf(Utils::degToRad(testCam.getAngle())), 0, delta);
 		}
 		if ((pressedActions & BACKWARD_PRESSED) == BACKWARD_PRESSED)
 		{
-			testCam.move(-0.1 * cosf(Utils::degToRad(testCam.getAngle())), -0.1 * sinf(Utils::degToRad(testCam.getAngle())), 0, 1);
+			testCam.move(-100 * cosf(Utils::degToRad(testCam.getAngle())), -100 * sinf(Utils::degToRad(testCam.getAngle())), 0, delta);
 		}
 
 		//Start of rendering frame
