@@ -56,6 +56,9 @@ private:
 	Vector2 splitterVec;
 
 public:
+	Node* getFront();
+	Node* getBack();
+
 	Node();
 	~Node();
 

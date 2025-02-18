@@ -9,8 +9,8 @@ private:
 	std::vector<Segment> segList;
 	Node root;
 
-	void splitSpace(Node* node, std::vector<Segment> input);
-	void buildBSPTree(Node* node, std::vector<Segment> input);
+	void splitSpace(Node* node, std::vector<Segment>* input);
+	void buildBSPTree(Node* node, std::vector<Segment>* input);
 
 public:
 	NodeBuilder();

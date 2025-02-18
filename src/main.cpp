@@ -165,7 +165,7 @@ int main(int argc, char* args[])
 		//Start of rendering frame
 		window.clearRenderer();
 
-		//test floor
+		//test floor, not very good and won't work with multiple floor heights but is here for demoing
 		for (int y = 360 / 2; y < 360; ++y) 
 		{
 			int col = y / 2;
@@ -181,6 +181,10 @@ int main(int argc, char* args[])
 		}
 
 		testCam.render2d(window.getRenderer());
+
+		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);
+
+		SDL_RenderDebugText(window.getRenderer(), 5, 5, "test");
 
 		//End of rendering frame
 		window.presentRenderer();

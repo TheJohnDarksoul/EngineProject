@@ -74,6 +74,17 @@ Sector::~Sector()
 
 }
 
+//Returns a non-const pointer to the front node
+Node* Node::getFront()
+{
+	return front;
+}
+
+//Returns a non-const pointer to the back node
+Node* Node::getBack()
+{
+	return back;
+}
 
 Node::Node()
 {

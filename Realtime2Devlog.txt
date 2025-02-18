@@ -58,3 +58,6 @@ Added camera movement
 2/18/25
 [In class]
 Added temporary floor gradient
+Added some math utils
+Spent time on the SDL wiki looking at functions that could be helpful
+Implemented debug text
