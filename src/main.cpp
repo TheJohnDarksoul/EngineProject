@@ -53,7 +53,7 @@ int main(int argc, char* args[])
 
 	unsigned int pressedActions = 0;
 
-	GameWindow window;
+	GameWindow window{640, 360};
 
 	bool isOpen = true;
 
@@ -164,6 +164,14 @@ int main(int argc, char* args[])
 
 		//Start of rendering frame
 		window.clearRenderer();
+
+		//test floor
+		for (int y = 360 / 2; y < 360; ++y) 
+		{
+			int col = y / 2;
+			SDL_SetRenderDrawColor(window.getRenderer(), col, col, col, 255);
+			SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
+		}
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xb2, 0xb2, 0xff, 0xff);
 

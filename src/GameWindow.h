@@ -11,6 +11,7 @@ private:
 
 public:
 	GameWindow();
+	GameWindow(unsigned int w, unsigned int h);
 	~GameWindow();
 
 	SDL_Window* getWindow();
