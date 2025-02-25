@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL.h>
+#include <cstdint>
 
 #include "GameWindow.h"
 #include "datastructs.h"
@@ -193,7 +194,7 @@ int main(int argc, char* args[])
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);
 
-		SDL_RenderDebugText(window.getRenderer(), 5, 5, "test");
+		SDL_RenderDebugText(window.getRenderer(), 5, 5, "test text: fill in with fps counter");
 
 		//End of rendering frame
 		window.presentRenderer();

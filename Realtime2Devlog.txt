@@ -61,3 +61,14 @@ Added temporary floor gradient
 Added some math utils
 Spent time on the SDL wiki looking at functions that could be helpful
 Implemented debug text
+https://yuriygeorgiev.com/2022/08/17/polygon-based-software-rendering-engine/
+
+2/20/25
+Worked a little on the node builder after presentations
+
+2/24/25
+Worked a bit more on the node builder
+
+2/25/25
+[In class]
+Worked a lot more on the node builder

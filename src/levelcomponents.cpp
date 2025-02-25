@@ -54,6 +54,11 @@ Vector2 Segment::getEnd()
 	return end;
 }
 
+Vector2 Segment::getVector()
+{
+	return vec;
+}
+
 //Renders segments as 2d lines, could be used later for an automap feature
 void Segment::render2d(SDL_Renderer* renderer)
 {
@@ -86,6 +91,16 @@ Node* Node::getBack()
 	return back;
 }
 
+void Node::setFront(Node* node)
+{
+	front = node;
+}
+
+void Node::setBack(Node* node)
+{
+	back = node;
+}
+
 Node::Node()
 {
 	front = nullptr;
@@ -99,5 +114,5 @@ Node::Node()
 
 Node::~Node()
 {
-
+	
 }

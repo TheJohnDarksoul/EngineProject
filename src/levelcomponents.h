@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL.h>
+#include <cstdint>
 #include "datastructs.h"
 
 //Lines that make up the level data
@@ -23,6 +24,7 @@ public:
 
 	Vector2 getStart();
 	Vector2 getEnd();
+	Vector2 getVector();
 
 	void render2d(SDL_Renderer* renderer);
 };
@@ -46,7 +48,7 @@ public:
 //Makes up the BSP tree, used for all sorts of things including rendering
 class Node 
 {
-private:
+public:
 	Node* front;
 	Node* back;
 
@@ -55,9 +57,14 @@ private:
 
 	Vector2 splitterVec;
 
+	uint32_t segmentId;
+
 public:
 	Node* getFront();
 	Node* getBack();
+
+	void setFront(Node* node);
+	void setBack(Node* node);
 
 	Node();
 	~Node();
