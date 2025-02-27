@@ -26,6 +26,10 @@ public:
 	Vector2 getEnd();
 	Vector2 getVector();
 
+	void setPosition(float x1, float y1, float x2, float y2);
+	void setPosition(Vector2 p1, Vector2 p2);
+	void setVector(Vector2 vec);
+
 	void render2d(SDL_Renderer* renderer);
 };
 

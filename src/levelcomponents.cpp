@@ -59,6 +59,25 @@ Vector2 Segment::getVector()
 	return vec;
 }
 
+void Segment::setPosition(float x1, float y1, float x2, float y2)
+{
+	start.x = x1;
+	start.y = y2;
+	end.x = x2;
+	end.y = y2;
+}
+
+void Segment::setPosition(Vector2 p1, Vector2 p2)
+{
+	start = p1;
+	end = p2;
+}
+
+void Segment::setVector(Vector2 vec)
+{
+	this->vec = vec;
+}
+
 //Renders segments as 2d lines, could be used later for an automap feature
 void Segment::render2d(SDL_Renderer* renderer)
 {
@@ -103,6 +122,7 @@ void Node::setBack(Node* node)
 
 Node::Node()
 {
+	//Dummy values, will be overwritten in node builder
 	front = nullptr;
 	back = nullptr;
 
@@ -110,6 +130,11 @@ Node::Node()
 	splitterStart.y = 0.f;
 	splitterEnd.x = 0.f;
 	splitterEnd.y = 0.f;
+
+	splitterVec.x = 0.f;
+	splitterVec.y = 0.f;
+
+	segmentId = UINT32_MAX;
 }
 
 Node::~Node()

@@ -72,3 +72,8 @@ Worked a bit more on the node builder
 2/25/25
 [In class]
 Worked a lot more on the node builder
+[After class]
+More node building work
+
+2/26/25
+I think basic bsp building is done, need to do traversal now

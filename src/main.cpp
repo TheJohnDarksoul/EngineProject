@@ -9,6 +9,8 @@
 
 #include "Camera.h"
 
+#include "NodeBuilder.h"
+
 #define FOREWARD_PRESSED 0b1
 #define FOREWARD_RELEASED FOREWARD_PRESSED ^ UINT_MAX
 #define BACKWARD_PRESSED 0b10
@@ -57,6 +59,8 @@ int main(int argc, char* args[])
 	GameWindow window{640, 360};
 
 	bool isOpen = true;
+
+	NodeBuilder builder(testSegments, 19);
 
 	SDL_HideCursor();
 
