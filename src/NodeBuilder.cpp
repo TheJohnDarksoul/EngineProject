@@ -212,3 +212,13 @@ void NodeBuilder::freeTree(Node* node)
 		delete node;
 	}
 }
+
+void NodeBuilder::drawSegs(SDL_Renderer* renderer)
+{
+	SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+
+	for (unsigned int i = 0; i < segments.size(); ++i) 
+	{
+		segments.at(i).render2d(renderer);
+	}
+}

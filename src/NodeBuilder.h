@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <cstdint>
+#include <SDL.h>
 #include "levelcomponents.h"
 
 class NodeBuilder
@@ -23,6 +24,7 @@ public:
 	~NodeBuilder();
 
 	void freeTree(Node* node);
+	void drawSegs(SDL_Renderer* renderer);
 
 };
 
