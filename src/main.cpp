@@ -10,6 +10,7 @@
 #include "Camera.h"
 
 #include "NodeBuilder.h"
+#include "NodeTraverser.h"
 
 #define FOREWARD_PRESSED 0b1
 #define FOREWARD_RELEASED FOREWARD_PRESSED ^ UINT_MAX
@@ -22,7 +23,13 @@
 #define USE_PRESSED 0b10000
 #define USE_RELEASED USE_PRESSED ^ UINT_MAX
 
-Vector2 testPoints[] = { {10.0, 10.0}, {70.0, 10.0}, {70.0, 80.0}, {10.0, 80.0},
+//Vector2 testPoints[] = { {10.0, 10.0}, {70.0, 10.0}, {70.0, 80.0}, {10.0, 80.0},
+//						 {50.0, 20.0}, {40.0, 40.0}, {50.0, 60.0}, {60.0, 40.0},
+//						 {18.0, 18.0}, {18.0, 42.0}, {35.0, 42.0}, {35.0, 18.0},
+//						 {15.0, 55.0}, {15.0, 65.0}, {20.0, 65.0}, {20.0, 55.0},
+//						 {32.5, 48.0}, {27.0, 71.0}, {38.0, 71.0} };
+
+Vector2 testPoints[] = { {10.0, 10.0}, {350.0, 10.0}, {350.0, 300.0}, {10.0, 300.0},
 						 {50.0, 20.0}, {40.0, 40.0}, {50.0, 60.0}, {60.0, 40.0},
 						 {18.0, 18.0}, {18.0, 42.0}, {35.0, 42.0}, {35.0, 18.0},
 						 {15.0, 55.0}, {15.0, 65.0}, {20.0, 65.0}, {20.0, 55.0},
@@ -61,8 +68,9 @@ int main(int argc, char* args[])
 	bool isOpen = true;
 
 	NodeBuilder builder(testSegments, 19);
+	NodeTraverser traverser(builder.getRoot(), builder.getSegments());
 
-	SDL_HideCursor();
+	//SDL_HideCursor();
 
 	uint64_t currentTime = SDL_GetTicks();
 
@@ -154,6 +162,9 @@ int main(int argc, char* args[])
 
 		currentTime = newTime;
 
+		Vector2 camPos = testCam.getPosition();
+		traverser.traverse(traverser.getRoot(), &camPos);
+
 		//Do updates
 		//Test code
 		if ((pressedActions & RIGHT_PRESSED) == RIGHT_PRESSED) 
@@ -180,19 +191,21 @@ int main(int argc, char* args[])
 		window.clearRenderer();
 
 		//test floor, not very good and won't work with multiple floor heights but is here for demoing
-		for (int y = 360 / 2; y < 360; ++y) 
-		{
-			int col = y / 2;
-			SDL_SetRenderDrawColor(window.getRenderer(), col, col, col, 255);
-			SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
-		}
+		//for (int y = 360 / 2; y < 360; ++y) 
+		//{
+		//	int col = y / 2;
+		//	SDL_SetRenderDrawColor(window.getRenderer(), col, col, col, 255);
+		//	SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
+		//}
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xb2, 0xb2, 0xff, 0xff);
 
-		for (unsigned char i = 0; i < 19; ++i) 
-		{
-			testSegments[i].render2d(window.getRenderer());
-		}
+		//for (unsigned char i = 0; i < 19; ++i) 
+		//{
+		//	testSegments[i].render2d(window.getRenderer());
+		//}
+
+		builder.drawSegs(window.getRenderer());
 
 		testCam.render2d(window.getRenderer());
 
@@ -202,6 +215,7 @@ int main(int argc, char* args[])
 
 		//End of rendering frame
 		window.presentRenderer();
+		traverser.clearIds();
 	}
 
 	SDL_Quit();

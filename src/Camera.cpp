@@ -17,6 +17,11 @@ Camera::~Camera()
 
 }
 
+Vector2 Camera::getPosition()
+{
+	return position;
+}
+
 float Camera::getAngle()
 {
 	return angle;

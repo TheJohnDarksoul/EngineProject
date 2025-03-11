@@ -42,3 +42,8 @@ Vector2 Utils::multVec(Vector2 vec, float scalar)
 	product.y = vec.y * scalar;
 	return product;
 }
+
+bool Utils::isOnFront(Vector2 v1, Vector2 v2)
+{
+	return v1.x * v2.y < v2.x * v1.y;
+}

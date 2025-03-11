@@ -15,6 +15,7 @@ public:
 	Camera();
 	~Camera();
 
+	Vector2 getPosition();
 	float getAngle();
 
 	void setPosition(float x, float y);

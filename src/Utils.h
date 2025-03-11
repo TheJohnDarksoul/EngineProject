@@ -14,5 +14,6 @@ public:
 	static Vector2 addVec(Vector2 v1, Vector2 v2);
 	static Vector2 subVec(Vector2 v1, Vector2 v2);
 	static Vector2 multVec(Vector2 vec, float scalar);
+	static bool isOnFront(Vector2 v1, Vector2 v2);
 };
 

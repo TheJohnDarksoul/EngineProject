@@ -169,9 +169,9 @@ void NodeBuilder::buildBSPTree(Node* node, std::vector<Segment>* input)
 	}
 }
 
-void NodeBuilder::addSegment(Segment* spllitterSeg, Node* node)
+void NodeBuilder::addSegment(Segment* splitterSeg, Node* node)
 {
-	segments.push_back(*spllitterSeg);
+	segments.push_back(*splitterSeg);
 	node->segmentId = segId;
 	++segId;
 }
@@ -193,6 +193,7 @@ NodeBuilder::NodeBuilder(Segment* segArray, unsigned int length)
 	buildBSPTree(&this->root, &rawSegments);
 
 	//std::cout << "Done building tree!\n";
+	std::cout << "Segments made: " << segments.size() << "\n";
 }
 
 NodeBuilder::~NodeBuilder()
@@ -201,6 +202,16 @@ NodeBuilder::~NodeBuilder()
 
 	freeTree(root.back);
 	freeTree(root.front);
+}
+
+Node* NodeBuilder::getRoot()
+{
+	return &root;
+}
+
+std::vector<Segment>* NodeBuilder::getSegments()
+{
+	return &segments;
 }
 
 void NodeBuilder::freeTree(Node* node)

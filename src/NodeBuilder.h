@@ -16,12 +16,15 @@ private:
 
 	void splitSpace(Node* node, std::vector<Segment>* input, std::vector<Segment>* front, std::vector<Segment>* back);
 	void buildBSPTree(Node* node, std::vector<Segment>* input);
-	void addSegment(Segment* spllitterSeg, Node* node);
+	void addSegment(Segment* splitterSeg, Node* node);
 
 public:
 	NodeBuilder();
 	NodeBuilder(Segment* segArray, unsigned int length);
 	~NodeBuilder();
+
+	Node* getRoot();
+	std::vector<Segment>* getSegments();
 
 	void freeTree(Node* node);
 	void drawSegs(SDL_Renderer* renderer);
