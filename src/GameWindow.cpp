@@ -22,6 +22,7 @@ GameWindow::GameWindow()
 	}
 
 	SDL_SetRenderLogicalPresentation(renderer, 640, 360, SDL_LOGICAL_PRESENTATION_INTEGER_SCALE);
+	//SDL_SetRenderLogicalPresentation(renderer, 640, 360, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 }
 
 GameWindow::GameWindow(unsigned int w, unsigned int h)
@@ -43,6 +44,7 @@ GameWindow::GameWindow(unsigned int w, unsigned int h)
 	}
 
 	SDL_SetRenderLogicalPresentation(renderer, 640, 360, SDL_LOGICAL_PRESENTATION_INTEGER_SCALE);
+	//SDL_SetRenderLogicalPresentation(renderer, 640, 360, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 }
 
 //Destructor

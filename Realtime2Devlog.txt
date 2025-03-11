@@ -81,3 +81,5 @@ I think basic bsp building is done, need to do traversal now
 3/11/25
 [In class]
 Started work on traversal, might need to do some debugging on the builder
+Adjusted test level size
+Added debug position display

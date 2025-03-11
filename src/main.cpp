@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <cstdint>
+#include <string>
 
 #include "GameWindow.h"
 #include "datastructs.h"
@@ -29,11 +30,11 @@
 //						 {15.0, 55.0}, {15.0, 65.0}, {20.0, 65.0}, {20.0, 55.0},
 //						 {32.5, 48.0}, {27.0, 71.0}, {38.0, 71.0} };
 
-Vector2 testPoints[] = { {10.0, 10.0}, {350.0, 10.0}, {350.0, 300.0}, {10.0, 300.0},
-						 {50.0, 20.0}, {40.0, 40.0}, {50.0, 60.0}, {60.0, 40.0},
-						 {18.0, 18.0}, {18.0, 42.0}, {35.0, 42.0}, {35.0, 18.0},
-						 {15.0, 55.0}, {15.0, 65.0}, {20.0, 65.0}, {20.0, 55.0},
-						 {32.5, 48.0}, {27.0, 71.0}, {38.0, 71.0} };
+Vector2 testPoints[] = { {10.0, 10.0}, {350.0, 10.0}, {350.0, 300.0}, {10.0, 300.0}, //bounds
+						 {200.0, 120.0}, {140.0, 190.0}, {200.0, 260.0}, {260.0, 190.0}, //inner diamond
+						 {50.0, 30.0}, {50.0, 70.0}, {100.0, 70.0}, {100.0, 30.0},
+						 {30.0, 90.0}, {30.0, 200.0}, {80.0, 200.0}, {80.0, 90.0},
+						 {270.0, 48.0}, {250.0, 100.0}, {290.0, 100.0} }; //triangle
 
 Segment testSegments[] = {{testPoints[4], testPoints[5]}, {testPoints[5], testPoints[6]}, {testPoints[6], testPoints[7]}, {testPoints[7], testPoints[4]},
 						  {testPoints[0], testPoints[1]}, {testPoints[1], testPoints[2]}, {testPoints[2], testPoints[3]}, {testPoints[3], testPoints[0]},
@@ -70,7 +71,7 @@ int main(int argc, char* args[])
 	NodeBuilder builder(testSegments, 19);
 	NodeTraverser traverser(builder.getRoot(), builder.getSegments());
 
-	//SDL_HideCursor();
+	SDL_HideCursor();
 
 	uint64_t currentTime = SDL_GetTicks();
 
@@ -200,18 +201,21 @@ int main(int argc, char* args[])
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xb2, 0xb2, 0xff, 0xff);
 
-		//for (unsigned char i = 0; i < 19; ++i) 
-		//{
-		//	testSegments[i].render2d(window.getRenderer());
-		//}
+		for (unsigned char i = 0; i < 19; ++i) 
+		{
+			testSegments[i].render2d(window.getRenderer());
+		}
 
-		builder.drawSegs(window.getRenderer());
+		//builder.drawSegs(window.getRenderer());
 
 		testCam.render2d(window.getRenderer());
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);
 
-		SDL_RenderDebugText(window.getRenderer(), 5, 5, "test text: fill in with fps counter");
+		std::string dText = "Position: " + std::to_string(testCam.getPosition().x) + ", " + std::to_string(testCam.getPosition().y) + " Angle: "
+			+ std::to_string(testCam.getAngle());
+
+		SDL_RenderDebugText(window.getRenderer(), 5, 5, dText.c_str());
 
 		//End of rendering frame
 		window.presentRenderer();

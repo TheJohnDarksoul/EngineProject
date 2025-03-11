@@ -64,6 +64,14 @@ void Camera::move(float x, float y, float h, float dt)
 void Camera::rotate(float delta)
 {
 	angle += delta;
+	if (angle > 360.f) 
+	{
+		angle -= 360.f;
+	}
+	else if (angle < 0.f) 
+	{
+		angle += 360.f;
+	}
 }
 
 //For use in testing, don't use in game
