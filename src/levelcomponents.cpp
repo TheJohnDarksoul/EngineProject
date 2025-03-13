@@ -81,8 +81,9 @@ void Segment::setVector(Vector2 vec)
 }
 
 //Renders segments as 2d lines, could be used later for an automap feature
-void Segment::render2d(SDL_Renderer* renderer)
+void Segment::render2d(SDL_Renderer* renderer, SDL_Color color)
 {
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderLine(renderer, start.x, start.y, end.x, end.y);
 
 	//Draw line facing

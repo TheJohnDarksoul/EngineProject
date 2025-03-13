@@ -30,7 +30,7 @@ public:
 	void setPosition(Vector2 p1, Vector2 p2);
 	void setVector(Vector2 vec);
 
-	void render2d(SDL_Renderer* renderer);
+	void render2d(SDL_Renderer* renderer, SDL_Color color);
 };
 
 //The area enclosed by segments

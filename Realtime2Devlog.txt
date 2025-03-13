@@ -83,3 +83,6 @@ I think basic bsp building is done, need to do traversal now
 Started work on traversal, might need to do some debugging on the builder
 Adjusted test level size
 Added debug position display
+
+3/13/25
+4 hours of debugging the bsp builder

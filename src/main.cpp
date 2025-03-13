@@ -199,14 +199,19 @@ int main(int argc, char* args[])
 		//	SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
 		//}
 
-		SDL_SetRenderDrawColor(window.getRenderer(), 0xb2, 0xb2, 0xff, 0xff);
+		SDL_Color lineColor = { 0xb2, 0xb2, 0xff, 0xff };
 
 		for (unsigned char i = 0; i < 19; ++i) 
 		{
-			testSegments[i].render2d(window.getRenderer());
+			testSegments[i].render2d(window.getRenderer(), lineColor);
 		}
 
-		//builder.drawSegs(window.getRenderer());
+		builder.drawSegs(window.getRenderer());
+		//builder.drawSplitters(window.getRenderer());
+
+		//200,120,140,190
+		//SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 255, 255);
+		//SDL_RenderLine(window.getRenderer(), 200, 120, 140, 190);
 
 		testCam.render2d(window.getRenderer());
 
@@ -215,7 +220,7 @@ int main(int argc, char* args[])
 		std::string dText = "Position: " + std::to_string(testCam.getPosition().x) + ", " + std::to_string(testCam.getPosition().y) + " Angle: "
 			+ std::to_string(testCam.getAngle());
 
-		SDL_RenderDebugText(window.getRenderer(), 5, 5, dText.c_str());
+		SDL_RenderDebugText(window.getRenderer(), 0, 359 - 8, dText.c_str());
 
 		//End of rendering frame
 		window.presentRenderer();

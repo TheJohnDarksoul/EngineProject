@@ -75,11 +75,11 @@ void NodeBuilder::splitSpace(Node* node, std::vector<Segment>* input, std::vecto
 	addSegment(splitterSeg, node);
 	*/
 
-	Segment* splitterSeg = &input->at(0);
+	Segment splitterSeg = input->at(0);
 
-	node->splitterVec = splitterSeg->getVector();
-	node->splitterStart = splitterSeg->getStart();
-	node->splitterEnd = splitterSeg->getEnd();
+	node->splitterVec = splitterSeg.getVector();
+	node->splitterStart = splitterSeg.getStart();
+	node->splitterEnd = splitterSeg.getEnd();
 
 	for (uint32_t i = 1; i < input->size(); ++i) 
 	{
@@ -87,8 +87,8 @@ void NodeBuilder::splitSpace(Node* node, std::vector<Segment>* input, std::vecto
 		Vector2 segEnd = input->at(i).getEnd();
 		Vector2 segVec = input->at(i).getVector();
 
-		float numerator = Utils::cross2d((Utils::subVec(segStart, splitterSeg->getStart())), splitterSeg->getVector());
-		float denominator = Utils::cross2d(splitterSeg->getVector(), segVec);
+		float numerator = Utils::cross2d((Utils::subVec(segStart, splitterSeg.getStart())), splitterSeg.getVector());
+		float denominator = Utils::cross2d(splitterSeg.getVector(), segVec);
 
 		bool denomIsZero = fabsf(denominator) < EPS;
 		bool numerIsZero = fabsf(numerator) < EPS;
@@ -105,6 +105,8 @@ void NodeBuilder::splitSpace(Node* node, std::vector<Segment>* input, std::vecto
 
 			if (0.0f < intersection && intersection < 1.0f) 
 			{
+				++numSplits;
+
 				Vector2 intersectionPoint = Utils::addVec(segStart, Utils::multVec(segVec, intersection));
 
 				Segment rSegment = input->at(i);
@@ -117,9 +119,7 @@ void NodeBuilder::splitSpace(Node* node, std::vector<Segment>* input, std::vecto
 
 				if (numerator > 0.f)
 				{
-					Segment tmp = rSegment;
-					rSegment = lSegment;
-					lSegment = rSegment;
+					std::swap(rSegment, lSegment);
 				}
 
 				front->push_back(rSegment);
@@ -131,14 +131,14 @@ void NodeBuilder::splitSpace(Node* node, std::vector<Segment>* input, std::vecto
 			{
 				front->push_back(input->at(i));
 			}
-			else if (numerator > 0.f or (numerIsZero && denominator < 0.f)) 
+			else if (numerator > 0.f || (numerIsZero && denominator < 0.f)) 
 			{
 				back->push_back(input->at(i));
 			}
 		}
 	}
 
-	addSegment(splitterSeg, node);
+	addSegment(&splitterSeg, node);
 	//done
 }
 
@@ -158,14 +158,16 @@ void NodeBuilder::buildBSPTree(Node* node, std::vector<Segment>* input)
 
 	if (backSegs.size() > 0) 
 	{
+		++numBack;
 		node->back = new Node();
-		buildBSPTree(node, &backSegs);
+		buildBSPTree(node->back, &backSegs);
 	}
 
 	if (frontSegs.size() > 0) 
 	{
+		++numFront;
 		node->front = new Node();
-		buildBSPTree(node, &frontSegs);
+		buildBSPTree(node->front, &frontSegs);
 	}
 }
 
@@ -176,14 +178,56 @@ void NodeBuilder::addSegment(Segment* splitterSeg, Node* node)
 	++segId;
 }
 
+void NodeBuilder::traverseSplitsAndDraw(Node* node, SDL_Renderer* renderer)
+{
+	if (node->front != nullptr) 
+	{
+		traverseSplitsAndDraw(node->front, renderer);
+	}
+
+	if (node->back != nullptr) 
+	{
+		traverseSplitsAndDraw(node->back, renderer);
+	}
+
+	SDL_RenderLine(renderer, node->splitterStart.x, node->splitterStart.y, node->splitterEnd.x, node->splitterEnd.y);
+}
+
+void NodeBuilder::printSplitters(Node* node)
+{
+	if (node != nullptr) 
+	{
+		std::cout << node->splitterStart.x << ", " << node->splitterStart.y << ", " << node->splitterEnd.x << ", " << node->splitterEnd.y << "\n";
+
+		if (node->back != nullptr) 
+		{
+			printSplitters(node->back);
+		}
+		if (node->front != nullptr) 
+		{
+			printSplitters(node->front);
+		}
+	}
+}
+
 NodeBuilder::NodeBuilder()
 {
+	numFront = 0;
+	numBack = 0;
+	numSplits = 0;
+
 	segId = 0;
 }
 
 NodeBuilder::NodeBuilder(Segment* segArray, unsigned int length)
 {
+	numFront = 0;
+	numBack = 0;
+	numSplits = 0;
+
 	segId = 0;
+
+	root.segmentId = 0; //Might want this
 
 	for (unsigned int i = 0; i < length; ++i) 
 	{
@@ -192,8 +236,14 @@ NodeBuilder::NodeBuilder(Segment* segArray, unsigned int length)
 
 	buildBSPTree(&this->root, &rawSegments);
 
-	//std::cout << "Done building tree!\n";
+	std::cout << "Done building tree!\n";
+	std::cout << "\x1b[32m\x1b[4mNode Builder Info:\x1b[0m\n";
 	std::cout << "Segments made: " << segments.size() << "\n";
+	std::cout << "Splits made: " << numSplits << "\n";
+	std::cout << "\x1b[4mSplitter Points:\x1b[0m\n";
+	printSplitters(&root);
+
+	std::cout << rawSegments.size() << ", " << segments.size() << "\n";
 }
 
 NodeBuilder::~NodeBuilder()
@@ -226,10 +276,16 @@ void NodeBuilder::freeTree(Node* node)
 
 void NodeBuilder::drawSegs(SDL_Renderer* renderer)
 {
-	SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+	SDL_Color color = { 255, 0, 255, 255 };
 
 	for (unsigned int i = 0; i < segments.size(); ++i) 
 	{
-		segments.at(i).render2d(renderer);
+		segments.at(i).render2d(renderer, color);
 	}
+}
+
+void NodeBuilder::drawSplitters(SDL_Renderer* renderer)
+{
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	traverseSplitsAndDraw(&root, renderer);
 }
