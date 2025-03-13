@@ -117,7 +117,7 @@ void NodeBuilder::splitSpace(Node* node, std::vector<Segment>* input, std::vecto
 				lSegment.setPosition(intersectionPoint, segEnd);
 				lSegment.setVector(Utils::subVec(lSegment.getEnd(), lSegment.getStart()));
 
-				if (numerator > 0.f)
+				if (numerator > EPS)
 				{
 					std::swap(rSegment, lSegment);
 				}
@@ -127,11 +127,11 @@ void NodeBuilder::splitSpace(Node* node, std::vector<Segment>* input, std::vecto
 				continue;
 			}
 
-			if (numerator < 0.f || (numerIsZero && denominator > 0.f)) 
+			if (numerator < EPS || (numerIsZero && denominator > EPS)) 
 			{
 				front->push_back(input->at(i));
 			}
-			else if (numerator > 0.f || (numerIsZero && denominator < 0.f)) 
+			else if (numerator > EPS || (numerIsZero && denominator < EPS)) 
 			{
 				back->push_back(input->at(i));
 			}
@@ -235,15 +235,6 @@ NodeBuilder::NodeBuilder(Segment* segArray, unsigned int length)
 	}
 
 	buildBSPTree(&this->root, &rawSegments);
-
-	std::cout << "Done building tree!\n";
-	std::cout << "\x1b[32m\x1b[4mNode Builder Info:\x1b[0m\n";
-	std::cout << "Segments made: " << segments.size() << "\n";
-	std::cout << "Splits made: " << numSplits << "\n";
-	std::cout << "\x1b[4mSplitter Points:\x1b[0m\n";
-	printSplitters(&root);
-
-	std::cout << rawSegments.size() << ", " << segments.size() << "\n";
 }
 
 NodeBuilder::~NodeBuilder()

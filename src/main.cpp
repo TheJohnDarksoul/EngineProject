@@ -71,7 +71,7 @@ int main(int argc, char* args[])
 	NodeBuilder builder(testSegments, 19);
 	NodeTraverser traverser(builder.getRoot(), builder.getSegments());
 
-	SDL_HideCursor();
+	//SDL_HideCursor();
 
 	uint64_t currentTime = SDL_GetTicks();
 
@@ -206,7 +206,10 @@ int main(int argc, char* args[])
 			testSegments[i].render2d(window.getRenderer(), lineColor);
 		}
 
-		builder.drawSegs(window.getRenderer());
+		SDL_Color segColor = { 0xff, 0x00, 0xff, 0xff };
+		Segment::renderSegments(window.getRenderer(), builder.getSegments(), segColor);
+
+		//builder.drawSegs(window.getRenderer());
 		//builder.drawSplitters(window.getRenderer());
 
 		//200,120,140,190
@@ -224,7 +227,7 @@ int main(int argc, char* args[])
 
 		//End of rendering frame
 		window.presentRenderer();
-		traverser.clearIds();
+		traverser.update();
 	}
 
 	SDL_Quit();

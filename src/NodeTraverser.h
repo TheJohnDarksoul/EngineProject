@@ -21,7 +21,7 @@ public:
 	Node* getRoot();
 
 	void traverse(Node* node, Vector2* cameraPosition);
-	void clearIds();
+	void update();
 
 };
 

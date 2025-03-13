@@ -51,7 +51,7 @@ void NodeTraverser::traverse(Node* node, Vector2* cameraPosition)
 	}
 }
 
-void NodeTraverser::clearIds()
+void NodeTraverser::update()
 {
 	segIdsToDraw.clear();
 }

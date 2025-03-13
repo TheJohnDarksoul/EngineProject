@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include <cstdint>
+#include <vector>
 #include "datastructs.h"
 
 //Lines that make up the level data
@@ -31,6 +32,7 @@ public:
 	void setVector(Vector2 vec);
 
 	void render2d(SDL_Renderer* renderer, SDL_Color color);
+	static void renderSegments(SDL_Renderer* renderer, std::vector<Segment>* segments, SDL_Color color);
 };
 
 //The area enclosed by segments

@@ -103,6 +103,30 @@ void Segment::render2d(SDL_Renderer* renderer, SDL_Color color)
 	SDL_RenderLine(renderer, point1.x, point1.y, point2.x, point2.y);
 }
 
+void Segment::renderSegments(SDL_Renderer* renderer, std::vector<Segment>* segments, SDL_Color color)
+{
+	for (unsigned int i = 0; i < segments->size(); ++i) 
+	{
+		segments->at(i).render2d(renderer, color);
+	}
+	for (unsigned int i = 0; i < segments->size(); ++i) 
+	{
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		SDL_FRect temp;
+		temp.x = segments->at(i).start.x - 2;
+		temp.y = segments->at(i).start.y - 2;
+		temp.w = 5;
+		temp.h = 5;
+
+		SDL_RenderRect(renderer, &temp);
+
+		temp.x = segments->at(i).end.x - 2;
+		temp.y = segments->at(i).end.y - 2;
+
+		SDL_RenderRect(renderer, &temp);
+	}
+}
+
 Sector::Sector()
 {
 	floorHeight = 0.f;
