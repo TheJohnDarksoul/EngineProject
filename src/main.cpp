@@ -164,7 +164,7 @@ int main(int argc, char* args[])
 		currentTime = newTime;
 
 		Vector2 camPos = testCam.getPosition();
-		traverser.traverse(traverser.getRoot(), &camPos);
+		//traverser.traverse(traverser.getRoot(), &camPos);
 
 		//Do updates
 		//Test code
@@ -209,13 +209,6 @@ int main(int argc, char* args[])
 		SDL_Color segColor = { 0xff, 0x00, 0xff, 0xff };
 		Segment::renderSegments(window.getRenderer(), builder.getSegments(), segColor);
 
-		//builder.drawSegs(window.getRenderer());
-		//builder.drawSplitters(window.getRenderer());
-
-		//200,120,140,190
-		//SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 255, 255);
-		//SDL_RenderLine(window.getRenderer(), 200, 120, 140, 190);
-
 		testCam.render2d(window.getRenderer());
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);
@@ -227,7 +220,7 @@ int main(int argc, char* args[])
 
 		//End of rendering frame
 		window.presentRenderer();
-		traverser.update();
+		//traverser.update();
 	}
 
 	SDL_Quit();

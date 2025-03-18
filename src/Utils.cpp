@@ -9,7 +9,7 @@ float Utils::degToRad(float deg)
 
 float Utils::cross2d(Vector2 v1, Vector2 v2)
 {
-	return v1.x * v2.y - v1.y * v2.x;
+	return v1.x * v2.y - v2.x * v1.y	;
 }
 
 Vector2 Utils::normalize(Vector2 v)
@@ -46,4 +46,24 @@ Vector2 Utils::multVec(Vector2 vec, float scalar)
 bool Utils::isOnFront(Vector2 v1, Vector2 v2)
 {
 	return v1.x * v2.y < v2.x * v1.y;
+}
+
+bool Utils::floatEquals(float a, float b, float epsilon)
+{
+	if (fabsf(a) < fabsf(b)) 
+	{
+		return fabsf(a - b) <= fabsf(b);
+	}
+
+	return fabsf(a - b) <= fabsf(a) * epsilon;
+}
+
+bool Utils::floatGreaterThan(float a, float b, float epsilon)
+{
+	if (fabsf(a) < fabsf(b)) 
+	{
+		return (a - b) > fabsf(b);
+	}
+
+	return (a - b) > (fabsf(a) * epsilon);
 }

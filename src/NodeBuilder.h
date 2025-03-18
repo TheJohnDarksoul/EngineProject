@@ -20,7 +20,7 @@ private:
 
 	void splitSpace(Node* node, std::vector<Segment>* input, std::vector<Segment>* front, std::vector<Segment>* back);
 	void buildBSPTree(Node* node, std::vector<Segment>* input);
-	void addSegment(Segment* splitterSeg, Node* node);
+	void addSegment(Segment splitterSeg, Node* node);
 
 	void traverseSplitsAndDraw(Node* node, SDL_Renderer* renderer);
 	void printSplitters(Node* node);

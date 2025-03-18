@@ -4,78 +4,13 @@
 #include <iostream>
 #include "Utils.h"
 
+//https://github.com/StanislavPetrovV/DOOM-Clone/blob/main/bsp/bsp_builder.py
+
 void NodeBuilder::splitSpace(Node* node, std::vector<Segment>* input, std::vector<Segment>* front, std::vector<Segment>* back)
 {
-	/*
 	Segment splitterSeg = input->at(0);
-
-	node->splitterVec = splitterSeg.getVector();
-	node->splitterStart = splitterSeg.getStart();
-	node->splitterEnd = splitterSeg.getEnd();
-
-	for (unsigned int i = 0; i < input->size(); ++i) 
-	{
-		Vector2 segStart = input->at(i).getStart();
-		Vector2 segEnd = input->at(i).getEnd();
-		Vector2 segVec = input->at(i).getVector();
-
-		float numerator = Utils::cross2d(Utils::subVec(segStart, splitterSeg.getStart()), node->splitterVec);
-		float denominator = Utils::cross2d(node->splitterVec, segVec);
-
-		bool denomIsZero = fabsf(denominator) < EPS;
-		bool numerIsZero = fabsf(numerator) < EPS;
-
-		if (denomIsZero && numerIsZero) 
-		{
-			//append to front segment list
-			front->push_back(input->at(i));
-			continue;
-		}
-
-		if (!denomIsZero) 
-		{
-			float intersection = numerator / denominator;
-
-			if (0.f < intersection && intersection < 1.f) 
-			{
-				//I think this is how I do this, if I can reengineer this to use operators that would be nice
-				Vector2 intersectPoint = Utils::addVec(segStart, Utils::multVec(segVec, intersection));
-
-				Segment rightSeg = input->at(i);
-				rightSeg.setPosition(segStart, intersectPoint);
-				rightSeg.setVector(Utils::subVec(rightSeg.getEnd(), rightSeg.getStart()));
-
-				Segment leftSeg = input->at(i);
-				leftSeg.setPosition(intersectPoint, segEnd);
-				leftSeg.setVector(Utils::subVec(leftSeg.getEnd(), leftSeg.getStart()));
-
-				if (numerator > 0) 
-				{
-					Segment tmpSeg = rightSeg;
-					rightSeg = leftSeg;
-					leftSeg = tmpSeg;
-				}
-
-				front->push_back(rightSeg);
-				back->push_back(leftSeg);
-				continue;
-			}
-
-			if (numerator < 0 || (numerIsZero && denominator > 0)) 
-			{
-				front->push_back(input->at(i));
-			}
-			else if (numerator > 0 || (numerIsZero && denominator < 0)) 
-			{
-				back->push_back(input->at(i));
-			}
-		}
-	}
-
-	addSegment(splitterSeg, node);
-	*/
-
-	Segment splitterSeg = input->at(0);
+	Vector2 splitterPos[2] = { splitterSeg.getStart(), splitterSeg.getEnd() };
+	Vector2 splitterVec = splitterSeg.getVector();
 
 	node->splitterVec = splitterSeg.getVector();
 	node->splitterStart = splitterSeg.getStart();
@@ -85,13 +20,13 @@ void NodeBuilder::splitSpace(Node* node, std::vector<Segment>* input, std::vecto
 	{
 		Vector2 segStart = input->at(i).getStart();
 		Vector2 segEnd = input->at(i).getEnd();
-		Vector2 segVec = input->at(i).getVector();
+		Vector2 segVec = input->at(i).getVector();	
 
-		float numerator = Utils::cross2d((Utils::subVec(segStart, splitterSeg.getStart())), splitterSeg.getVector());
-		float denominator = Utils::cross2d(splitterSeg.getVector(), segVec);
+		float numerator = Utils::cross2d((Utils::subVec(segStart, splitterPos[0])), splitterVec);
+		float denominator = Utils::cross2d(splitterVec, segVec);
 
-		bool denomIsZero = fabsf(denominator) < EPS;
-		bool numerIsZero = fabsf(numerator) < EPS;
+		bool denomIsZero = fabsf(denominator) < EPS; //If true, lines are parallel
+		bool numerIsZero = fabsf(numerator) < EPS; //If true and above is true, lines are collinear
 
 		if (denomIsZero && numerIsZero) 
 		{
@@ -103,7 +38,7 @@ void NodeBuilder::splitSpace(Node* node, std::vector<Segment>* input, std::vecto
 		{
 			float intersection = numerator / denominator;
 
-			if (0.0f < intersection && intersection < 1.0f) 
+			if (0.f < intersection && intersection < 1.0f) 
 			{
 				++numSplits;
 
@@ -117,7 +52,7 @@ void NodeBuilder::splitSpace(Node* node, std::vector<Segment>* input, std::vecto
 				lSegment.setPosition(intersectionPoint, segEnd);
 				lSegment.setVector(Utils::subVec(lSegment.getEnd(), lSegment.getStart()));
 
-				if (numerator > EPS)
+				if (numerator > -EPS)
 				{
 					std::swap(rSegment, lSegment);
 				}
@@ -127,18 +62,18 @@ void NodeBuilder::splitSpace(Node* node, std::vector<Segment>* input, std::vecto
 				continue;
 			}
 
-			if (numerator < EPS || (numerIsZero && denominator > EPS)) 
+			if (numerator < EPS || (numerIsZero && denominator > -EPS)) 
 			{
 				front->push_back(input->at(i));
 			}
-			else if (numerator > EPS || (numerIsZero && denominator < EPS)) 
+			else if (numerator > -EPS || (numerIsZero && denominator < EPS)) 
 			{
 				back->push_back(input->at(i));
 			}
 		}
 	}
 
-	addSegment(&splitterSeg, node);
+	addSegment(splitterSeg, node);
 	//done
 }
 
@@ -171,9 +106,9 @@ void NodeBuilder::buildBSPTree(Node* node, std::vector<Segment>* input)
 	}
 }
 
-void NodeBuilder::addSegment(Segment* splitterSeg, Node* node)
+void NodeBuilder::addSegment(Segment splitterSeg, Node* node)
 {
-	segments.push_back(*splitterSeg);
+	segments.push_back(splitterSeg);
 	node->segmentId = segId;
 	++segId;
 }

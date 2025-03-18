@@ -87,3 +87,6 @@ Added debug position display
 3/13/25
 4 hours of debugging the bsp builder
 1 more hour in I partially fixed the problem, but still have issues with the node builder
+
+3/18/25
+Pivoted development to a build style renderer as a backup

@@ -3,7 +3,7 @@
 #include "datastructs.h"
 
 #define PI 3.1415926f
-#define EPS 0.0001f
+#define EPS 1e-9
 
 static class Utils
 {
@@ -15,5 +15,7 @@ public:
 	static Vector2 subVec(Vector2 v1, Vector2 v2);
 	static Vector2 multVec(Vector2 vec, float scalar);
 	static bool isOnFront(Vector2 v1, Vector2 v2);
+	static bool floatEquals(float a, float b, float epsilon);
+	static bool floatGreaterThan(float a, float b, float epsilon);
 };
 
