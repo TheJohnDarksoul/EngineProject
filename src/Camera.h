@@ -9,8 +9,11 @@ class Camera
 private:
 	Vector2 position;
 	float height;
+
 	float angle;
 	float fov;
+
+	int sector;
 public:
 	Camera();
 	~Camera();

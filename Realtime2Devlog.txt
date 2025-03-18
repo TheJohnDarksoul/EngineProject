@@ -90,3 +90,4 @@ Added debug position display
 
 3/18/25
 Pivoted development to a build style renderer as a backup
+Wrote some software rendering code

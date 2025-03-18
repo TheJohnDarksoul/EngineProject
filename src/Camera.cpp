@@ -10,6 +10,7 @@ Camera::Camera()
 	height = 0.f;
 	angle = 0.f;
 	fov = 90.f;
+	sector = 0;
 }
 
 Camera::~Camera()

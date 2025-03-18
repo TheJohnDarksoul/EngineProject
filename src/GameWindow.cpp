@@ -82,6 +82,6 @@ void GameWindow::clearRenderer()
 //Presents your changes to the screen, called at end of frame
 void GameWindow::presentRenderer()
 {
-	SDL_RenderPresent(renderer);
 	SDL_UpdateWindowSurface(window);
+	SDL_RenderPresent(renderer);
 }
