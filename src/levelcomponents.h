@@ -35,44 +35,42 @@ public:
 	static void renderSegments(SDL_Renderer* renderer, std::vector<Segment>* segments, SDL_Color color);
 };
 
-//The area enclosed by segments
+//The area enclosed by lines
 class Sector 
 {
 private:
+	uint32_t id;
+
 	float floorHeight;
 	float ceilingHeight;
 
-	SDL_Texture* floorTexture;
-	SDL_Texture* ceilingTexture;
+	uint32_t firstwall;
+	uint32_t numWalls;
+
+	//SDL_Texture* floorTexture;
+	//SDL_Texture* ceilingTexture;
 
 public:
 	Sector();
+	Sector(uint32_t id, float fh, float ch, uint32_t fwall, uint32_t nwalls);
 	~Sector();
+
+	void setFloorHeight(float val);
+	void setCeilingHeight(float val);
 
 };
 
-//Makes up the BSP tree, used for all sorts of things including rendering
-class Node 
+class Line 
 {
+private:
+	Vector2 start;
+	Vector2 end;
+
+	int portal;
 public:
-	Node* front;
-	Node* back;
+	Line();
+	Line(Vector2 start, Vector2 end, int portal);
+	~Line();
 
-	Vector2 splitterStart;
-	Vector2 splitterEnd;
-
-	Vector2 splitterVec;
-
-	uint32_t segmentId;
-
-public:
-	Node* getFront();
-	Node* getBack();
-
-	void setFront(Node* node);
-	void setBack(Node* node);
-
-	Node();
-	~Node();
-
+	void printPositions();
 };

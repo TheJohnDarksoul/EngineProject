@@ -20,6 +20,14 @@ Vector2 Utils::normalize(Vector2 v)
 	return norm;
 }
 
+Vector2 Utils::rotateVec(Vector2 v, float a)
+{
+	Vector2 temp;
+	temp.x = (v.x * cosf(degToRad(a)) - (v.y * sinf(degToRad(a))));
+	temp.y = (v.x * sinf(degToRad(a)) + (v.y * cosf(degToRad(a))));
+	return temp;
+}
+
 Vector2 Utils::addVec(Vector2 v1, Vector2 v2)
 {
 	Vector2 sum;
@@ -47,26 +55,6 @@ Vector2 Utils::multVec(Vector2 vec, float scalar)
 bool Utils::isOnFront(Vector2 v1, Vector2 v2)
 {
 	return v1.x * v2.y < v2.x * v1.y;
-}
-
-bool Utils::floatEquals(float a, float b, float epsilon)
-{
-	if (fabsf(a) < fabsf(b)) 
-	{
-		return fabsf(a - b) <= fabsf(b);
-	}
-
-	return fabsf(a - b) <= fabsf(a) * epsilon;
-}
-
-bool Utils::floatGreaterThan(float a, float b, float epsilon)
-{
-	if (fabsf(a) < fabsf(b)) 
-	{
-		return (a - b) > fabsf(b);
-	}
-
-	return (a - b) > (fabsf(a) * epsilon);
 }
 
 void Utils::drawVertLineColor(SDL_Surface* surface, int x, int y1, int y2, uint32_t color)

@@ -1,0 +1,10 @@
+[sectors]
+#id,firstwall,numwalls,floor,ceiling
+1,1,4,0.0,15.0,
+
+[lines]
+#x1,y1,x2,y2,portalnum
+5,5,20,5,0,
+5,5,5,20,0,
+20,5,20,20,0,
+5,20,20,20,0,

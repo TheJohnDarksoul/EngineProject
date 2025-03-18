@@ -9,6 +9,7 @@
 #include "datastructs.h"
 #include "levelcomponents.h"
 #include "Utils.h"
+#include "Level.h"
 
 #include "Camera.h"
 
@@ -36,6 +37,14 @@ int main(int argc, char* args[])
 	GameWindow window{640, 360};
 
 	bool isOpen = true;
+
+	Level level;
+
+	if (level.loadLevel("levels/demo.txt") != 0) 
+	{
+		std::cout << "oops\n";
+		return 1;
+	}
 
 	//SDL_HideCursor();
 
@@ -156,8 +165,6 @@ int main(int argc, char* args[])
 		//Start of rendering frame
 		window.clearRenderer();
 
-		Utils::drawVertLineColor(SDL_GetWindowSurface(window.getWindow()), 100, 0, 200, 0xffffffff);
-
 		//test floor, not very good and won't work with multiple floor heights but is here for demoing
 		//for (int y = 360 / 2; y < 360; ++y) 
 		//{
@@ -167,6 +174,8 @@ int main(int argc, char* args[])
 		//}
 
 		testCam.render2d(window.getRenderer());
+
+		Utils::drawVertLineColor(SDL_GetWindowSurface(window.getWindow()), 500, 0, 200, 0xb2b2ffff);
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);
 

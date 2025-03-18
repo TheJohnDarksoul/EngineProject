@@ -129,11 +129,22 @@ void Segment::renderSegments(SDL_Renderer* renderer, std::vector<Segment>* segme
 
 Sector::Sector()
 {
+	id = 0;
+
 	floorHeight = 0.f;
 	ceilingHeight = 0.f;
 
-	floorTexture = nullptr;
-	ceilingTexture = nullptr;
+	firstwall = 0;
+	numWalls = 0;
+}
+
+Sector::Sector(uint32_t id, float fh, float ch, uint32_t fwall, uint32_t nwalls)
+{
+	this->id = id;
+	floorHeight = fh;
+	ceilingHeight = ch;
+	firstwall = fwall;
+	numWalls = nwalls;
 }
 
 Sector::~Sector()
@@ -141,46 +152,36 @@ Sector::~Sector()
 
 }
 
-//Returns a non-const pointer to the front node
-Node* Node::getFront()
+void Sector::setFloorHeight(float val)
 {
-	return front;
+	floorHeight = val;
 }
 
-//Returns a non-const pointer to the back node
-Node* Node::getBack()
+void Sector::setCeilingHeight(float val)
 {
-	return back;
+	ceilingHeight = val;
 }
 
-void Node::setFront(Node* node)
+Line::Line()
 {
-	front = node;
+	start = Vector2{ 0, 0 };
+	end = start;
+	portal = 0;
 }
 
-void Node::setBack(Node* node)
+Line::Line(Vector2 start, Vector2 end, int portal)
 {
-	back = node;
+	this->start = start;
+	this->end = end;
+	this->portal = portal;
 }
 
-Node::Node()
+Line::~Line()
 {
-	//Dummy values, will be overwritten in node builder
-	front = nullptr;
-	back = nullptr;
 
-	splitterStart.x = 0.f;
-	splitterStart.y = 0.f;
-	splitterEnd.x = 0.f;
-	splitterEnd.y = 0.f;
-
-	splitterVec.x = 0.f;
-	splitterVec.y = 0.f;
-
-	segmentId = UINT32_MAX;
 }
 
-Node::~Node()
+void Line::printPositions()
 {
-	
+	std::cout << "x1: " << start.x << " y1: " << start.y << " x2: " << end.x << " y2: " << end.y << "\n";
 }
