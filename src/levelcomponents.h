@@ -73,4 +73,9 @@ public:
 	~Line();
 
 	void printPositions();
+
+	Vector2 getStart();
+	Vector2 getEnd();
+
+	int getPortalNum();
 };

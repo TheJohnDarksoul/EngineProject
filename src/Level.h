@@ -7,6 +7,8 @@
 
 enum fileReadStates {READ_SECTORS, READ_LINES};
 
+class Camera;
+
 class Level
 {
 private:
@@ -26,5 +28,7 @@ public:
 	* Reads in level data from a file. Returns 0 on success, 1 on failure.
 	*/
 	int loadLevel(std::string filepath);
+
+	void drawWalls(SDL_Surface* surface, Camera* cam);
 };
 

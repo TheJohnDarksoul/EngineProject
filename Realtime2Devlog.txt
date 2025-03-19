@@ -95,3 +95,4 @@ Wrote some software rendering code
 [After class]
 Began work on file reading
 Level data can be parsed from a file now
+Not working correctly yet, but I spent like 5-6 hours writing the code to render a single wall, will refactor later

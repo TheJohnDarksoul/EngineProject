@@ -40,6 +40,13 @@ int main(int argc, char* args[])
 
 	Level level;
 
+	Line l1(Vector2{ 0, 0 }, Vector2{ 100, 100 }, 0);
+	Line l2(Vector2{ 0, 100 }, Vector2{ 100, 0 }, 0);
+
+	Vector2 point = Utils::intersectLines(l1.getStart(), l1.getEnd(), l2.getStart(), l2.getEnd());
+
+	std::cout << point.x << " " << point.y << "\n";
+
 	if (level.loadLevel("levels/demo.txt") != 0) 
 	{
 		std::cout << "oops\n";
@@ -176,6 +183,12 @@ int main(int argc, char* args[])
 		testCam.render2d(window.getRenderer());
 
 		Utils::drawVertLineColor(SDL_GetWindowSurface(window.getWindow()), 500, 0, 200, 0xb2b2ffff);
+
+		SDL_SetRenderDrawColor(window.getRenderer(), 255, 0, 0, 255);
+		SDL_RenderLine(window.getRenderer(), l1.getStart().x, l1.getStart().y, l1.getEnd().x, l1.getEnd().y);
+		SDL_RenderLine(window.getRenderer(), l2.getStart().x, l2.getStart().y, l2.getEnd().x, l2.getEnd().y);
+
+		level.drawWalls(SDL_GetWindowSurface(window.getWindow()), &testCam);
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);
 

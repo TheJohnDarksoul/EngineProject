@@ -23,9 +23,36 @@ Vector2 Camera::getPosition()
 	return position;
 }
 
+float Camera::getHeight()
+{
+	return height;
+}
+
 float Camera::getAngle()
 {
 	return angle;
+}
+
+float Camera::getFov()
+{
+	return fov;
+}
+
+float Camera::getFovRad()
+{
+	return Utils::degToRad(fov);
+}
+
+Vector2 Camera::convertCoords(Vector2 pos)
+{
+	Vector2 up{ pos.x - position.x, pos.y - position.y };
+	return Vector2{up.x * sinf(Utils::degToRad(angle)) - up.y * cosf(Utils::degToRad(angle)),
+					up.x * cosf(Utils::degToRad(angle)) + up.y * sinf(Utils::degToRad(angle))};
+}
+
+int Camera::screenAngleToX(float angle, int width)
+{
+	return (int)(width / 2) * (1.f - tanf(((angle) + (fov / 2) / fov) * (PI / 2) - (PI / 4)));
 }
 
 //Sets the camera position to the passed x y values

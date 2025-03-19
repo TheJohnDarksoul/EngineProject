@@ -185,3 +185,18 @@ void Line::printPositions()
 {
 	std::cout << "x1: " << start.x << " y1: " << start.y << " x2: " << end.x << " y2: " << end.y << "\n";
 }
+
+Vector2 Line::getStart()
+{
+	return start;
+}
+
+Vector2 Line::getEnd()
+{
+	return end;
+}
+
+int Line::getPortalNum()
+{
+	return portal;
+}

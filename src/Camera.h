@@ -3,6 +3,9 @@
 #include<SDL.h>
 #include "datastructs.h"
 
+#define Z_NEAR 0.0001f
+#define Z_FAR 128.f
+
 //The level is rendered from this object's perspective
 class Camera
 {
@@ -19,7 +22,13 @@ public:
 	~Camera();
 
 	Vector2 getPosition();
+	float getHeight();
 	float getAngle();
+	float getFov();
+	float getFovRad();
+
+	Vector2 convertCoords(Vector2 pos);
+	int screenAngleToX(float angle, int width);
 
 	void setPosition(float x, float y);
 	void setHeight(float height);
