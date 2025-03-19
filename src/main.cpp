@@ -21,6 +21,34 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
+	//Quit prompt stuff
+	const SDL_MessageBoxButtonData boxButtons[] = { {0, 0, "No"}, {SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 1, "Yes"}};
+
+	const SDL_MessageBoxColorScheme boxColors = {
+		{
+			//bg
+			{0, 0, 0},
+			//text
+			{255, 255, 255},
+			//button border
+			{127, 127, 127},
+			//button bg
+			{0, 0, 0},
+			//button selected
+			{127, 127, 127}
+		}
+	};
+
+	const SDL_MessageBoxData boxData = {
+		SDL_MESSAGEBOX_INFORMATION,
+		NULL,
+		"Quit?",
+		"Would you like to quit?",
+		SDL_arraysize(boxButtons),
+		boxButtons,
+		&boxColors
+	};
+
 	Camera testCam;
 	testCam.setPosition(100.f, 100.f);
 
@@ -38,14 +66,9 @@ int main(int argc, char* args[])
 
 	bool isOpen = true;
 
+	float xMotion = 0;
+
 	Level level;
-
-	Line l1(Vector2{ 0, 0 }, Vector2{ 100, 100 }, 0);
-	Line l2(Vector2{ 0, 100 }, Vector2{ 100, 0 }, 0);
-
-	Vector2 point = Utils::intersectLines(l1.getStart(), l1.getEnd(), l2.getStart(), l2.getEnd());
-
-	std::cout << point.x << " " << point.y << "\n";
 
 	if (level.loadLevel("levels/demo.txt") != 0) 
 	{
@@ -53,7 +76,8 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
-	//SDL_HideCursor();
+	SDL_HideCursor();
+	SDL_SetWindowRelativeMouseMode(window.getWindow(), true);
 
 	uint64_t currentTime = SDL_GetTicks();
 
@@ -101,6 +125,16 @@ int main(int argc, char* args[])
 					pressedActions |= USE_PRESSED;
 					//std::cout << pressedActions << "\n";
 				}
+				else if (e.key.key == SDLK_ESCAPE) 
+				{
+					int buttonid;
+					SDL_ShowMessageBox(&boxData, &buttonid);
+
+					if (buttonid == 1) 
+					{
+						isOpen = false;
+					}
+				}
 			}
 			else if (e.type == SDL_EVENT_KEY_UP) 
 			{
@@ -136,6 +170,10 @@ int main(int argc, char* args[])
 					//std::cout << pressedActions << "\n";
 				}
 			}
+			else if (e.type == SDL_EVENT_MOUSE_MOTION) 
+			{
+				xMotion += e.motion.xrel;
+			}
 		}
 
 		//Change to fixed timestep later
@@ -151,13 +189,15 @@ int main(int argc, char* args[])
 		//Test code
 		if ((pressedActions & RIGHT_PRESSED) == RIGHT_PRESSED) 
 		{
-			testCam.rotate(90.f * delta);
+			//testCam.rotate(90.f * delta);
 			//std::cout << "rotate right\n";
+			testCam.move(100 * cosf(Utils::degToRad(testCam.getAngle() + 90)), 100 * sinf(Utils::degToRad(testCam.getAngle() + 90)), 0, delta);
 		}
 		if ((pressedActions & LEFT_PRESSED) == LEFT_PRESSED) 
 		{
-			testCam.rotate(-90.f * delta);
+			//testCam.rotate(-90.f * delta);
 			//std::cout << "rotate left\n";
+			testCam.move(-100 * cosf(Utils::degToRad(testCam.getAngle() + 90)), -100 * sinf(Utils::degToRad(testCam.getAngle() + 90)), 0, delta);
 		}
 
 		if ((pressedActions & FOREWARD_PRESSED) == FOREWARD_PRESSED) 
@@ -167,6 +207,12 @@ int main(int argc, char* args[])
 		if ((pressedActions & BACKWARD_PRESSED) == BACKWARD_PRESSED)
 		{
 			testCam.move(-100 * cosf(Utils::degToRad(testCam.getAngle())), -100 * sinf(Utils::degToRad(testCam.getAngle())), 0, delta);
+		}
+
+		if (xMotion != 0.f) 
+		{
+			testCam.rotate(xMotion * 360 * delta);
+			xMotion = 0.f;
 		}
 
 		//Start of rendering frame
@@ -181,12 +227,6 @@ int main(int argc, char* args[])
 		//}
 
 		testCam.render2d(window.getRenderer());
-
-		Utils::drawVertLineColor(SDL_GetWindowSurface(window.getWindow()), 500, 0, 200, 0xb2b2ffff);
-
-		SDL_SetRenderDrawColor(window.getRenderer(), 255, 0, 0, 255);
-		SDL_RenderLine(window.getRenderer(), l1.getStart().x, l1.getStart().y, l1.getEnd().x, l1.getEnd().y);
-		SDL_RenderLine(window.getRenderer(), l2.getStart().x, l2.getStart().y, l2.getEnd().x, l2.getEnd().y);
 
 		level.drawWalls(SDL_GetWindowSurface(window.getWindow()), &testCam);
 

@@ -4,7 +4,7 @@
 #include "datastructs.h"
 
 #define Z_NEAR 0.0001f
-#define Z_FAR 128.f
+#define Z_FAR 1024.f
 
 //The level is rendered from this object's perspective
 class Camera
