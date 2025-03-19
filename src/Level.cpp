@@ -219,14 +219,16 @@ void Level::drawWalls(SDL_Surface* surface, Camera* cam)
 		scaleY2 = 1e10;
 	}
 
-	int yFloor1 = (640 / 2) + (int)((zfloor - cam->getHeight()) * scaleY1);
-	int yFloor2 = (640 / 2) + (int)((zfloor - cam->getHeight()) * scaleY2);
-	int yCeil1 = (640 / 2) + (int)((zceil - cam->getHeight()) * scaleY1);
-	int yCeil2 = (640 / 2) + (int)((zceil - cam->getHeight()) * scaleY2);
+	#define EYE_Z 1.6f
+
+	int yFloor1 = (640 / 2) + (int)((zfloor - EYE_Z) * scaleY1);
+	int yFloor2 = (640 / 2) + (int)((zfloor - EYE_Z) * scaleY2);
+	int yCeil1 = (640 / 2) + (int)((zceil - EYE_Z) * scaleY1);
+	int yCeil2 = (640 / 2) + (int)((zceil - EYE_Z) * scaleY2);
 
 	for (int x = x1; x <= x2; ++x) 
 	{
-		float xProg = (x - tx1) / (float)(tx1 - tx2);
+		float xProg = (x - tx1) / (float)(tx2 - tx1);
 		if (isnan(xProg)) 
 		{
 			xProg = 0;
@@ -239,5 +241,13 @@ void Level::drawWalls(SDL_Surface* surface, Camera* cam)
 		int yCeil = SDL_clamp(tYCeil, 0, 360 - 1);
 
 		Utils::drawVertLineColor(surface, x, yFloor, yCeil, 0xff0000ff);
+	}
+}
+
+void Level::render2d(SDL_Renderer* renderer, SDL_Color color)
+{
+	for (unsigned i = 0; i < lines.size(); ++i) 
+	{
+		lines.at(i).render2d(renderer, color);
 	}
 }

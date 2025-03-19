@@ -78,4 +78,6 @@ public:
 	Vector2 getEnd();
 
 	int getPortalNum();
+
+	void render2d(SDL_Renderer* renderer, SDL_Color color);
 };

@@ -212,8 +212,9 @@ int main(int argc, char* args[])
 		if (xMotion != 0.f) 
 		{
 			testCam.rotate(xMotion * 360 * delta);
-			xMotion = 0.f;
 		}
+
+		xMotion = 0.f;
 
 		//Start of rendering frame
 		window.clearRenderer();
@@ -229,6 +230,10 @@ int main(int argc, char* args[])
 		testCam.render2d(window.getRenderer());
 
 		level.drawWalls(SDL_GetWindowSurface(window.getWindow()), &testCam);
+
+		SDL_Color col{ 255, 0, 0, 255 };
+
+		level.render2d(window.getRenderer(), col);
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);
 

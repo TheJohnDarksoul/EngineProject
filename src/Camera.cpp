@@ -52,7 +52,7 @@ Vector2 Camera::convertCoords(Vector2 pos)
 
 int Camera::screenAngleToX(float angle, int width)
 {
-	return (int)(width / 2) * (1.f - tanf(((angle) + (fov / 2) / fov) * (PI / 2) - (PI / 4)));
+	return (int)(width / 2.f) * (1.f - tanf(((angle) + (Utils::degToRad(fov) / 2) / Utils::degToRad(fov)) * (PI / 2) - (PI / 4)));
 }
 
 //Sets the camera position to the passed x y values

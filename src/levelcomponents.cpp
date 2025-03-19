@@ -200,3 +200,9 @@ int Line::getPortalNum()
 {
 	return portal;
 }
+
+void Line::render2d(SDL_Renderer* renderer, SDL_Color color)
+{
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+	SDL_RenderLine(renderer, start.x, start.y, end.x, end.y);
+}
