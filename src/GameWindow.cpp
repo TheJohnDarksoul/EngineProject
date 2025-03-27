@@ -36,6 +36,8 @@ GameWindow::GameWindow(unsigned int w, unsigned int h)
 
 	drawSurface = SDL_GetWindowSurface(window);
 
+	std::cout << SDL_GetWindowSurface(window)->pitch / SDL_GetWindowSurface(window)->w << "\n";
+
 	renderer = SDL_CreateSoftwareRenderer(drawSurface);
 
 	if (renderer == nullptr)

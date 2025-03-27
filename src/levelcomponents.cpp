@@ -134,22 +134,45 @@ Sector::Sector()
 	floorHeight = 0.f;
 	ceilingHeight = 0.f;
 
-	firstwall = 0;
 	numWalls = 0;
 }
 
-Sector::Sector(uint32_t id, float fh, float ch, uint32_t fwall, uint32_t nwalls)
+Sector::Sector(uint32_t id, float fh, float ch, std::vector<uint32_t>* iWalls)
 {
 	this->id = id;
 	floorHeight = fh;
 	ceilingHeight = ch;
-	firstwall = fwall;
-	numWalls = nwalls;
+	numWalls = iWalls->size();
+
+	for (uint32_t i = 0; i < numWalls; ++i) 
+	{
+		wallindices.push_back(iWalls->at(i));
+	}
 }
 
 Sector::~Sector()
 {
 
+}
+
+uint32_t Sector::getNumWalls()
+{
+	return numWalls;
+}
+
+const std::vector<uint32_t>* Sector::getWallIndices()
+{
+	return &wallindices;
+}
+
+float Sector::getFloorHeight()
+{
+	return floorHeight;
+}
+
+float Sector::getCeilingHeight()
+{
+	return ceilingHeight;
 }
 
 void Sector::setFloorHeight(float val)
@@ -205,4 +228,24 @@ void Line::render2d(SDL_Renderer* renderer, SDL_Color color)
 {
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderLine(renderer, start.x, start.y, end.x, end.y);
+
+	Vector2 vec;
+
+	vec.x = end.x - start.x;
+	vec.y = end.y - start.y;
+
+	Vector2 norm = Utils::normalize(Vector2{ -vec.y, vec.x });
+
+	Vector2 point1;
+
+	point1.x = start.x + end.x;
+	point1.y = start.y + end.y;
+
+	point1 = Utils::multVec(point1, 0.5);
+
+	Vector2 point2;
+
+	point2 = Utils::addVec(point1, Utils::multVec(norm, 5));
+
+	SDL_RenderLine(renderer, point1.x, point1.y, point2.x, point2.y);
 }

@@ -2,15 +2,25 @@
 
 #include "Utils.h"
 #include <math.h>
+#include <iostream>
+
+void Camera::calcVFov()
+{
+	vfov = 2 * atanf(tanf(fov / 2) *  (1 / (16.f / 9.f)));
+}
 
 Camera::Camera()
 {
 	position.x = 0.f;
 	position.y = 0.f;
-	height = 0.f;
+	height = 2.f;
 	angle = 0.f;
-	fov = 90.f;
+	fov = Utils::degToRad(90.f);
+	vfov = 0;
+	calcVFov();
 	sector = 0;
+
+	std::cout << "Fov: " << Utils::radToDeg(fov) << " VFov: " << Utils::radToDeg(vfov) << "\n";
 }
 
 Camera::~Camera()
@@ -40,7 +50,17 @@ float Camera::getFov()
 
 float Camera::getFovRad()
 {
-	return Utils::degToRad(fov);
+	return getFov();//Utils::degToRad(fov);
+}
+
+float Camera::getVFov()
+{
+	return vfov;
+}
+
+uint32_t Camera::getSectorNum()
+{
+	return sector;
 }
 
 Vector2 Camera::convertCoords(Vector2 pos)
@@ -81,6 +101,11 @@ void Camera::setAngle(float angle)
 	this->angle = angle;
 }
 
+void Camera::setSectorNum(uint32_t sector)
+{
+	this->sector = sector;
+}
+
 //Should not be used ingame, only for testing
 void Camera::move(float x, float y, float h, float dt)
 {
@@ -118,9 +143,12 @@ void Camera::render2d(SDL_Renderer* renderer)
 
 	SDL_SetRenderDrawColor(renderer, 0xb2, 0xff, 0xb2, 0xff);
 
+	SDL_RenderLine(renderer, position.x, position.y,
+		position.x + 10 * cosf(Utils::degToRad(angle)), position.y + 10 * sinf(Utils::degToRad(angle)));
+
 	//Camera fov visualization
-	SDL_RenderLine(renderer, position.x, position.y, position.x + 50 * cosf(Utils::degToRad(angle + 45)), 
-		position.y + 50 * sinf(Utils::degToRad(angle + fov / 2)));
-	SDL_RenderLine(renderer, position.x, position.y, position.x + 50 * cosf(Utils::degToRad(angle - 45)),
-		position.y + 50 * sinf(Utils::degToRad(angle - fov / 2)));
+	//SDL_RenderLine(renderer, position.x, position.y, position.x + 50 * cosf((angle + Utils::degToRad(45))), 
+	//	position.y + 50 * sinf((Utils::degToRad(angle) + fov / 2)));
+	//SDL_RenderLine(renderer, position.x, position.y, position.x + 50 * cosf((angle - Utils::degToRad(45))),
+	//	position.y + 50 * sinf((Utils::degToRad(angle) - fov / 2)));
 }

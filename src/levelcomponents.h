@@ -44,7 +44,7 @@ private:
 	float floorHeight;
 	float ceilingHeight;
 
-	uint32_t firstwall;
+	std::vector<uint32_t> wallindices;
 	uint32_t numWalls;
 
 	//SDL_Texture* floorTexture;
@@ -52,8 +52,14 @@ private:
 
 public:
 	Sector();
-	Sector(uint32_t id, float fh, float ch, uint32_t fwall, uint32_t nwalls);
+	Sector(uint32_t id, float fh, float ch, std::vector<uint32_t>* iWalls);
 	~Sector();
+
+	uint32_t getNumWalls();
+	const std::vector<uint32_t>* getWallIndices();
+
+	float getFloorHeight();
+	float getCeilingHeight();
 
 	void setFloorHeight(float val);
 	void setCeilingHeight(float val);

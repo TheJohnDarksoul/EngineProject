@@ -15,8 +15,12 @@ private:
 
 	float angle;
 	float fov;
+	float vfov;
 
-	int sector;
+	uint32_t sector;
+
+	void calcVFov();
+
 public:
 	Camera();
 	~Camera();
@@ -26,6 +30,8 @@ public:
 	float getAngle();
 	float getFov();
 	float getFovRad();
+	float getVFov();
+	uint32_t getSectorNum();
 
 	Vector2 convertCoords(Vector2 pos);
 	int screenAngleToX(float angle, int width);
@@ -34,6 +40,7 @@ public:
 	void setHeight(float height);
 	void setPosition(float x, float y, float height);
 	void setAngle(float angle);
+	void setSectorNum(uint32_t sector);
 
 	void move(float x, float y, float h, float dt);
 	void rotate(float delta);

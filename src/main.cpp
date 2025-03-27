@@ -189,15 +189,15 @@ int main(int argc, char* args[])
 		//Test code
 		if ((pressedActions & RIGHT_PRESSED) == RIGHT_PRESSED) 
 		{
-			//testCam.rotate(90.f * delta);
+			testCam.rotate(90.f * delta);
 			//std::cout << "rotate right\n";
-			testCam.move(100 * cosf(Utils::degToRad(testCam.getAngle() + 90)), 100 * sinf(Utils::degToRad(testCam.getAngle() + 90)), 0, delta);
+			//testCam.move(100 * cosf(Utils::degToRad(testCam.getAngle() + 90)), 100 * sinf(Utils::degToRad(testCam.getAngle() + 90)), 0, delta);
 		}
 		if ((pressedActions & LEFT_PRESSED) == LEFT_PRESSED) 
 		{
-			//testCam.rotate(-90.f * delta);
+			testCam.rotate(-90.f * delta);
 			//std::cout << "rotate left\n";
-			testCam.move(-100 * cosf(Utils::degToRad(testCam.getAngle() + 90)), -100 * sinf(Utils::degToRad(testCam.getAngle() + 90)), 0, delta);
+			//testCam.move(-100 * cosf(Utils::degToRad(testCam.getAngle() + 90)), -100 * sinf(Utils::degToRad(testCam.getAngle() + 90)), 0, delta);
 		}
 
 		if ((pressedActions & FOREWARD_PRESSED) == FOREWARD_PRESSED) 
@@ -211,7 +211,7 @@ int main(int argc, char* args[])
 
 		if (xMotion != 0.f) 
 		{
-			testCam.rotate(xMotion * 360 * delta);
+			//testCam.rotate(xMotion * 360 * delta);
 		}
 
 		xMotion = 0.f;
@@ -229,11 +229,15 @@ int main(int argc, char* args[])
 
 		testCam.render2d(window.getRenderer());
 
-		level.drawWalls(SDL_GetWindowSurface(window.getWindow()), &testCam);
+		//SDL_UpdateWindowSurface(window.getWindow());
+
+
+		//level.drawLevel(SDL_GetWindowSurface(window.getWindow()), &testCam);
+		level.render(window.getRenderer(), &testCam);
 
 		SDL_Color col{ 255, 0, 0, 255 };
-
 		level.render2d(window.getRenderer(), col);
+		
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);
 
@@ -244,6 +248,7 @@ int main(int argc, char* args[])
 
 		//End of rendering frame
 		window.presentRenderer();
+		//SDL_RenderPresent(window.getRenderer());
 	}
 
 	SDL_Quit();
