@@ -69,6 +69,7 @@ int main(int argc, char* args[])
 	bool isOpen = true;
 
 	float xMotion = 0;
+	float sensitivity = 3.1f;
 
 	Level level;
 
@@ -212,7 +213,7 @@ int main(int argc, char* args[])
 
 		if (xMotion != 0.f) 
 		{
-			testCam.rotate(xMotion * delta);
+			testCam.rotate(xMotion * 1.7f * (sensitivity * 10) * delta);
 		}
 
 		xMotion = 0.f;
@@ -235,13 +236,8 @@ int main(int argc, char* args[])
 			SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
 		}
 
-		//testCam.render2d(window.getRenderer());
 
 		level.render(window.getRenderer(), window.getWindowSurface(), &testCam);
-		//level.drawSolid(SDL_GetWindowSurface(window.getWindow()), &testCam, 0xff0000ff);
-
-		//SDL_Color col{ 255, 0, 0, 255 };
-		//level.render2d(window.getRenderer(), col);
 		
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);

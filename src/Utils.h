@@ -11,18 +11,20 @@
 static class Utils
 {
 public:
+	//Math utils
+
 	static float degToRad(float deg);
 	static float radToDeg(float rad);
 	static float cross2d(Vector2 v1, Vector2 v2);
 	static float cross2d(float x0, float x1, float y0, float y1);
 	static Vector2 normalize(Vector2 v);
 	static float normalizeAngle(float angle);
+
 	/*
-	* Calculates and returns the intersection point of two lines.
-	* NAN, NAN is returned if the lines do not intersect
+	* Calculates and returns the intersection between two lines
 	*/
-	static Vector2 intersectLines(Vector2 start1, Vector2 end1, Vector2 start2, Vector2 end2);
 	static Vector2 intersectLines(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
+
 	/*
 	* Rotates a vec2 by an angle given in degrees
 	*/
@@ -30,7 +32,11 @@ public:
 	static Vector2 addVec(Vector2 v1, Vector2 v2);
 	static Vector2 subVec(Vector2 v1, Vector2 v2);
 	static Vector2 multVec(Vector2 vec, float scalar);
+
+
 	static bool isOnFront(Vector2 v1, Vector2 v2);
+
+	//Drawing utils
 
 	/*
 	* Draws a solid color vertical line to the surface at position x from y1 to y2 inclusive
