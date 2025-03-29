@@ -14,4 +14,6 @@ typedef struct
 	unsigned int p_right;
 	unsigned int p_backward;
 	unsigned int p_use;
+	unsigned int p_rotateleft;
+	unsigned int p_rotateright;
 }InputMap;

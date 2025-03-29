@@ -114,3 +114,6 @@ Wrote a function to render level with a different method to figure out whats wro
 
 3/27/25
 Fixed my rendering, I used the wrong operator in two places
+
+3/28/25
+Added distinct rotate/strafe keys

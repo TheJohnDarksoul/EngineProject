@@ -59,6 +59,8 @@ int main(int argc, char* args[])
 	inputMap.p_left = SDLK_A;
 	inputMap.p_right = SDLK_D;
 	inputMap.p_use = SDLK_E;
+	inputMap.p_rotateleft = SDLK_LEFT;
+	inputMap.p_rotateright = SDLK_RIGHT;
 
 	unsigned int pressedActions = 0;
 
@@ -114,6 +116,14 @@ int main(int argc, char* args[])
 				{
 					pressedActions |= USE_PRESSED;
 				}
+				else if (e.key.key == inputMap.p_rotateleft) 
+				{
+					pressedActions |= ROTATE_LEFT_PRESSED;
+				}
+				else if (e.key.key == inputMap.p_rotateright) 
+				{
+					pressedActions |= ROTATE_RIGHT_PRESSED;
+				}
 				else if (e.key.key == SDLK_ESCAPE) 
 				{
 					int buttonid;
@@ -147,6 +157,14 @@ int main(int argc, char* args[])
 				{
 					pressedActions &= USE_RELEASED;
 				}
+				else if (e.key.key == inputMap.p_rotateleft) 
+				{
+					pressedActions &= ROTATE_LEFT_RELEASED;
+				}
+				else if (e.key.key == inputMap.p_rotateright)
+				{
+					pressedActions &= ROTATE_RIGHT_RELEASED;
+				}
 			}
 			else if (e.type == SDL_EVENT_MOUSE_MOTION) 
 			{
@@ -167,13 +185,20 @@ int main(int argc, char* args[])
 		//Test code
 		if ((pressedActions & RIGHT_PRESSED) == RIGHT_PRESSED) 
 		{
-			testCam.rotate(90.f * delta);
-			//testCam.move(100 * cosf(Utils::degToRad(testCam.getAngle() + 90)), 100 * sinf(Utils::degToRad(testCam.getAngle() + 90)), 0, delta);
+			testCam.move(100 * cosf(Utils::degToRad(testCam.getAngle() + 90)), 100 * sinf(Utils::degToRad(testCam.getAngle() + 90)), 0, delta);
 		}
 		if ((pressedActions & LEFT_PRESSED) == LEFT_PRESSED) 
 		{
+			testCam.move(-100 * cosf(Utils::degToRad(testCam.getAngle() + 90)), -100 * sinf(Utils::degToRad(testCam.getAngle() + 90)), 0, delta);
+		}
+
+		if ((pressedActions & ROTATE_LEFT_PRESSED) == ROTATE_LEFT_PRESSED) 
+		{
 			testCam.rotate(-90.f * delta);
-			//testCam.move(-100 * cosf(Utils::degToRad(testCam.getAngle() + 90)), -100 * sinf(Utils::degToRad(testCam.getAngle() + 90)), 0, delta);
+		}
+		if ((pressedActions & ROTATE_RIGHT_PRESSED) == ROTATE_RIGHT_PRESSED)
+		{
+			testCam.rotate(90.f * delta);
 		}
 
 		if ((pressedActions & FOREWARD_PRESSED) == FOREWARD_PRESSED) 
