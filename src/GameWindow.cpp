@@ -68,6 +68,11 @@ SDL_Renderer* GameWindow::getRenderer()
 	return renderer;
 }
 
+SDL_Surface* GameWindow::getWindowSurface()
+{
+	return drawSurface;
+}
+
 //Sets the GameWindow title
 void GameWindow::setTitle(const char* title)
 {

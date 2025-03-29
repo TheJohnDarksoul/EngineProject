@@ -16,6 +16,7 @@ public:
 
 	SDL_Window* getWindow();
 	SDL_Renderer* getRenderer();
+	SDL_Surface* getWindowSurface();
 
 	void setTitle(const char* title);
 

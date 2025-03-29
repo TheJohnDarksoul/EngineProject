@@ -62,7 +62,7 @@ int main(int argc, char* args[])
 	inputMap.p_rotateleft = SDLK_LEFT;
 	inputMap.p_rotateright = SDLK_RIGHT;
 
-	unsigned int pressedActions = 0;
+	uint32_t pressedActions = 0;
 
 	GameWindow window{640, 360};
 
@@ -212,7 +212,7 @@ int main(int argc, char* args[])
 
 		if (xMotion != 0.f) 
 		{
-			//testCam.rotate(xMotion * 360 * delta);
+			testCam.rotate(xMotion * delta);
 		}
 
 		xMotion = 0.f;
@@ -237,7 +237,7 @@ int main(int argc, char* args[])
 
 		//testCam.render2d(window.getRenderer());
 
-		level.render(window.getRenderer(), SDL_GetWindowSurface(window.getWindow()), &testCam);
+		level.render(window.getRenderer(), window.getWindowSurface(), &testCam);
 		//level.drawSolid(SDL_GetWindowSurface(window.getWindow()), &testCam, 0xff0000ff);
 
 		//SDL_Color col{ 255, 0, 0, 255 };

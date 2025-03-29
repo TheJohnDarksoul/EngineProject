@@ -479,21 +479,17 @@ void Level::render(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam)
 				if (i1.y > 0)
 
 				{
-
 					distX2 = i1.x;
 
 					z2 = i1.y;
-
 				}
 
 				else
 
 				{
-
 					distX2 = i2.x;
 
 					z2 = i2.y;
-
 				}
 			}
 		}
