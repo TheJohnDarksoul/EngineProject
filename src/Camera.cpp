@@ -20,7 +20,7 @@ Camera::Camera()
 	calcVFov();
 	sector = 0;
 
-	std::cout << "Fov: " << Utils::radToDeg(fov) << " VFov: " << Utils::radToDeg(vfov) << "\n";
+	//std::cout << "Fov: " << Utils::radToDeg(fov) << " VFov: " << Utils::radToDeg(vfov) << "\n";
 }
 
 Camera::~Camera()

@@ -130,7 +130,7 @@ void Utils::drawVertLineColor(SDL_Surface* surface, int x, int y1, int y2, uint3
 	if (surface != nullptr)
 	{
 		unsigned int i;
-		for (i = y1; i <= y2; ++i)
+		for (i = y1; i < y2; ++i)
 		{
 			uint32_t* pixels = (uint32_t*)surface->pixels;
 			pixels[i * surface->w + x] = color;

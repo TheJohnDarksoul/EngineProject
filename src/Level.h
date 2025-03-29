@@ -32,6 +32,6 @@ public:
 	void drawWalls(SDL_Surface* surface, Camera* cam);
 	void drawLevel(SDL_Surface* surface, Camera* cam);
 	void render2d(SDL_Renderer* renderer, SDL_Color color);
-	void render(SDL_Renderer* renderer, Camera* cam);
+	void render(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam);
 };
 

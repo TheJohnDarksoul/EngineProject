@@ -93,37 +93,26 @@ int main(int argc, char* args[])
 			}
 			else if (e.type == SDL_EVENT_KEY_DOWN) 
 			{
-				//Test code
 				//Can't use a switch on a non-const value
 				if (e.key.key == inputMap.p_foreward) 
 				{
-					//std::cout << "Foreward pressed!\n";
 					pressedActions |= FOREWARD_PRESSED;
-					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_backward) 
 				{
-					//std::cout << "Backward pressed!\n";
 					pressedActions |= BACKWARD_PRESSED;
-					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_left) 
 				{
-					//std::cout << "Left pressed!\n";
 					pressedActions |= LEFT_PRESSED;
-					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_right) 
 				{
-					//std::cout << "Right pressed!\n";
 					pressedActions |= RIGHT_PRESSED;
-					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_use) 
 				{
-					//std::cout << "Use pressed!\n";
 					pressedActions |= USE_PRESSED;
-					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == SDLK_ESCAPE) 
 				{
@@ -138,36 +127,25 @@ int main(int argc, char* args[])
 			}
 			else if (e.type == SDL_EVENT_KEY_UP) 
 			{
-				//Also test code
 				if (e.key.key == inputMap.p_foreward)
 				{
-					//std::cout << "Foreward released!\n";
 					pressedActions &= FOREWARD_RELEASED;
-					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_backward) 
 				{
-					//std::cout << "Backward released!\n";
 					pressedActions &= BACKWARD_RELEASED;
-					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_left) 
 				{
-					//std::cout << "Left released!\n";
 					pressedActions &= LEFT_RELEASED;
-					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_right)
 				{
-					//std::cout << "Right released!\n";
 					pressedActions &= RIGHT_RELEASED;
-					//std::cout << pressedActions << "\n";
 				}
 				else if (e.key.key == inputMap.p_use) 
 				{
-					//std::cout << "Use released!\n";
 					pressedActions &= USE_RELEASED;
-					//std::cout << pressedActions << "\n";
 				}
 			}
 			else if (e.type == SDL_EVENT_MOUSE_MOTION) 
@@ -190,13 +168,11 @@ int main(int argc, char* args[])
 		if ((pressedActions & RIGHT_PRESSED) == RIGHT_PRESSED) 
 		{
 			testCam.rotate(90.f * delta);
-			//std::cout << "rotate right\n";
 			//testCam.move(100 * cosf(Utils::degToRad(testCam.getAngle() + 90)), 100 * sinf(Utils::degToRad(testCam.getAngle() + 90)), 0, delta);
 		}
 		if ((pressedActions & LEFT_PRESSED) == LEFT_PRESSED) 
 		{
 			testCam.rotate(-90.f * delta);
-			//std::cout << "rotate left\n";
 			//testCam.move(-100 * cosf(Utils::degToRad(testCam.getAngle() + 90)), -100 * sinf(Utils::degToRad(testCam.getAngle() + 90)), 0, delta);
 		}
 
@@ -220,23 +196,27 @@ int main(int argc, char* args[])
 		window.clearRenderer();
 
 		//test floor, not very good and won't work with multiple floor heights but is here for demoing
-		//for (int y = 360 / 2; y < 360; ++y) 
-		//{
-		//	int col = y / 2;
-		//	SDL_SetRenderDrawColor(window.getRenderer(), col, col, col, 255);
-		//	SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
-		//}
+		for (int y = 360 / 2; y < 360; ++y) 
+		{
+			int col = y / 2;
+			SDL_SetRenderDrawColor(window.getRenderer(), col, col, col, 255);
+			SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
+		}
 
-		testCam.render2d(window.getRenderer());
+		for (int y = 0; y < 360 / 2; ++y)
+		{
+			int col = y / 2;
+			SDL_SetRenderDrawColor(window.getRenderer(), col, col, 128, 255);
+			SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
+		}
 
-		//SDL_UpdateWindowSurface(window.getWindow());
+		//testCam.render2d(window.getRenderer());
 
+		level.render(window.getRenderer(), SDL_GetWindowSurface(window.getWindow()), &testCam);
+		//level.drawSolid(SDL_GetWindowSurface(window.getWindow()), &testCam, 0xff0000ff);
 
-		//level.drawLevel(SDL_GetWindowSurface(window.getWindow()), &testCam);
-		level.render(window.getRenderer(), &testCam);
-
-		SDL_Color col{ 255, 0, 0, 255 };
-		level.render2d(window.getRenderer(), col);
+		//SDL_Color col{ 255, 0, 0, 255 };
+		//level.render2d(window.getRenderer(), col);
 		
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);
@@ -248,7 +228,6 @@ int main(int argc, char* args[])
 
 		//End of rendering frame
 		window.presentRenderer();
-		//SDL_RenderPresent(window.getRenderer());
 	}
 
 	SDL_Quit();

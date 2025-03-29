@@ -136,14 +136,15 @@ int Level::loadLevel(std::string filepath)
 
 	file.close();
 
-	for (unsigned i = 0; i < sectors.size(); ++i) 
-	{
-		for (unsigned j = 0; j < sectors.at(i).getWallIndices()->size(); ++j) 
-		{
-			std::cout << "x1: " << lines.at(j).getStart().x << " y1: " << lines.at(j).getStart().y
-				<< " x2: " << lines.at(j).getEnd().x << " y2: " << lines.at(j).getEnd().y << "\n\n";
-		}
-	}
+	//Debugging
+	//for (unsigned i = 0; i < sectors.size(); ++i) 
+	//{
+	//	for (unsigned j = 0; j < sectors.at(i).getWallIndices()->size(); ++j) 
+	//	{
+	//		std::cout << "x1: " << lines.at(j).getStart().x << " y1: " << lines.at(j).getStart().y
+	//			<< " x2: " << lines.at(j).getEnd().x << " y2: " << lines.at(j).getEnd().y << "\n\n";
+	//	}
+	//}
 
 	return 0; //Success
 }
@@ -422,16 +423,18 @@ void Level::render2d(SDL_Renderer* renderer, SDL_Color color)
 	}
 }
 
-void Level::render(SDL_Renderer* renderer, Camera* cam)
+void Level::render(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam)
 {
-	//Testing
-	#define W 640
-	#define H 360
-
 	Sector* sec = &sectors.at(cam->getSectorNum());
 	for (unsigned i = 0; i < sec->getNumWalls(); ++i) 
 	{
 		Line* lin = &lines.at(sec->getWallIndices()->at(i));
+
+		//Don't render portals as walls
+		if (lin->getPortalNum() != 0) 
+		{
+			continue;
+		}
 
 		Vector2 p1 = lin->getStart();
 		Vector2 p2 = lin->getEnd();
@@ -499,11 +502,11 @@ void Level::render(SDL_Renderer* renderer, Camera* cam)
 			continue;
 		}
 
-		float widthRatio = W / 2.f;
-		float heightRatio =	(W * H) / 60.f;
+		float widthRatio = surface->w / 2.f;
+		float heightRatio =	(surface->w * surface->h) / 60.f;
 
-		float centerScreenW = W / 2.f;
-		float centerScreenH = H / 2.f;
+		float centerScreenW = surface->w / 2.f;
+		float centerScreenH = surface->h / 2.f;
 
 		float x1 = -distX1 * widthRatio / z1;
 		float x2 = -distX2 * widthRatio / z2;
@@ -512,11 +515,32 @@ void Level::render(SDL_Renderer* renderer, Camera* cam)
 		float y2a = (ceilingHeight - heightRatio) / z2;
 		float y2b = heightRatio / z2;
 
-		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+		SDL_Vertex verts[4];
+		verts[0].position.x = centerScreenW + x1;
+		verts[0].position.y = centerScreenH + y1a;
+		verts[0].color = SDL_FColor{ 1.f, 0.f, 0.f, 1.f };
 
-		SDL_RenderLine(renderer, centerScreenW + x1, centerScreenH + y1a, centerScreenW + x2, centerScreenH + y2a);
-		SDL_RenderLine(renderer, centerScreenW + x1, centerScreenH + y1b, centerScreenW + x2, centerScreenH + y2b);
-		SDL_RenderLine(renderer, centerScreenW + x1, centerScreenH + y1a, centerScreenW + x1, centerScreenH + y1b);
-		SDL_RenderLine(renderer, centerScreenW + x2, centerScreenH + y2a, centerScreenW + x2, centerScreenH + y2b);
+		verts[1].position.x = centerScreenW + x2;
+		verts[1].position.y = centerScreenH + y2a;
+		verts[1].color = SDL_FColor{ 1.f, 0.f, 0.f, 1.f };
+
+		verts[2].position.x = centerScreenW + x1;
+		verts[2].position.y = centerScreenH + y1b;
+		verts[2].color = SDL_FColor{ 1.f, 0.f, 0.f, 1.f };
+
+		verts[3].position.x = centerScreenW + x2;
+		verts[3].position.y = centerScreenH + y2b;
+		verts[3].color = SDL_FColor{ 1.f, 0.f, 0.f, 1.f };
+
+		int indices[6] = { 0,1,2,2,3,1 };
+
+		SDL_RenderGeometry(renderer, NULL, verts, 4, indices, 6);
+
+		//SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+
+		//SDL_RenderLine(renderer, centerScreenW + x1, centerScreenH + y1a, centerScreenW + x2, centerScreenH + y2a); //Top
+		//SDL_RenderLine(renderer, centerScreenW + x1, centerScreenH + y1b, centerScreenW + x2, centerScreenH + y2b); //Bottom
+		//SDL_RenderLine(renderer, centerScreenW + x1, centerScreenH + y1a, centerScreenW + x1, centerScreenH + y1b);
+		//SDL_RenderLine(renderer, centerScreenW + x2, centerScreenH + y2a, centerScreenW + x2, centerScreenH + y2b);
 	}
 }
