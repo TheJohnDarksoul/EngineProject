@@ -3,13 +3,13 @@
 #include<SDL.h>
 #include "datastructs.h"
 
-#define Z_NEAR 0.0001f
-#define Z_FAR 128.f
+class Line;
 
 //The level is rendered from this object's perspective
 class Camera
 {
 private:
+	Vector2 lastPosition;
 	Vector2 position;
 	float height;
 

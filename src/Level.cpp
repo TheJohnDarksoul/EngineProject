@@ -56,6 +56,10 @@ int Level::loadLevel(std::string filepath)
 			{
 				state = READ_LINES;
 			}
+			else if (fileline == "player") 
+			{
+				state = READ_PLAYER;
+			}
 			continue;
 		}
 
@@ -131,6 +135,12 @@ int Level::loadLevel(std::string filepath)
 
 			sectors.push_back(Sector(secid, flHeight, ceilHeight, &iWalls));
 			drawnSectors.push_back(false);
+		}
+		else if (state == READ_PLAYER) 
+		{
+			//Set player position
+			//Stub, add later
+			getline(file, fileline);
 		}
 		file.peek();
 	}

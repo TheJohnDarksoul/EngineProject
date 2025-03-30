@@ -5,7 +5,7 @@
 
 #include "levelcomponents.h"
 
-enum fileReadStates {READ_SECTORS, READ_LINES};
+enum fileReadStates {READ_SECTORS, READ_LINES, READ_PLAYER};
 
 class Camera;
 

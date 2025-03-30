@@ -3,6 +3,7 @@
 #include "Utils.h"
 #include <math.h>
 #include <iostream>
+#include "levelcomponents.h"
 
 void Camera::calcVFov()
 {
@@ -13,6 +14,8 @@ Camera::Camera()
 {
 	position.x = 0.f;
 	position.y = 0.f;
+	lastPosition.x = position.x;
+	lastPosition.y = position.y;
 	height = 2.f;
 	angle = 0.f;
 	fov = Utils::degToRad(90.f);
@@ -78,6 +81,7 @@ int Camera::screenAngleToX(float angle, int width)
 //Sets the camera position to the passed x y values
 void Camera::setPosition(float x, float y)
 {
+	lastPosition = position;
 	position.x = x;
 	position.y = y;
 }
@@ -109,6 +113,7 @@ void Camera::setSectorNum(uint32_t sector)
 //Should not be used ingame, only for testing
 void Camera::move(float x, float y, float h, float dt)
 {
+	lastPosition = position;
 	position.x += x * dt;
 	position.y += y * dt;
 	height += h * dt;
