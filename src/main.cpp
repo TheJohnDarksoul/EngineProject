@@ -64,7 +64,7 @@ int main(int argc, char* args[])
 
 	uint32_t pressedActions = 0;
 
-	bool rendererTesting = true;
+	bool rendererTesting = true; //Testing
 
 	GameWindow window{640, 360};
 
@@ -168,7 +168,7 @@ int main(int argc, char* args[])
 				{
 					pressedActions &= ROTATE_RIGHT_RELEASED;
 				}
-				else if (e.key.key == SDLK_TAB) 
+				else if (e.key.key == SDLK_TAB) //Testing
 				{
 					rendererTesting = !rendererTesting;
 				}
