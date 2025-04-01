@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <queue>
 
 #include "levelcomponents.h"
 
@@ -20,6 +21,13 @@ private:
 	//Keeps track of which sectors we have drawn. Allocate on level load.
 	std::vector<bool> drawnSectors;
 
+	std::queue<Sector*> sectorQueue;
+
+	/*
+	* Pushes sector pointer to sector queue
+	*/
+	void addSectorToQueue(Sector* sec);
+
 public:
 	Level();
 	~Level();
@@ -35,5 +43,6 @@ public:
 	*/
 	void render2d(SDL_Renderer* renderer, SDL_Color color);
 	void render(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam);
+	void renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam);
 };
 

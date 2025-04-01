@@ -64,6 +64,8 @@ int main(int argc, char* args[])
 
 	uint32_t pressedActions = 0;
 
+	bool rendererTesting = true;
+
 	GameWindow window{640, 360};
 
 	bool isOpen = true;
@@ -166,6 +168,10 @@ int main(int argc, char* args[])
 				{
 					pressedActions &= ROTATE_RIGHT_RELEASED;
 				}
+				else if (e.key.key == SDLK_TAB) 
+				{
+					rendererTesting = !rendererTesting;
+				}
 			}
 			else if (e.type == SDL_EVENT_MOUSE_MOTION) 
 			{
@@ -236,8 +242,14 @@ int main(int argc, char* args[])
 			SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
 		}
 
-
-		level.render(window.getRenderer(), window.getWindowSurface(), &testCam);
+		if (rendererTesting)
+		{
+			level.render(window.getRenderer(), window.getWindowSurface(), &testCam);
+		}
+		else
+		{
+			level.renderSectors(window.getRenderer(), window.getWindowSurface(), &testCam);
+		}
 		
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);

@@ -118,3 +118,7 @@ Fixed my rendering, I used the wrong operator in two places
 3/28/25
 Added distinct rotate/strafe keys
 Reimplemented mouselook but it will probably need a second look
+
+4/1/25
+[In class]
+Worked on improving renderer

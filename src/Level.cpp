@@ -9,6 +9,11 @@
 #include "Utils.h"
 #include "Camera.h"
 
+void Level::addSectorToQueue(Sector* sec)
+{
+	sectorQueue.push(sec);
+}
+
 Level::Level()
 {
 
@@ -157,6 +162,9 @@ int Level::loadLevel(std::string filepath)
 	//	}
 	//}
 
+	//Testing
+	addSectorToQueue(&sectors.at(0));
+
 	return 0; //Success
 }
 
@@ -287,5 +295,81 @@ void Level::render(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam)
 		//SDL_RenderLine(renderer, centerScreenW + x1, centerScreenH + y1b, centerScreenW + x2, centerScreenH + y2b); //Bottom
 		//SDL_RenderLine(renderer, centerScreenW + x1, centerScreenH + y1a, centerScreenW + x1, centerScreenH + y1b);
 		//SDL_RenderLine(renderer, centerScreenW + x2, centerScreenH + y2a, centerScreenW + x2, centerScreenH + y2b);
+	}
+}
+
+void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam)
+{
+	unsigned halfWidth = surface->w / 2;
+	unsigned halfHeight = surface->h / 2;
+
+	float fov = cam->getFov();
+
+	//Loop through all sectors in queue
+	unsigned numSectors = sectorQueue.size();
+	for (unsigned i = 0; i < numSectors; ++i) 
+	{
+		Sector* sec = sectorQueue.front();
+
+		float fheight = sec->getFloorHeight();
+		float cheight = sec->getCeilingHeight();
+
+		//Loop through all lines in the sector
+		for (unsigned j = 0; j < sec->getNumWalls(); ++j) 
+		{
+			Line* ln = &lines.at(sec->getWallIndices()->at(j));
+
+			//Convert world coords
+			float dx1 = ln->getStart().x - cam->getPosition().x;
+			float dy1 = ln->getStart().y - cam->getPosition().y;
+			float dx2 = ln->getEnd().x - cam->getPosition().x;
+			float dy2 = ln->getEnd().y - cam->getPosition().y;
+
+			float angleSin = sinf(Utils::degToRad(cam->getAngle()));
+			float angleCos = cosf(Utils::degToRad(cam->getAngle()));
+
+			//Rotate world
+			float rx1 = dx1 * angleSin - dy1 * angleCos;
+			float rz1 = dx1 * angleCos + dy1 * angleSin;
+			float rx2 = dx2 * angleSin - dy2 * angleCos;
+			float rz2 = dx2 * angleCos + dy2 * angleSin;
+
+			//Get line height
+			float height1 = (cheight / rz1) * fov;
+			float height2 = (cheight / rz2) * fov;
+
+			//Convert to screen space
+			float sx1 = (rx1 / rz1) * fov;
+			float sy1 = ((surface->h + cam->getHeight()) / rz1);
+			float sx2 = (rx2 / rz2) * fov;
+			float sy2 = ((surface->h + cam->getHeight()) / rz2);
+
+			//Elevation from floor
+			float secLev1 = (fheight / rz1) * fov;
+			float secLev2 = (fheight / rz2) * fov;
+			sy1 -= secLev1;
+			sy2 -= secLev2;
+
+			float portBH1 = 0;
+			float portBH2 = 0;
+			float portTH1 = 0;
+			float portTH2 = 0;
+
+			if (ln->getPortalNum() == 0) 
+			{
+				//calculate
+			}
+
+			sx1 += halfWidth;
+			sy1 += halfHeight;
+			sx2 += halfWidth;
+			sy2 += halfHeight;
+
+			SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+			SDL_RenderLine(renderer, sx1, sy1 - height1, sx2, sy2 - height2); //Top
+			SDL_RenderLine(renderer, sx1, sy1, sx2, sy2); //Bottom
+			SDL_RenderLine(renderer, sx1, sy1 - height1, sx1, sy1);
+			SDL_RenderLine(renderer, sx2, sy2 - height2, sx2, sy2);
+		}
 	}
 }
