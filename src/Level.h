@@ -23,6 +23,9 @@ private:
 
 	std::queue<Sector*> sectorQueue;
 
+	std::vector<uint16_t> upperPixDrawn;
+	std::vector<uint16_t> lowerPixDrawn;
+
 	/*
 	* Pushes sector pointer to sector queue
 	*/
@@ -31,6 +34,11 @@ private:
 public:
 	Level();
 	~Level();
+
+	/*
+	* Sets the upper and lower screen bounds the level can be drawn to at each pixel column
+	*/
+	void setDrawBounds(SDL_Surface* surface);
 
 	/*
 	* Reads in level data from a file. Returns 0 on success, 1 on failure.

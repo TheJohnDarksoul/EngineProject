@@ -24,6 +24,21 @@ Level::~Level()
 
 }
 
+void Level::setDrawBounds(SDL_Surface* surface)
+{
+	if (!lowerPixDrawn.empty() || !upperPixDrawn.empty())
+	{
+		lowerPixDrawn.clear();
+		upperPixDrawn.clear();
+	}
+
+	for (uint16_t i = 0; i < surface->w; ++i)
+	{
+		lowerPixDrawn.push_back(surface->w - 1);
+		upperPixDrawn.push_back(0);
+	}
+}
+
 int Level::loadLevel(std::string filepath)
 {
 	std::ifstream file;

@@ -74,6 +74,7 @@ int main(int argc, char* args[])
 	float sensitivity = 3.1f;
 
 	Level level;
+	level.setDrawBounds(window.getWindowSurface());
 
 	if (level.loadLevel("levels/demo.txt") != 0) 
 	{

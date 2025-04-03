@@ -122,3 +122,6 @@ Reimplemented mouselook but it will probably need a second look
 4/1/25
 [In class]
 Worked on improving renderer
+
+4/3/25
+Added two pixel coord vectors to help eliminate overdraw
