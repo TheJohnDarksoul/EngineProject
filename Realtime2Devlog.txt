@@ -125,3 +125,4 @@ Worked on improving renderer
 
 4/3/25
 Added two pixel coord vectors to help eliminate overdraw
+Added rudimentary crosshair

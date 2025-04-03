@@ -154,7 +154,7 @@ int Level::loadLevel(std::string filepath)
 			}
 
 			sectors.push_back(Sector(secid, flHeight, ceilHeight, &iWalls));
-			drawnSectors.push_back(false);
+			//drawnSectors.push_back(false);
 		}
 		else if (state == READ_PLAYER) 
 		{

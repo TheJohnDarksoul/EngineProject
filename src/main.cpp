@@ -251,6 +251,14 @@ int main(int argc, char* args[])
 		{
 			level.renderSectors(window.getRenderer(), window.getWindowSurface(), &testCam);
 		}
+
+		SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
+
+		SDL_RenderLine(window.getRenderer(), window.getWindowSurface()->w / 2 - 1 - 5, window.getWindowSurface()->h / 2 - 1,
+			window.getWindowSurface()->w / 2 - 1 + 5, window.getWindowSurface()->h / 2 - 1);
+
+		SDL_RenderLine(window.getRenderer(), window.getWindowSurface()->w / 2 - 1, window.getWindowSurface()->h / 2 - 1 - 5,
+			window.getWindowSurface()->w / 2 - 1, window.getWindowSurface()->h / 2 - 1 + 5);
 		
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);
