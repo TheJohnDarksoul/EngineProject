@@ -16,6 +16,8 @@ typedef struct
 	uint32_t p_use;
 	uint32_t p_rotateleft;
 	uint32_t p_rotateright;
+	uint8_t p_lmb;
+	uint8_t p_rmb;
 }InputMap;
 
 //Maybe add transformation matricies here

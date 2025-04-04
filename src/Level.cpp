@@ -330,7 +330,7 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 	unsigned halfWidth = surface->w / 2;
 	unsigned halfHeight = surface->h / 2;
 
-	float fov = cam->getFov();
+	float fov = -cam->getFov();
 
 	//Loop through all sectors in queue
 	unsigned numSectors = sectorQueue.size();
@@ -361,9 +361,23 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			float rx2 = dx2 * angleSin - dy2 * angleCos;
 			float rz2 = dx2 * angleCos + dy2 * angleSin;
 
+			//Clipping
+			if (rz1 < 0 && rz2 < 0) 
+			{
+				continue;
+			}
+			if (rz1 < 0) 
+			{
+				Utils::clipBehindCamera(&rx1, &rz1, rx2, rz2);
+			}
+			else if (rz2 < 0) 
+			{
+				Utils::clipBehindCamera(&rx2, &rz2, rx1, rz1);
+			}
+
 			//Get line height
-			float height1 = (cheight / rz1) * fov;
-			float height2 = (cheight / rz2) * fov;
+			float height1 = -(cheight / rz1) * fov;
+			float height2 = -(cheight / rz2) * fov;
 
 			//Convert to screen space
 			float sx1 = (rx1 / rz1) * fov;
@@ -382,9 +396,10 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			float portTH1 = 0;
 			float portTH2 = 0;
 
-			if (ln->getPortalNum() == 0) 
+			if (ln->getPortalNum() != 0) 
 			{
 				//calculate
+				continue;
 			}
 
 			sx1 += halfWidth;

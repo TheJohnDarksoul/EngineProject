@@ -85,6 +85,22 @@ bool Utils::isOnFront(Vector2 v1, Vector2 v2)
 	return v1.x * v2.y < v2.x * v1.y;
 }
 
+void Utils::clipBehindCamera(float* ax, float* ay, float bx, float by)
+{
+	float px1 = 1;
+	float py1 = 1;
+	float px2 = 200;
+	float py2 = 1;
+
+	float a = cross2d(px1 - px2, py1 - py2, *ax - px2, *ay - py2);
+	float b = cross2d(py1 - py2, px1 - px2, *ay - by, *ax - bx);
+
+	float t = a / b;
+
+	*ax = *ax - (t * (bx - *ax));
+	*ay = *ay - (t * (by - *ay));
+}
+
 void Utils::drawVertLineColor(SDL_Surface* surface, int x, int y1, int y2, uint32_t color)
 {
 	if (surface != nullptr)

@@ -35,6 +35,7 @@ public:
 
 
 	static bool isOnFront(Vector2 v1, Vector2 v2);
+	static void clipBehindCamera(float* ax, float* ay, float bx, float by);
 
 	//Drawing utils
 

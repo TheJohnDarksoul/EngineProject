@@ -61,6 +61,8 @@ int main(int argc, char* args[])
 	inputMap.p_use = SDLK_E;
 	inputMap.p_rotateleft = SDLK_LEFT;
 	inputMap.p_rotateright = SDLK_RIGHT;
+	inputMap.p_lmb = SDL_BUTTON_LEFT;
+	inputMap.p_rmb = SDL_BUTTON_RIGHT;
 
 	uint32_t pressedActions = 0;
 
@@ -178,6 +180,28 @@ int main(int argc, char* args[])
 			{
 				xMotion += e.motion.xrel;
 			}
+			else if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) 
+			{
+				if (e.button.button == inputMap.p_lmb) 
+				{
+					pressedActions |= LMB_PRESSED;
+				}
+				else if (e.button.button == inputMap.p_rmb) 
+				{
+					pressedActions |= RMB_PRESSED;
+				}
+			}
+			else if (e.type == SDL_EVENT_MOUSE_BUTTON_UP) 
+			{
+				if (e.button.button == inputMap.p_lmb) 
+				{
+					pressedActions &= LMB_RELEASED;
+				}
+				else if (e.button.button == inputMap.p_rmb) 
+				{
+					pressedActions &= RMB_RELEASED;
+				}
+			}
 		}
 
 		//Change to fixed timestep later
@@ -216,6 +240,16 @@ int main(int argc, char* args[])
 		if ((pressedActions & BACKWARD_PRESSED) == BACKWARD_PRESSED)
 		{
 			testCam.move(-100 * cosf(Utils::degToRad(testCam.getAngle())), -100 * sinf(Utils::degToRad(testCam.getAngle())), 0, delta);
+		}
+
+		if ((pressedActions & LMB_PRESSED) == LMB_PRESSED) 
+		{
+			//Debug height code
+			testCam.setHeight(testCam.getHeight() + (10 * delta));
+		}
+		if ((pressedActions & RMB_PRESSED) == RMB_PRESSED) 
+		{
+			testCam.setHeight(testCam.getHeight() - (10 * delta));
 		}
 
 		if (xMotion != 0.f) 
@@ -264,7 +298,7 @@ int main(int argc, char* args[])
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);
 
 		std::string dText = "Position: " + std::to_string(testCam.getPosition().x) + ", " + std::to_string(testCam.getPosition().y) + " Angle: "
-			+ std::to_string(testCam.getAngle());
+			+ std::to_string(testCam.getAngle()) + " Height: " + std::to_string(testCam.getHeight());
 
 		SDL_RenderDebugText(window.getRenderer(), 0, 359 - 8, dText.c_str());
 
