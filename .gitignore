@@ -70,3 +70,5 @@
 /build
 /install
 
+.DS_Store
+
