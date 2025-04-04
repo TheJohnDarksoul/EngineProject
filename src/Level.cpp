@@ -26,16 +26,28 @@ Level::~Level()
 
 void Level::setDrawBounds(SDL_Surface* surface)
 {
-	if (!lowerPixDrawn.empty() || !upperPixDrawn.empty())
+	//If size has not changed
+	if ((lowerPixDrawn.size() == upperPixDrawn.size()) && lowerPixDrawn.size() == surface->w) 
 	{
-		lowerPixDrawn.clear();
-		upperPixDrawn.clear();
+		for (uint16_t i = 0; i < surface->w; ++i) 
+		{
+			lowerPixDrawn.at(i) = surface->h - 1;
+			upperPixDrawn.at(i) = 0;
+		}
 	}
-
-	for (uint16_t i = 0; i < surface->w; ++i)
+	else //If size has changed
 	{
-		lowerPixDrawn.push_back(surface->w - 1);
-		upperPixDrawn.push_back(0);
+		if (!lowerPixDrawn.empty() || !upperPixDrawn.empty())
+		{
+			lowerPixDrawn.clear();
+			upperPixDrawn.clear();
+		}
+
+		for (uint16_t i = 0; i < surface->w; ++i)
+		{
+			lowerPixDrawn.push_back(surface->h - 1);
+			upperPixDrawn.push_back(0);
+		}
 	}
 }
 

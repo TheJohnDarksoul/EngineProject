@@ -36,7 +36,7 @@ public:
 	~Level();
 
 	/*
-	* Sets the upper and lower screen bounds the level can be drawn to at each pixel column
+	* Sets the upper and lower screen bounds the level can be drawn to at each pixel column to default values
 	*/
 	void setDrawBounds(SDL_Surface* surface);
 
