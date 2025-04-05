@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <SDL.h>
+#include <vector>
 #include "datastructs.h"
 
 #define PI 3.1415926f
@@ -19,6 +20,7 @@ public:
 	static float cross2d(float x0, float x1, float y0, float y1);
 	static Vector2 normalize(Vector2 v);
 	static float normalizeAngle(float angle);
+	static float diagonalDistance(float x1, float y1, float x2, float y2);
 
 	/*
 	* Calculates and returns the intersection between two lines
@@ -34,7 +36,6 @@ public:
 	static Vector2 multVec(Vector2 vec, float scalar);
 
 	static float lerp(float start, float end, float t);
-
 
 	static bool isOnFront(Vector2 v1, Vector2 v2);
 	static void clipBehindCamera(float* ax, float* ay, float bx, float by);

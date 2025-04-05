@@ -35,6 +35,13 @@ float Utils::normalizeAngle(float angle)
 	return angle - (TAU * floorf(angle + PI / TAU));
 }
 
+float Utils::diagonalDistance(float x1, float y1, float x2, float y2)
+{
+	float dx = x2 - x1;
+	float dy = y2 - y1;
+	return SDL_max(fabsf(dx), fabsf(dy));
+}
+
 Vector2 Utils::intersectLines(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
 {
 	Vector2 i;

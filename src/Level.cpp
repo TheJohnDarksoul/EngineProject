@@ -411,11 +411,12 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
 			//Draw columns
-			//for (uint16_t c = (uint16_t)sx1; c < (uint16_t)sx2; ++c) 
-			//{
+			for (uint16_t c = (uint16_t)sx1; c < (uint16_t)sx2; ++c) 
+			{
+				
 				//upperPixDrawn.at(c);
 				//lowerPixDrawn.at(c);
-			//}
+			}
 
 			//Testing
 			SDL_RenderLine(renderer, sx1, sy1 - height1, sx2, sy2 - height2); //Top

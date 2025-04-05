@@ -131,3 +131,4 @@ Added rudimentary crosshair
 Added mouse button support
 Continued work on improved renderer
 Fixed renderer ignoring player height for bottom of walls
+Tried implementing a function to find vertical line values but it didn't pan out
