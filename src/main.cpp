@@ -279,11 +279,11 @@ int main(int argc, char* args[])
 
 		if (rendererTesting)
 		{
-			level.render(window.getRenderer(), window.getWindowSurface(), &testCam);
+			level.renderSectors(window.getRenderer(), window.getWindowSurface(), &testCam);
 		}
 		else
 		{
-			level.renderSectors(window.getRenderer(), window.getWindowSurface(), &testCam);
+			level.render(window.getRenderer(), window.getWindowSurface(), &testCam);
 		}
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);

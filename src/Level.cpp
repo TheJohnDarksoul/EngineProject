@@ -166,7 +166,7 @@ int Level::loadLevel(std::string filepath)
 			}
 
 			sectors.push_back(Sector(secid, flHeight, ceilHeight, &iWalls));
-			//drawnSectors.push_back(false);
+			drawnSectors.push_back(false);
 		}
 		else if (state == READ_PLAYER) 
 		{
@@ -330,11 +330,11 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 	unsigned halfWidth = surface->w / 2;
 	unsigned halfHeight = surface->h / 2;
 
-	float fov = -cam->getFov();
+	float fov = -(cam->getFov() * (3 + 1.f / 3.f));
 
 	//Loop through all sectors in queue
 	unsigned numSectors = sectorQueue.size();
-	for (unsigned i = 0; i < numSectors; ++i) 
+	for (unsigned i = 0; i < numSectors; ++i)
 	{
 		Sector* sec = sectorQueue.front();
 
@@ -386,8 +386,8 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			float sy2 = ((surface->h + cam->getHeight()) / rz2);
 
 			//Elevation from floor
-			float secLev1 = (fheight / rz1) * fov;
-			float secLev2 = (fheight / rz2) * fov;
+			float secLev1 = ((fheight + cam->getHeight()) / rz1) * fov;
+			float secLev2 = ((fheight + cam->getHeight()) / rz2) * fov;
 			sy1 -= secLev1;
 			sy2 -= secLev2;
 
@@ -396,6 +396,7 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			float portTH1 = 0;
 			float portTH2 = 0;
 
+			//if is portal
 			if (ln->getPortalNum() != 0) 
 			{
 				//calculate
@@ -408,6 +409,15 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			sy2 += halfHeight;
 
 			SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+
+			//Draw columns
+			//for (uint16_t c = (uint16_t)sx1; c < (uint16_t)sx2; ++c) 
+			//{
+				//upperPixDrawn.at(c);
+				//lowerPixDrawn.at(c);
+			//}
+
+			//Testing
 			SDL_RenderLine(renderer, sx1, sy1 - height1, sx2, sy2 - height2); //Top
 			SDL_RenderLine(renderer, sx1, sy1, sx2, sy2); //Bottom
 			SDL_RenderLine(renderer, sx1, sy1 - height1, sx1, sy1);

@@ -130,3 +130,4 @@ Added rudimentary crosshair
 4/4/25
 Added mouse button support
 Continued work on improved renderer
+Fixed renderer ignoring player height for bottom of walls

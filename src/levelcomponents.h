@@ -56,6 +56,7 @@ public:
 	~Sector();
 
 	uint32_t getNumWalls();
+	uint32_t getID();
 	const std::vector<uint32_t>* getWallIndices();
 
 	float getFloorHeight();

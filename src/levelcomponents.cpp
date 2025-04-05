@@ -160,6 +160,11 @@ uint32_t Sector::getNumWalls()
 	return numWalls;
 }
 
+uint32_t Sector::getID()
+{
+	return id;
+}
+
 const std::vector<uint32_t>* Sector::getWallIndices()
 {
 	return &wallindices;

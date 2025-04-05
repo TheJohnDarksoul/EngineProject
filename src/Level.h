@@ -19,7 +19,7 @@ private:
 	std::vector<Line> lines;
 
 	//Keeps track of which sectors we have drawn. Allocate on level load.
-	//std::vector<bool> drawnSectors;
+	std::vector<bool> drawnSectors;
 
 	std::queue<Sector*> sectorQueue;
 

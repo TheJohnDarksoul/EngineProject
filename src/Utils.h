@@ -33,6 +33,8 @@ public:
 	static Vector2 subVec(Vector2 v1, Vector2 v2);
 	static Vector2 multVec(Vector2 vec, float scalar);
 
+	static float lerp(float start, float end, float t);
+
 
 	static bool isOnFront(Vector2 v1, Vector2 v2);
 	static void clipBehindCamera(float* ax, float* ay, float bx, float by);
