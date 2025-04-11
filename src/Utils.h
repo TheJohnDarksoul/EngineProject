@@ -21,6 +21,15 @@ public:
 	static Vector2 normalize(Vector2 v);
 	static float normalizeAngle(float angle);
 	static float diagonalDistance(float x1, float y1, float x2, float y2);
+	static Vector2 midpt(Vector2 p1, Vector2 p2);
+	/*
+	* Returns the distance between two points squared
+	*/
+	static float distanceSquared(Vector2 p1, Vector2 p2);
+	/*
+	* Returns the distance between two points
+	*/
+	static float distance(Vector2 p1, Vector2 p2);
 
 	/*
 	* Calculates and returns the intersection between two lines

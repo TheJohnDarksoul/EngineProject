@@ -385,6 +385,22 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 				Utils::clipBehindCamera(&rx2, &rz2, rx1, rz1);
 			}
 
+			float portBH1 = 0;
+			float portBH2 = 0;
+			float portTH1 = 0;
+			float portTH2 = 0;
+
+			//if is portal
+			if (ln->getPortalNum() != 0)
+			{
+				//calculate
+				if (!drawnSectors.at(ln->getPortalNum() - 1))
+				{
+					sectorQueue.push(&sectors.at(ln->getPortalNum() - 1));
+				}
+				continue;
+			}
+
 			//Get line height
 			float height1 = -(cheight / rz1) * fov;
 			float height2 = -(cheight / rz2) * fov;
@@ -400,22 +416,6 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			float secLev2 = ((fheight + cam->getHeight()) / rz2) * fov;
 			sy1 -= secLev1;
 			sy2 -= secLev2;
-
-			float portBH1 = 0;
-			float portBH2 = 0;
-			float portTH1 = 0;
-			float portTH2 = 0;
-
-			//if is portal
-			if (ln->getPortalNum() != 0) 
-			{
-				//calculate
-				if (!drawnSectors.at(ln->getPortalNum() - 1))
-				{
-					sectorQueue.push(&sectors.at(ln->getPortalNum() - 1));
-				}
-				continue;
-			}
 
 			sx1 += halfWidth;
 			sy1 += halfHeight;

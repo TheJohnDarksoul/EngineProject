@@ -42,6 +42,21 @@ float Utils::diagonalDistance(float x1, float y1, float x2, float y2)
 	return SDL_max(fabsf(dx), fabsf(dy));
 }
 
+Vector2 Utils::midpt(Vector2 p1, Vector2 p2)
+{
+	return Vector2{(p1.x + p2.x) / 2, (p1.y - p2.y) / 2};
+}
+
+float Utils::distanceSquared(Vector2 p1, Vector2 p2)
+{
+	return ((p2.x - p1.x) * (p2.x - p1.x)) + ((p2.y - p1.y) * (p2.y - p1.y));
+}
+
+float Utils::distance(Vector2 p1, Vector2 p2)
+{
+	return powf(distanceSquared(p1, p2), 0.5f);
+}
+
 Vector2 Utils::intersectLines(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
 {
 	Vector2 i;

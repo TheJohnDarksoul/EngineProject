@@ -53,6 +53,10 @@ public:
 	*/
 	void render2d(SDL_Renderer* renderer, SDL_Color color);
 	void render(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam);
+	/*
+	* Renders all sectors visible to the camera
+	* Must call updatePlayerSector first
+	*/
 	void renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam);
 };
 
