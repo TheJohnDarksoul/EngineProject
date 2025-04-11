@@ -259,6 +259,8 @@ int main(int argc, char* args[])
 
 		xMotion = 0.f;
 
+		level.updatePlayerSector(&testCam);
+
 		//Start of rendering frame
 		window.clearRenderer();
 
@@ -288,6 +290,7 @@ int main(int argc, char* args[])
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
 
+		//Crosshair
 		SDL_RenderLine(window.getRenderer(), window.getWindowSurface()->w / 2 - 1 - 5, window.getWindowSurface()->h / 2 - 1,
 			window.getWindowSurface()->w / 2 - 1 + 5, window.getWindowSurface()->h / 2 - 1);
 
@@ -295,6 +298,7 @@ int main(int argc, char* args[])
 			window.getWindowSurface()->w / 2 - 1, window.getWindowSurface()->h / 2 - 1 + 5);
 		
 
+		//Debug display
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);
 
 		std::string dText = "Position: " + std::to_string(testCam.getPosition().x) + ", " + std::to_string(testCam.getPosition().y) + " Angle: "

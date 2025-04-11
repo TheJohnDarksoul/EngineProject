@@ -46,6 +46,8 @@ public:
 	*/
 	int loadLevel(std::string filepath);
 
+	void updatePlayerSector(Camera* cam);
+
 	/*
 	* Render a 2d representation of the level
 	*/

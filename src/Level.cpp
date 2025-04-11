@@ -195,6 +195,15 @@ int Level::loadLevel(std::string filepath)
 	return 0; //Success
 }
 
+void Level::updatePlayerSector(Camera* cam)
+{
+	sectorQueue.push(&sectors.at(cam->getSectorNum()));
+	for (unsigned i = 0; i < drawnSectors.size(); ++i) 
+	{
+		drawnSectors.at(i) = false;
+	}
+}
+
 void Level::render2d(SDL_Renderer* renderer, SDL_Color color)
 {
 	//Renders by looping through index list in sectors, less efficient than drawing lines directly, but will help pinpoint screwups
@@ -334,6 +343,7 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 
 	//Loop through all sectors in queue
 	unsigned numSectors = sectorQueue.size();
+
 	for (unsigned i = 0; i < numSectors; ++i)
 	{
 		Sector* sec = sectorQueue.front();
@@ -400,6 +410,10 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			if (ln->getPortalNum() != 0) 
 			{
 				//calculate
+				if (!drawnSectors.at(ln->getPortalNum() - 1))
+				{
+					sectorQueue.push(&sectors.at(ln->getPortalNum() - 1));
+				}
 				continue;
 			}
 
@@ -411,12 +425,12 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
 			//Draw columns
-			for (uint16_t c = (uint16_t)sx1; c < (uint16_t)sx2; ++c) 
-			{
+			//for (uint16_t c = (uint16_t)sx1; c < (uint16_t)sx2; ++c) 
+			//{
 				
 				//upperPixDrawn.at(c);
 				//lowerPixDrawn.at(c);
-			}
+			//}
 
 			//Testing
 			SDL_RenderLine(renderer, sx1, sy1 - height1, sx2, sy2 - height2); //Top
@@ -424,5 +438,9 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			SDL_RenderLine(renderer, sx1, sy1 - height1, sx1, sy1);
 			SDL_RenderLine(renderer, sx2, sy2 - height2, sx2, sy2);
 		}
+
+		//Mark drawn sectors and dequeue
+		drawnSectors.at(sec->getID() - 1) = true;
+		sectorQueue.pop();
 	}
 }
