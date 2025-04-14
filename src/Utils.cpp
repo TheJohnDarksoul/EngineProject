@@ -128,6 +128,17 @@ void Utils::clipBehindCamera(float* ax, float* ay, float bx, float by)
 	*ay = *ay - (t * (by - *ay));
 }
 
+void Utils::calcLineStep(float x1, float y1, float x2, float y2, int* x, int* y)
+{
+	*y = y2 - y1;
+	*x = x2 - x1;
+}
+
+float Utils::calcLineSlope(float x1, float y1, float x2, float y2)
+{
+	return (y2 - y1) / (x2 - x1);
+}
+
 void Utils::drawVertLineColor(SDL_Surface* surface, int x, int y1, int y2, uint32_t color)
 {
 	if (surface != nullptr)

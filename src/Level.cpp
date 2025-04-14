@@ -14,6 +14,29 @@ void Level::addSectorToQueue(Sector* sec)
 	sectorQueue.push(sec);
 }
 
+void Level::sortWallsAtSectorNum(unsigned sectorNum, Vector2 cameraPos)
+{
+	Sector* sec = &sectors.at(sectorNum);
+
+	//This is doing a bubblesort, but right now the number of walls in a sector is so small it shouldn't matter that much
+
+	for (unsigned i = 0; i < sec->getNumWalls() - 1; ++i) 
+	{
+		for (unsigned j = 0; j < sec->getNumWalls() - i - 1; ++j) 
+		{
+			Line* line1 = &lines.at(sec->getWallIndices()->at(j));
+			Line* line2 = &lines.at(sec->getWallIndices()->at(j + 1));
+
+			//If distance between line 1 and camera pos is less than distance between line 2 and camera pos
+			if (fabsf(Utils::distance(Utils::midpt(line1->getStart(), line1->getEnd()), cameraPos)) > 
+				fabsf(Utils::distance(Utils::midpt(line2->getStart(), line2->getEnd()), cameraPos)))
+			{
+				sec->swapWallIndexPositions(j, j + 1);
+			}
+		}
+	}
+}
+
 Level::Level()
 {
 
@@ -348,6 +371,8 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 	{
 		Sector* sec = sectorQueue.front();
 
+		//sortWallsAtSectorNum(sec->getID() - 1, cam->getPosition());
+
 		float fheight = sec->getFloorHeight();
 		float cheight = sec->getCeilingHeight();
 
@@ -425,18 +450,38 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
 			//Draw columns
-			//for (uint16_t c = (uint16_t)sx1; c < (uint16_t)sx2; ++c) 
+			//for (uint16_t c = (uint16_t)SDL_clamp(sx1, 0, surface->w - 1); c < (uint16_t)SDL_clamp(sx2, 0, surface->w - 1); ++c) 
 			//{
-				
 				//upperPixDrawn.at(c);
 				//lowerPixDrawn.at(c);
 			//}
 
 			//Testing
-			SDL_RenderLine(renderer, sx1, sy1 - height1, sx2, sy2 - height2); //Top
-			SDL_RenderLine(renderer, sx1, sy1, sx2, sy2); //Bottom
-			SDL_RenderLine(renderer, sx1, sy1 - height1, sx1, sy1);
-			SDL_RenderLine(renderer, sx2, sy2 - height2, sx2, sy2);
+			//SDL_RenderLine(renderer, sx1, sy1 - height1, sx2, sy2 - height2); //Top
+			//SDL_RenderLine(renderer, sx1, sy1, sx2, sy2); //Bottom
+			//SDL_RenderLine(renderer, sx1, sy1 - height1, sx1, sy1);
+			//SDL_RenderLine(renderer, sx2, sy2 - height2, sx2, sy2);
+
+			SDL_Vertex verts[4];
+			verts[0].position.x = sx1;
+			verts[0].position.y = sy1 - height1;
+			verts[0].color = ln->getFcolor();
+
+			verts[1].position.x = sx2;
+			verts[1].position.y = sy2 - height2;
+			verts[1].color = ln->getFcolor();
+
+			verts[2].position.x = sx1;
+			verts[2].position.y = sy1;
+			verts[2].color = ln->getFcolor();
+
+			verts[3].position.x = sx2;
+			verts[3].position.y = sy2;
+			verts[3].color = ln->getFcolor();
+
+			int indices[6] = { 0,1,2,2,3,1 };
+
+			SDL_RenderGeometry(renderer, NULL, verts, 4, indices, 6);
 		}
 
 		//Mark drawn sectors and dequeue

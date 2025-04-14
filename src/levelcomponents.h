@@ -65,6 +65,7 @@ public:
 	void setFloorHeight(float val);
 	void setCeilingHeight(float val);
 
+	void swapWallIndexPositions(unsigned p1, unsigned p2);
 };
 
 class Line 
@@ -74,6 +75,7 @@ private:
 	Vector2 end;
 
 	int portal;
+	SDL_Color color;
 public:
 	Line();
 	Line(Vector2 start, Vector2 end, int portal);
@@ -85,6 +87,9 @@ public:
 	Vector2 getEnd();
 
 	int getPortalNum();
+
+	SDL_Color getColor();
+	SDL_FColor getFcolor();
 
 	void render2d(SDL_Renderer* renderer, SDL_Color color);
 };

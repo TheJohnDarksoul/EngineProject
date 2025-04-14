@@ -49,6 +49,9 @@ public:
 	static bool isOnFront(Vector2 v1, Vector2 v2);
 	static void clipBehindCamera(float* ax, float* ay, float bx, float by);
 
+	static void calcLineStep(float x1, float y1, float x2, float y2, int* x, int* y);
+	static float calcLineSlope(float x1, float y1, float x2, float y2);
+
 	//Drawing utils
 
 	/*

@@ -190,11 +190,23 @@ void Sector::setCeilingHeight(float val)
 	ceilingHeight = val;
 }
 
+void Sector::swapWallIndexPositions(unsigned p1, unsigned p2)
+{
+	uint32_t temp = wallindices.at(p1);
+	wallindices.at(p1) = wallindices.at(p2);
+	wallindices.at(p2) = temp;
+}
+
 Line::Line()
 {
 	start = Vector2{ 0, 0 };
 	end = start;
 	portal = 0;
+
+	this->color.r = rand() % 256;
+	this->color.g = rand() % 256;
+	this->color.b = rand() % 256;
+	this->color.a = 255;
 }
 
 Line::Line(Vector2 start, Vector2 end, int portal)
@@ -202,6 +214,11 @@ Line::Line(Vector2 start, Vector2 end, int portal)
 	this->start = start;
 	this->end = end;
 	this->portal = portal;
+
+	this->color.r = rand() % 256;
+	this->color.g = rand() % 256;
+	this->color.b = rand() % 256;
+	this->color.a = 255;
 }
 
 Line::~Line()
@@ -227,6 +244,22 @@ Vector2 Line::getEnd()
 int Line::getPortalNum()
 {
 	return portal;
+}
+
+SDL_Color Line::getColor()
+{
+	return this->color;
+}
+
+SDL_FColor Line::getFcolor()
+{
+	SDL_FColor temp;
+	temp.r = color.r / 255.f;
+	temp.g = color.g / 255.f;
+	temp.b = color.b / 255.f;
+	temp.a = 1.0f;
+
+	return temp;
 }
 
 void Line::render2d(SDL_Renderer* renderer, SDL_Color color)

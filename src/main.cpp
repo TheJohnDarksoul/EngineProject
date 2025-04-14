@@ -15,6 +15,9 @@
 
 int main(int argc, char* args[])
 {
+
+	srand(time(NULL));
+
 	if (SDL_Init(SDL_INIT_VIDEO) == false) 
 	{
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "SDL Init Failure", "SDL video failed to init", NULL);

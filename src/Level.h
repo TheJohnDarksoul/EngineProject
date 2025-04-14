@@ -31,6 +31,8 @@ private:
 	*/
 	void addSectorToQueue(Sector* sec);
 
+	void sortWallsAtSectorNum(unsigned sectorNum, Vector2 cameraPos);
+
 public:
 	Level();
 	~Level();

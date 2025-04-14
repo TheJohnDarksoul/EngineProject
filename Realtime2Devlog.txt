@@ -138,3 +138,6 @@ Migrane :(
 
 4/10/25
 Added multi-sector rendering, still needs to be optimized
+
+4/13/25
+Spent a while working on front-to-back rendering, need to implement vertical line based rendering before that will work though
