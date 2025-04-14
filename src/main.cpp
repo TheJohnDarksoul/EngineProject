@@ -248,16 +248,17 @@ int main(int argc, char* args[])
 		if ((pressedActions & LMB_PRESSED) == LMB_PRESSED) 
 		{
 			//Debug height code
-			testCam.setHeight(testCam.getHeight() + (10 * delta));
+			testCam.setHeight(testCam.getHeight() + (25 * delta));
 		}
 		if ((pressedActions & RMB_PRESSED) == RMB_PRESSED) 
 		{
-			testCam.setHeight(testCam.getHeight() - (10 * delta));
+			testCam.setHeight(testCam.getHeight() - (25 * delta));
 		}
 
 		if (xMotion != 0.f) 
 		{
-			testCam.rotate(xMotion * 1.7f * (sensitivity * 10) * delta);
+			//testCam.rotate(xMotion * 1.7f * (sensitivity * 10) * delta);
+			testCam.rotate(xMotion * (sensitivity / 50));
 		}
 
 		xMotion = 0.f;
@@ -268,19 +269,19 @@ int main(int argc, char* args[])
 		window.clearRenderer();
 
 		//test floor, not very good and won't work with multiple floor heights but is here for demoing
-		for (int y = 360 / 2; y < 360; ++y) 
-		{
-			int col = y / 2;
-			SDL_SetRenderDrawColor(window.getRenderer(), col, col, col, 255);
-			SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
-		}
+		//for (int y = 360 / 2; y < 360; ++y) 
+		//{
+		//	int col = y / 2;
+		//	SDL_SetRenderDrawColor(window.getRenderer(), col, col, col, 255);
+		//	SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
+		//}
 
-		for (int y = 0; y < 360 / 2; ++y)
-		{
-			int col = y / 2;
-			SDL_SetRenderDrawColor(window.getRenderer(), col, col, 128, 255);
-			SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
-		}
+		//for (int y = 0; y < 360 / 2; ++y)
+		//{
+		//	int col = y / 2;
+		//	SDL_SetRenderDrawColor(window.getRenderer(), col, col, 128, 255);
+		//	SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
+		//}
 
 		if (rendererTesting)
 		{

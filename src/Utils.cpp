@@ -44,7 +44,7 @@ float Utils::diagonalDistance(float x1, float y1, float x2, float y2)
 
 Vector2 Utils::midpt(Vector2 p1, Vector2 p2)
 {
-	return Vector2{(p1.x + p2.x) / 2, (p1.y - p2.y) / 2};
+	return Vector2{(p1.x + p2.x) / 2, (p1.y + p2.y) / 2};
 }
 
 float Utils::distanceSquared(Vector2 p1, Vector2 p2)

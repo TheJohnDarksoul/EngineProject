@@ -28,13 +28,51 @@ void Level::sortWallsAtSectorNum(unsigned sectorNum, Vector2 cameraPos)
 			Line* line2 = &lines.at(sec->getWallIndices()->at(j + 1));
 
 			//If distance between line 1 and camera pos is less than distance between line 2 and camera pos
-			if (fabsf(Utils::distance(Utils::midpt(line1->getStart(), line1->getEnd()), cameraPos)) > 
+			if (fabsf(Utils::distance(Utils::midpt(line1->getStart(), line1->getEnd()), cameraPos)) < 
 				fabsf(Utils::distance(Utils::midpt(line2->getStart(), line2->getEnd()), cameraPos)))
 			{
 				sec->swapWallIndexPositions(j, j + 1);
 			}
 		}
 	}
+}
+
+/*
+* A stub consisting of a lot of pseudo-code
+* Call in updatePlayerSector to get which sector the player is in
+* Starting sector is the last sector the player was in
+*/
+uint32_t Level::camInSector(Camera* cam)
+{
+	const Vector2 infLeft{ -2000000000.f, cam->getPosition().y };
+
+	Sector* sec = &sectors.at(cam->getSectorNum());
+	uint32_t secnum = sec->getID();
+
+	unsigned count = 0;
+
+	for (uint32_t i = 0; i < sec->getNumWalls(); ++i) 
+	{
+		Line* line = &lines.at(sec->getWallIndices()->at(i));
+
+		//check line intersection
+		//if intersection is true increment count
+
+		//if count is odd you are in the sector, if not, you are outside
+	}
+
+	//if odd
+	if ((count & 1) == 1) 
+	{
+		//Return current sector num
+		return secnum;
+	}
+	else 
+	{
+		//check adjacent sectors
+	}
+
+	return 0;
 }
 
 Level::Level()
@@ -371,7 +409,7 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 	{
 		Sector* sec = sectorQueue.front();
 
-		//sortWallsAtSectorNum(sec->getID() - 1, cam->getPosition());
+		sortWallsAtSectorNum(sec->getID() - 1, cam->getPosition());
 
 		float fheight = sec->getFloorHeight();
 		float cheight = sec->getCeilingHeight();
@@ -410,6 +448,7 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 				Utils::clipBehindCamera(&rx2, &rz2, rx1, rz1);
 			}
 
+			//Use later for drawing above and below portals
 			float portBH1 = 0;
 			float portBH2 = 0;
 			float portTH1 = 0;
@@ -462,6 +501,7 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			//SDL_RenderLine(renderer, sx1, sy1 - height1, sx1, sy1);
 			//SDL_RenderLine(renderer, sx2, sy2 - height2, sx2, sy2);
 
+			/*
 			SDL_Vertex verts[4];
 			verts[0].position.x = sx1;
 			verts[0].position.y = sy1 - height1;
@@ -482,10 +522,45 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			int indices[6] = { 0,1,2,2,3,1 };
 
 			SDL_RenderGeometry(renderer, NULL, verts, 4, indices, 6);
+			*/
+			
+			renderWall(renderer, surface, sx1, sx2, sy1 - height1, sy1, sy2 - height2, sy2, ln->getFcolor());
 		}
 
 		//Mark drawn sectors and dequeue
 		drawnSectors.at(sec->getID() - 1) = true;
 		sectorQueue.pop();
 	}
+}
+
+void Level::renderWall(SDL_Renderer* renderer, SDL_Surface* surface, float x1, float x2, float y1a, float y1b, float y2a, float y2b, SDL_FColor color)
+{
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+
+	//Testing
+	//SDL_RenderLine(renderer, sx1, sy1 - height1, sx2, sy2 - height2); //Top
+	//SDL_RenderLine(renderer, sx1, sy1, sx2, sy2); //Bottom
+	//SDL_RenderLine(renderer, sx1, sy1 - height1, sx1, sy1);
+	//SDL_RenderLine(renderer, sx2, sy2 - height2, sx2, sy2);
+
+	SDL_Vertex verts[4];
+	verts[0].position.x = x1;
+	verts[0].position.y = y1a;
+	verts[0].color = color;
+
+	verts[1].position.x = x2;
+	verts[1].position.y = y2a;
+	verts[1].color = color;
+
+	verts[2].position.x = x1;
+	verts[2].position.y = y1b;
+	verts[2].color = color;
+
+	verts[3].position.x = x2;
+	verts[3].position.y = y2b;
+	verts[3].color = color;
+
+	int indices[6] = { 0,1,2,2,3,1 };
+
+	SDL_RenderGeometry(renderer, NULL, verts, 4, indices, 6);
 }
