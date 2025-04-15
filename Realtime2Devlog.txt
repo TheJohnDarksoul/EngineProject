@@ -145,3 +145,7 @@ Started work on sector transitions
 
 4/14/25
 Continued working on renderWall function
+
+4/15/25
+[In class]
+Worked on ray intersections for use in finding player sector

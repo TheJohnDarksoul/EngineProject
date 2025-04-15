@@ -279,6 +279,10 @@ int main(int argc, char* args[])
 
 		level.renderSectors(window.getRenderer(), window.getWindowSurface(), &testCam);
 
+		//2d map
+		//SDL_Color testcolor{ 0xb2, 0xb2, 0xff, 0xff };
+		//level.render2d(window.getRenderer(), testcolor);
+
 		SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
 
 		//Crosshair

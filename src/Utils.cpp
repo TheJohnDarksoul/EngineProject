@@ -64,10 +64,23 @@ Vector2 Utils::intersectLines(float x1, float y1, float x2, float y2, float x3, 
 	i.x = cross2d(x1, y1, x2, y2);
 	i.y = cross2d(x3, y3, x4, y4);
 	float det = cross2d(x1 - x2, y1 - y2, x3 - x4, y3 - y4);
+
+	if (det == 0.f) //Stop potential divide-by-zero
+	{
+		det += EPS;
+	}
+
 	i.x = cross2d(i.x, x1 - x2, i.y, x3 - x4) / det;
 	i.y = cross2d(i.x, y1 - y2, i.y, y3 - y4) / det;
 
 	return i;
+}
+
+bool Utils::doRaysIntersect(Vector2 p1, Vector2 d1, Vector2 p2, Vector2 d2)
+{
+	//Implement
+	
+	return false;
 }
 
 Vector2 Utils::rotateVec(Vector2 v, float a)

@@ -519,6 +519,7 @@ void Level::renderWall(SDL_Renderer* renderer, SDL_Surface* surface, float x1, f
 	//Draw columns
 	for (uint16_t c = (uint16_t)SDL_clamp(x1, 0, surface->w - 1); c < (uint16_t)SDL_clamp(x2, 0, surface->w - 1); ++c)
 	{
+		//Check top bounds and bottom bounds in occlusion mask and clip accordingly
 		Utils::drawVertLineColors(surface, (unsigned)c, (unsigned)(y1a - ts), (unsigned)(y1b + bs), 0xffff0000, 0xff00ff00, 0xff0000ff);
 
 		ts += topSlope;
