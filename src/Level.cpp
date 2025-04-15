@@ -44,6 +44,7 @@ void Level::sortWallsAtSectorNum(unsigned sectorNum, Vector2 cameraPos)
 */
 uint32_t Level::camInSector(Camera* cam)
 {
+	//Implement a ray-segment intersection test
 	const Vector2 infLeft{ -2000000000.f, cam->getPosition().y };
 
 	Sector* sec = &sectors.at(cam->getSectorNum());
@@ -487,42 +488,6 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			sy2 += halfHeight;
 
 			SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-
-			//Draw columns
-			//for (uint16_t c = (uint16_t)SDL_clamp(sx1, 0, surface->w - 1); c < (uint16_t)SDL_clamp(sx2, 0, surface->w - 1); ++c) 
-			//{
-				//upperPixDrawn.at(c);
-				//lowerPixDrawn.at(c);
-			//}
-
-			//Testing
-			//SDL_RenderLine(renderer, sx1, sy1 - height1, sx2, sy2 - height2); //Top
-			//SDL_RenderLine(renderer, sx1, sy1, sx2, sy2); //Bottom
-			//SDL_RenderLine(renderer, sx1, sy1 - height1, sx1, sy1);
-			//SDL_RenderLine(renderer, sx2, sy2 - height2, sx2, sy2);
-
-			/*
-			SDL_Vertex verts[4];
-			verts[0].position.x = sx1;
-			verts[0].position.y = sy1 - height1;
-			verts[0].color = ln->getFcolor();
-
-			verts[1].position.x = sx2;
-			verts[1].position.y = sy2 - height2;
-			verts[1].color = ln->getFcolor();
-
-			verts[2].position.x = sx1;
-			verts[2].position.y = sy1;
-			verts[2].color = ln->getFcolor();
-
-			verts[3].position.x = sx2;
-			verts[3].position.y = sy2;
-			verts[3].color = ln->getFcolor();
-
-			int indices[6] = { 0,1,2,2,3,1 };
-
-			SDL_RenderGeometry(renderer, NULL, verts, 4, indices, 6);
-			*/
 			
 			renderWall(renderer, surface, sx1, sx2, sy1 - height1, sy1, sy2 - height2, sy2, ln->getFcolor());
 		}
@@ -536,12 +501,34 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 void Level::renderWall(SDL_Renderer* renderer, SDL_Surface* surface, float x1, float x2, float y1a, float y1b, float y2a, float y2b, SDL_FColor color)
 {
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	
+#define RENDER_TYPE 1
 
 	//Testing
 	//SDL_RenderLine(renderer, sx1, sy1 - height1, sx2, sy2 - height2); //Top
 	//SDL_RenderLine(renderer, sx1, sy1, sx2, sy2); //Bottom
 	//SDL_RenderLine(renderer, sx1, sy1 - height1, sx1, sy1);
 	//SDL_RenderLine(renderer, sx2, sy2 - height2, sx2, sy2);
+
+#if RENDER_TYPE == 0
+	float topSlope = fabsf(Utils::calcLineSlope(x1, y1a, x2, y2a));
+	float bottomSlope = fabsf(Utils::calcLineSlope(x1, y1b, x2, y2b));
+	float ts = 0;
+	float bs = 0;
+
+	//Draw columns
+	for (uint16_t c = (uint16_t)SDL_clamp(x1, 0, surface->w - 1); c < (uint16_t)SDL_clamp(x2, 0, surface->w - 1); ++c)
+	{
+		Utils::drawVertLineColors(surface, (unsigned)c, (unsigned)(y1a - ts), (unsigned)(y1b + bs), 0xffff0000, 0xff00ff00, 0xff0000ff);
+
+		ts += topSlope;
+		bs += bottomSlope;
+
+		//upperPixDrawn.at(c);
+		//lowerPixDrawn.at(c);
+	}
+
+#elif RENDER_TYPE == 1
 
 	SDL_Vertex verts[4];
 	verts[0].position.x = x1;
@@ -563,4 +550,5 @@ void Level::renderWall(SDL_Renderer* renderer, SDL_Surface* surface, float x1, f
 	int indices[6] = { 0,1,2,2,3,1 };
 
 	SDL_RenderGeometry(renderer, NULL, verts, 4, indices, 6);
+#endif
 }
