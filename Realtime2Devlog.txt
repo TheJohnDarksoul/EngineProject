@@ -153,3 +153,4 @@ Worked on ray intersections for use in finding player sector
 4/17/25
 [In class]
 Implemented a map toggle
+Read over sections of the doom engine black book
