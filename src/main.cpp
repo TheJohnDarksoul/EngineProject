@@ -64,6 +64,7 @@ int main(int argc, char* args[])
 	inputMap.p_use = SDLK_E;
 	inputMap.p_rotateleft = SDLK_LEFT;
 	inputMap.p_rotateright = SDLK_RIGHT;
+	inputMap.p_toggleMap = SDLK_TAB;
 	inputMap.p_lmb = SDL_BUTTON_LEFT;
 	inputMap.p_rmb = SDL_BUTTON_RIGHT;
 
@@ -72,6 +73,7 @@ int main(int argc, char* args[])
 	GameWindow window{640, 360};
 
 	bool isOpen = true;
+	bool renderMap = false;
 
 	float xMotion = 0;
 	float sensitivity = 3.1f;
@@ -131,6 +133,10 @@ int main(int argc, char* args[])
 				{
 					pressedActions |= ROTATE_RIGHT_PRESSED;
 				}
+				else if (e.key.key == inputMap.p_toggleMap) 
+				{
+					pressedActions |= TOGGLE_MAP_PRESSED;
+				}
 				else if (e.key.key == SDLK_ESCAPE) 
 				{
 					int buttonid;
@@ -171,6 +177,10 @@ int main(int argc, char* args[])
 				else if (e.key.key == inputMap.p_rotateright)
 				{
 					pressedActions &= ROTATE_RIGHT_RELEASED;
+				}
+				else if (e.key.key == inputMap.p_toggleMap) 
+				{
+					pressedActions &= TOGGLE_MAP_RELEASED;
 				}
 			}
 			else if (e.type == SDL_EVENT_MOUSE_MOTION) 
@@ -249,6 +259,12 @@ int main(int argc, char* args[])
 			testCam.setHeight(testCam.getHeight() - (25 * delta));
 		}
 
+		//right now continues toggling on hold, fix later
+		if ((pressedActions & TOGGLE_MAP_PRESSED) == TOGGLE_MAP_PRESSED) 
+		{
+			renderMap = !renderMap;
+		}
+
 		if (xMotion != 0.f) 
 		{
 			//testCam.rotate(xMotion * 1.7f * (sensitivity * 10) * delta);
@@ -278,6 +294,12 @@ int main(int argc, char* args[])
 		//}
 
 		level.renderSectors(window.getRenderer(), window.getWindowSurface(), &testCam);
+
+		//Renders map. Change to scroll with camera, eventually make it an automap
+		if (renderMap)
+		{
+			level.renderMap(window.getRenderer(), window.getWindowSurface(), &testCam);
+		}
 
 		//2d map
 		//SDL_Color testcolor{ 0xb2, 0xb2, 0xff, 0xff };

@@ -18,7 +18,7 @@ Camera::Camera()
 	lastPosition.y = position.y;
 	height = 15.f;
 	angle = 0.f;
-	fov = 90;//Utils::degToRad(90.f);
+	fov = 300;//90;//Utils::degToRad(90.f);
 	vfov = 0;
 	calcVFov();
 	sector = 0;

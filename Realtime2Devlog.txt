@@ -149,3 +149,7 @@ Continued working on renderWall function
 4/15/25
 [In class]
 Worked on ray intersections for use in finding player sector
+
+4/17/25
+[In class]
+Implemented a map toggle

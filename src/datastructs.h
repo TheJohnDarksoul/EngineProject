@@ -16,6 +16,7 @@ typedef struct
 	uint32_t p_use;
 	uint32_t p_rotateleft;
 	uint32_t p_rotateright;
+	uint32_t p_toggleMap;
 	uint8_t p_lmb;
 	uint8_t p_rmb;
 }InputMap;

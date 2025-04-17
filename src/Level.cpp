@@ -278,6 +278,14 @@ void Level::render2d(SDL_Renderer* renderer, SDL_Color color)
 	}
 }
 
+void Level::renderMap(SDL_Renderer* renderer, SDL_Surface* surf, Camera* cam)
+{
+	for (unsigned i = 0; i < lines.size(); ++i) 
+	{
+		lines.at(i).render2d(renderer, lines.at(i).getColor());
+	}
+}
+
 void Level::render(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam)
 {
 	Sector* sec = &sectors.at(cam->getSectorNum());
@@ -401,7 +409,7 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 	unsigned halfWidth = surface->w / 2;
 	unsigned halfHeight = surface->h / 2;
 
-	float fov = -(cam->getFov() * (3 + 1.f / 3.f));
+	float fov = -(cam->getFov());
 
 	//Loop through all sectors in queue
 	unsigned numSectors = sectorQueue.size();

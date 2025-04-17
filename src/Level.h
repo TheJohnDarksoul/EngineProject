@@ -56,6 +56,7 @@ public:
 	* Render a 2d representation of the level
 	*/
 	void render2d(SDL_Renderer* renderer, SDL_Color color);
+	void renderMap(SDL_Renderer* renderer, SDL_Surface* surf, Camera* cam);
 	void render(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam);
 	/*
 	* Renders all sectors visible to the camera
