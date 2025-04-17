@@ -154,3 +154,6 @@ Worked on ray intersections for use in finding player sector
 [In class]
 Implemented a map toggle
 Read over sections of the doom engine black book
+[After class]
+Cleaned up level file and removed old unused level component
+Located flickering bug

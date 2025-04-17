@@ -298,12 +298,12 @@ int main(int argc, char* args[])
 		//Renders map. Change to scroll with camera, eventually make it an automap
 		if (renderMap)
 		{
-			level.renderMap(window.getRenderer(), window.getWindowSurface(), &testCam);
-		}
+			//level.renderMap(window.getRenderer(), window.getWindowSurface(), &testCam);
 
-		//2d map
-		//SDL_Color testcolor{ 0xb2, 0xb2, 0xff, 0xff };
-		//level.render2d(window.getRenderer(), testcolor);
+			SDL_Color testcolor{ 0xb2, 0xb2, 0xff, 0xff };
+			level.render2d(window.getRenderer(), testcolor);
+			testCam.render2d(window.getRenderer());
+		}	
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
 

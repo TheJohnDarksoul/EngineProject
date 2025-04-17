@@ -5,36 +5,6 @@
 #include <vector>
 #include "datastructs.h"
 
-//Lines that make up the level data
-class Segment 
-{
-private:
-	Vector2 start;
-	Vector2 end;
-
-	Vector2 vec;
-
-	//int frontSectorId;
-	//int backSectorId;
-
-public:
-	Segment();
-	Segment(float startX, float startY, float endX, float endY);
-	Segment(Vector2 start, Vector2 end);
-	~Segment();
-
-	Vector2 getStart();
-	Vector2 getEnd();
-	Vector2 getVector();
-
-	void setPosition(float x1, float y1, float x2, float y2);
-	void setPosition(Vector2 p1, Vector2 p2);
-	void setVector(Vector2 vec);
-
-	void render2d(SDL_Renderer* renderer, SDL_Color color);
-	static void renderSegments(SDL_Renderer* renderer, std::vector<Segment>* segments, SDL_Color color);
-};
-
 //The area enclosed by lines
 class Sector 
 {
@@ -76,6 +46,8 @@ private:
 
 	int portal;
 	SDL_Color color;
+
+	//SDL_Texture* texture;
 public:
 	Line();
 	Line(Vector2 start, Vector2 end, int portal);

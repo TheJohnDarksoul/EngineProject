@@ -423,6 +423,8 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 		float fheight = sec->getFloorHeight();
 		float cheight = sec->getCeilingHeight();
 
+		//drawnSectors.at(sec->getID() - 1) = true;
+
 		//Loop through all lines in the sector
 		for (unsigned j = 0; j < sec->getNumWalls(); ++j) 
 		{
@@ -469,6 +471,7 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 				//calculate
 				if (!drawnSectors.at(ln->getPortalNum() - 1))
 				{
+					//This is messing up and causing flickering
 					sectorQueue.push(&sectors.at(ln->getPortalNum() - 1));
 				}
 				continue;
@@ -519,8 +522,8 @@ void Level::renderWall(SDL_Renderer* renderer, SDL_Surface* surface, float x1, f
 	//SDL_RenderLine(renderer, sx2, sy2 - height2, sx2, sy2);
 
 #if RENDER_TYPE == 0
-	float topSlope = fabsf(Utils::calcLineSlope(x1, y1a, x2, y2a));
-	float bottomSlope = fabsf(Utils::calcLineSlope(x1, y1b, x2, y2b));
+	float topSlope = (Utils::calcLineSlope(x1, y1a, x2, y2a));
+	float bottomSlope = (Utils::calcLineSlope(x1, y1b, x2, y2b));
 	float ts = 0;
 	float bs = 0;
 
@@ -528,7 +531,7 @@ void Level::renderWall(SDL_Renderer* renderer, SDL_Surface* surface, float x1, f
 	for (uint16_t c = (uint16_t)SDL_clamp(x1, 0, surface->w - 1); c < (uint16_t)SDL_clamp(x2, 0, surface->w - 1); ++c)
 	{
 		//Check top bounds and bottom bounds in occlusion mask and clip accordingly
-		Utils::drawVertLineColors(surface, (unsigned)c, (unsigned)(y1a - ts), (unsigned)(y1b + bs), 0xffff0000, 0xff00ff00, 0xff0000ff);
+		Utils::drawVertLineColors(surface, (unsigned)c, (unsigned)(y1a + ts), (unsigned)(y1b + bs), 0xffff0000, 0xff00ff00, 0xff0000ff);
 
 		ts += topSlope;
 		bs += bottomSlope;
