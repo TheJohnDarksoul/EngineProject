@@ -483,9 +483,9 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			float height2 = -(cheight / rz2) * fov;
 
 			//Convert to screen space
-			float sx1 = (rx1 / rz1) * fov;
+			float sx1 = ((rx1 / rz1) * fov) - (surface->w / 2);
 			float sy1 = ((surface->h + cam->getHeight()) / rz1);
-			float sx2 = (rx2 / rz2) * fov;
+			float sx2 = ((rx2 / rz2) * fov) - (surface->w / 2);
 			float sy2 = ((surface->h + cam->getHeight()) / rz2);
 
 			//Elevation from floor
@@ -514,7 +514,7 @@ void Level::renderWall(SDL_Renderer* renderer, SDL_Surface* surface, float x1, f
 {
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 	
-#define RENDER_TYPE 1
+#define RENDER_TYPE 0
 
 	//Testing
 	//SDL_RenderLine(renderer, sx1, sy1 - height1, sx2, sy2 - height2); //Top
@@ -529,10 +529,15 @@ void Level::renderWall(SDL_Renderer* renderer, SDL_Surface* surface, float x1, f
 	float bs = 0;
 
 	//Draw columns
-	for (uint16_t c = (uint16_t)SDL_clamp(x1, 0, surface->w - 1); c < (uint16_t)SDL_clamp(x2, 0, surface->w - 1); ++c)
+	for (int16_t c = (int16_t)x1; c < (int16_t)x2; ++c)
 	{
 		//Check top bounds and bottom bounds in occlusion mask and clip accordingly
-		Utils::drawVertLineColors(surface, (unsigned)c, (unsigned)(y1a + ts), (unsigned)(y1b + bs), 0xffff0000, 0xff00ff00, 0xff0000ff);
+		float top = ((y2a - y1a) * ((c - x1) / (x2 - x1))) + y1a;
+		float bottom = ((y2b - y1b) * ((c - x1) / (x2 - x1))) + y1b;
+		Utils::drawVertLineColors(surface, SDL_clamp(c + (surface->w / 2), 0, surface->w - 1),
+			                               SDL_clamp(y1a + ts, top, bottom),
+			                               SDL_clamp(y1b + bs, top, bottom),
+			                               0xffff0000, 0xff00ff00, 0xff0000ff);
 
 		ts += topSlope;
 		bs += bottomSlope;
