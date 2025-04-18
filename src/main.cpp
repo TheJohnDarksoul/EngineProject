@@ -90,6 +90,8 @@ int main(int argc, char* args[])
 	SDL_HideCursor();
 	SDL_SetWindowRelativeMouseMode(window.getWindow(), true);
 
+	uint64_t countedFrames = 0;
+
 	uint64_t currentTime = SDL_GetTicks();
 
 	while (isOpen) 
@@ -325,6 +327,8 @@ int main(int argc, char* args[])
 
 		//End of rendering frame
 		window.presentRenderer();
+
+		++countedFrames;
 	}
 
 	SDL_Quit();

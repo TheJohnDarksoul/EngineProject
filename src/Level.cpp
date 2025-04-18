@@ -423,7 +423,7 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 		float fheight = sec->getFloorHeight();
 		float cheight = sec->getCeilingHeight();
 
-		//drawnSectors.at(sec->getID() - 1) = true;
+		drawnSectors.at(sec->getID() - 1) = true;
 
 		//Loop through all lines in the sector
 		for (unsigned j = 0; j < sec->getNumWalls(); ++j) 
@@ -473,6 +473,7 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 				{
 					//This is messing up and causing flickering
 					sectorQueue.push(&sectors.at(ln->getPortalNum() - 1));
+					++numSectors;
 				}
 				continue;
 			}
@@ -504,7 +505,7 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 		}
 
 		//Mark drawn sectors and dequeue
-		drawnSectors.at(sec->getID() - 1) = true;
+		//drawnSectors.at(sec->getID() - 1) = true;
 		sectorQueue.pop();
 	}
 }

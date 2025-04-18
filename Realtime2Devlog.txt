@@ -157,3 +157,4 @@ Read over sections of the doom engine black book
 [After class]
 Cleaned up level file and removed old unused level component
 Located flickering bug
+Fixed the flickering bug

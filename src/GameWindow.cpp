@@ -13,6 +13,7 @@ GameWindow::GameWindow()
 	}
 
 	drawSurface = SDL_GetWindowSurface(window);
+	SDL_SetSurfaceRLE(drawSurface, false);
 
 	renderer = SDL_CreateSoftwareRenderer(drawSurface);
 
