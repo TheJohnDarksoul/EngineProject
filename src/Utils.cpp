@@ -149,6 +149,9 @@ void Utils::calcLineStep(float x1, float y1, float x2, float y2, int* x, int* y)
 
 float Utils::calcLineSlope(float x1, float y1, float x2, float y2)
 {
+	if (fabsf(x2 - x1) < .000001f) {
+		return y2 - y1;
+	}
 	return (y2 - y1) / (x2 - x1);
 }
 

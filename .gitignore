@@ -69,6 +69,7 @@
 /lib
 /build
 /install
+/SDL
 
 .DS_Store
 
