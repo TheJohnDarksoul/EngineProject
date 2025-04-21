@@ -6,6 +6,16 @@
 #include <SDL.h>
 #include <queue>
 
+//GLM stuff
+#include "../libraries/glm/vec2.hpp"
+#include "../libraries/glm/vec3.hpp"
+#include "../libraries/glm/mat4x4.hpp"
+#include "../libraries/glm/trigonometric.hpp"
+
+#include "../libraries/glm/ext/matrix_transform.hpp"
+#include "../libraries/glm/ext/matrix_clip_space.hpp"
+
+//My stuff
 #include "Utils.h"
 #include "Camera.h"
 
@@ -514,7 +524,7 @@ void Level::renderWall(SDL_Renderer* renderer, SDL_Surface* surface, float x1, f
 {
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 	
-#define RENDER_TYPE 0
+#define RENDER_TYPE 1
 
 	//Testing
 	//SDL_RenderLine(renderer, sx1, sy1 - height1, sx2, sy2 - height2); //Top
