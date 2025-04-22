@@ -158,3 +158,7 @@ Read over sections of the doom engine black book
 Cleaned up level file and removed old unused level component
 Located flickering bug
 Fixed the flickering bug
+Spent 2 hours working with Pierce on the software renderer
+
+4/21/25
+Did some research into GLM

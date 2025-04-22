@@ -421,6 +421,9 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 
 	float fov = -(cam->getFov());
 
+	//This might be how to handle perspective correction but I'm also not sure that I'm giving the correct values for width and height
+	glm::mat4 persp = glm::perspectiveFov(cam->getFovRad(), surface->w - 1.f, surface->h - 1.f, 0.1f, 200.f);
+
 	//Loop through all sectors in queue
 	unsigned numSectors = sectorQueue.size();
 
