@@ -9,6 +9,7 @@
 //GLM stuff
 #include "../libraries/glm/vec2.hpp"
 #include "../libraries/glm/vec3.hpp"
+#include "../libraries/glm/mat3x3.hpp"
 #include "../libraries/glm/mat4x4.hpp"
 #include "../libraries/glm/trigonometric.hpp"
 
@@ -421,9 +422,6 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 
 	float fov = -(cam->getFov());
 
-	//This might be how to handle perspective correction but I'm also not sure that I'm giving the correct values for width and height
-	glm::mat4 persp = glm::perspectiveFov(cam->getFovRad(), surface->w - 1.f, surface->h - 1.f, 0.1f, 200.f);
-
 	//Loop through all sectors in queue
 	unsigned numSectors = sectorQueue.size();
 
@@ -519,6 +517,54 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 
 		//Mark drawn sectors and dequeue
 		//drawnSectors.at(sec->getID() - 1) = true;
+		sectorQueue.pop();
+	}
+}
+
+void Level::renderSectorsGLM(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam)
+{
+	float fov = cam->getFovRad();
+
+	//Might be what I want to do
+	glm::vec4 pos = { cam->getPosition().x, cam->getHeight(), cam->getPosition().y, 1.0f };
+
+	glm::mat4 view = { 1.0f };
+	glm::mat4 persp = glm::perspectiveFov(cam->getFovRad(), surface->w - 1.f, surface->h - 1.f, 0.1f, 200.f);
+
+	unsigned numSectors = sectorQueue.size();
+
+	for (unsigned i = 0; i < numSectors; ++i) 
+	{
+		Sector* sec = sectorQueue.front();
+
+		sortWallsAtSectorNum(sec->getID() - 1, cam->getPosition());
+
+		float fheight = sec->getFloorHeight();
+		float cheight = sec->getCeilingHeight();
+
+		drawnSectors.at(sec->getID() - 1) = true;
+
+		//Loop through all lines in the sector
+		for (unsigned j = 0; j < sec->getNumWalls(); ++j) 
+		{
+			//Get line pointer
+			Line* ln = &lines.at(sec->getWallIndices()->at(j));
+
+			//if is portal
+			//if (ln->getPortalNum() != 0)
+			//{
+				//calculate
+			//	if (!drawnSectors.at(ln->getPortalNum() - 1))
+			//	{
+					//This is messing up and causing flickering
+			//		sectorQueue.push(&sectors.at(ln->getPortalNum() - 1));
+			//		++numSectors;
+			//	}
+			//	continue;
+			//}
+			//Done handling portals
+		}
+
 		sectorQueue.pop();
 	}
 }

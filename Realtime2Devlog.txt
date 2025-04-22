@@ -162,3 +162,7 @@ Spent 2 hours working with Pierce on the software renderer
 
 4/21/25
 Did some research into GLM
+
+4/22/25
+[In class]
+Tried doing some stuff with GLM, could not find in depth documentation
