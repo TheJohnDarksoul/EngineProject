@@ -494,9 +494,9 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 			float height2 = -(cheight / rz2) * fov;
 
 			//Convert to screen space
-			float sx1 = ((rx1 / rz1) * fov) - (surface->w / 2);
+			float sx1 = ((rx1 / rz1) * fov);
 			float sy1 = ((surface->h + cam->getHeight()) / rz1);
-			float sx2 = ((rx2 / rz2) * fov) - (surface->w / 2);
+			float sx2 = ((rx2 / rz2) * fov);
 			float sy2 = ((surface->h + cam->getHeight()) / rz2);
 
 			//Elevation from floor
@@ -550,6 +550,18 @@ void Level::renderSectorsGLM(SDL_Renderer* renderer, SDL_Surface* surface, Camer
 			//Get line pointer
 			Line* ln = &lines.at(sec->getWallIndices()->at(j));
 
+			glm::vec4 verts[4];
+
+			verts[0] = glm::vec4(ln->getStart().x, ln->getStart().y - cheight, 1.0f, 1.0f);
+			verts[1] = glm::vec4(ln->getEnd().x, ln->getEnd().y - cheight, 1.0f, 1.0f);
+			verts[2] = glm::vec4(ln->getEnd().x, ln->getEnd().y + fheight, 1.0f, 1.0f);
+			verts[3] = glm::vec4(ln->getStart().x, ln->getStart().y + fheight, 1.0f, 1.0f);
+
+			for (char i = 0; i < 4; ++i) 
+			{
+				verts[i] = persp * verts[i];
+			}
+
 			//if is portal
 			//if (ln->getPortalNum() != 0)
 			//{
@@ -563,6 +575,12 @@ void Level::renderSectorsGLM(SDL_Renderer* renderer, SDL_Surface* surface, Camer
 			//	continue;
 			//}
 			//Done handling portals
+
+			SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+			SDL_RenderLine(renderer, verts[0].x, verts[0].y, verts[1].x, verts[1].y);
+			SDL_RenderLine(renderer, verts[1].x, verts[1].y, verts[2].x, verts[2].y);
+			SDL_RenderLine(renderer, verts[2].x, verts[2].y, verts[3].x, verts[3].y);
+			SDL_RenderLine(renderer, verts[3].x, verts[3].y, verts[0].x, verts[0].y);
 		}
 
 		sectorQueue.pop();

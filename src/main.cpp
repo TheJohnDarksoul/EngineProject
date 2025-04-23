@@ -295,7 +295,7 @@ int main(int argc, char* args[])
 		//	SDL_RenderLine(window.getRenderer(), 0, y, 640, y);
 		//}
 
-		level.renderSectorsGLM(window.getRenderer(), window.getWindowSurface(), &testCam);
+		level.renderSectors(window.getRenderer(), window.getWindowSurface(), &testCam);
 
 		//Renders map. Change to scroll with camera, eventually make it an automap
 		if (renderMap)
