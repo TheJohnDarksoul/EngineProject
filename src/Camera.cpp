@@ -155,6 +155,9 @@ void Camera::render2d(SDL_Renderer* renderer)
 	SDL_RenderLine(renderer, rect.x + 5, rect.y + 5,
 		rect.x + 5 + 10 * cosf(Utils::degToRad(angle)), rect.y + 5 + 10 * sinf(Utils::degToRad(angle)));
 
+	SDL_SetRenderDrawColor(renderer, 0xff, 0x00, 0xff, 0xff);
+	SDL_RenderLine(renderer, rect.x + 5, rect.y + 5, -2000000, rect.y + 5);
+
 	//Camera fov visualization
 	//SDL_RenderLine(renderer, position.x, position.y, position.x + 50 * cosf((angle + Utils::degToRad(45))), 
 	//	position.y + 50 * sinf((Utils::degToRad(angle) + fov / 2)));

@@ -49,26 +49,31 @@ void Level::sortWallsAtSectorNum(unsigned sectorNum, Vector2 cameraPos)
 }
 
 /*
-* A stub consisting of a lot of pseudo-code
-* Call in updatePlayerSector to get which sector the player is in
-* Starting sector is the last sector the player was in
+* Terrible wet code but It'll have to do for now
 */
 uint32_t Level::camInSector(Camera* cam)
 {
 	//Direction of the ray. Origin is the camera position.
-	const Vector2 leftRay{ -1.0f, 0 };
+	const Vector2 leftRay{ -1.0f, 0.f };
+	const Vector2 infLeft{ -2000000.f, cam->getPosition().y};
 
 	Sector* sec = &sectors.at(cam->getSectorNum());
 	uint32_t secnum = sec->getID();
 
 	unsigned count = 0;
 
-	/*
+	std::vector<int> adjSecNum;
+
 	for (unsigned i = 0; i < sec->getNumWalls(); ++i) 
 	{
 		Line* line = &lines.at(sec->getWallIndices()->at(i));
 
-		if (Utils::doRaySegmentIntersect(line->getStart(), line->getEnd(), cam->getPosition(), leftRay)) 
+		if (line->getPortalNum() != 0 && line->getPortalNum() != sec->getID()) 
+		{
+			adjSecNum.push_back(line->getPortalNum() - 1);
+		}
+
+		if (Utils::doSegementsIntersect(line->getStart(), line->getEnd(), cam->getPosition(), infLeft)) 
 		{
 			++count;
 		}
@@ -76,10 +81,34 @@ uint32_t Level::camInSector(Camera* cam)
 
 	if ((count & 1) == 1) 
 	{
-		return secnum - 1;
+		//std::cout << "true\n";
+		return (int)secnum - 1;
 	}
-	*/
+	
+	count = 0;
+ 
+	for (unsigned i = 0; i < adjSecNum.size(); ++i) 
+	{
+		sec = &sectors.at(adjSecNum.at(i));
 
+		uint32_t secnum2 = sec->getID() - 1;
+
+		for (unsigned j = 0; j < sec->getNumWalls(); ++j)
+		{
+			Line* line = &lines.at(sec->getWallIndices()->at(j));
+
+			if (Utils::doSegementsIntersect(line->getStart(), line->getEnd(), cam->getPosition(), infLeft))
+			{
+				++count;
+			}
+		}
+
+		if ((count & 1) == 1)
+		{
+			return (int)secnum2;
+		}
+	}
+	
 	return (int)secnum - 1;
 }
 
@@ -117,6 +146,29 @@ void Level::setDrawBounds(SDL_Surface* surface)
 			lowerPixDrawn.push_back(surface->h - 1);
 			upperPixDrawn.push_back(0);
 		}
+	}
+}
+
+void Level::printSectorInformation()
+{
+	std::cout << "\x1b[0;31m<DEBUGGING>\x1b[0m \x1b[4;37mSector information:\x1b[0m\n\n";
+
+	for (unsigned i = 0; i < sectors.size(); ++i) 
+	{
+		Sector* sec = &sectors.at(i);
+
+		std::cout << "Sector num: " << sec->getID() << " Index: " << sec->getID() - 1 << " Lines: " << sec->getNumWalls() << "\n";
+
+		for (unsigned j = 0; j < sec->getNumWalls(); ++j) 
+		{
+			Line* line = &lines.at(sec->getWallIndices()->at(j));
+
+			std::cout << "Coords: x1 = " << line->getStart().x << " y1 = " << line->getStart().y <<
+				" x2 = " << line->getEnd().x << " y2 = " << line->getEnd().y << 
+				" Portal num: " << line->getPortalNum() << "\n";
+		}
+
+		std::cout << "\n";
 	}
 }
 

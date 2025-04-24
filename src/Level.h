@@ -45,6 +45,11 @@ public:
 	void setDrawBounds(SDL_Surface* surface);
 
 	/*
+	* Prints out relevent sector information for debugging purposes
+	*/
+	void printSectorInformation();
+
+	/*
 	* Reads in level data from a file. Returns 0 on success, 1 on failure.
 	* Currently just crashes on failure instead of returning, rewrite this later when you have more time.
 	*/

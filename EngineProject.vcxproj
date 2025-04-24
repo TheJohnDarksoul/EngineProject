@@ -157,6 +157,10 @@
     <ClInclude Include="src\levelcomponents.h" />
     <ClInclude Include="src\Utils.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="levels\demo.txt" />
+    <Text Include="levels\demo2.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

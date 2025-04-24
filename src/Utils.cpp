@@ -76,6 +76,26 @@ Vector2 Utils::intersectLines(float x1, float y1, float x2, float y2, float x3, 
 	return i;
 }
 
+bool Utils::doSegementsIntersect(Vector2 a, Vector2 b, Vector2 c, Vector2 d)
+{
+	Vector2 r = subVec(b, a);
+	Vector2 s = subVec(d, c);
+
+	float rxs = cross2d(r, s);
+
+	Vector2 cma = subVec(c, a);
+
+	float t = cross2d(cma, s) / rxs;
+	float u = cross2d(cma, r) / rxs;
+
+	if (t >= 0.f && t <= 1.f && u >= 0.f && u <= 1.f) 
+	{
+		return true;
+	}
+
+	return false;
+}
+
 bool Utils::doRaySegmentIntersect(Vector2 p1, Vector2 p2, Vector2 origin, Vector2 direction)
 {
 	Vector2 v1 = Utils::subVec(origin, p1);

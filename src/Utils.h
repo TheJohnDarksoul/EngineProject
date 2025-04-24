@@ -37,6 +37,7 @@ public:
 	* Calculates and returns the intersection between two lines
 	*/
 	static Vector2 intersectLines(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
+	static bool doSegementsIntersect(Vector2 a, Vector2 b, Vector2 c, Vector2 d);
 	static bool doRaySegmentIntersect(Vector2 p1, Vector2 p2, Vector2 origin, Vector2 direction);
 
 	/*

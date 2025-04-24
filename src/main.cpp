@@ -81,11 +81,13 @@ int main(int argc, char* args[])
 	Level level;
 	level.setDrawBounds(window.getWindowSurface());
 
-	if (level.loadLevel("levels/demo.txt") != 0) 
+	if (level.loadLevel("levels/demo2.txt") != 0) 
 	{
 		std::cout << "oops\n";
 		return 1;
 	}
+
+	//level.printSectorInformation();
 
 	SDL_HideCursor();
 	SDL_SetWindowRelativeMouseMode(window.getWindow(), true);
@@ -323,10 +325,10 @@ int main(int argc, char* args[])
 		std::string dText = "Position: " + std::to_string(testCam.getPosition().x) + ", " + std::to_string(testCam.getPosition().y) + " Angle: "
 			+ std::to_string(testCam.getAngle()) + " Height: " + std::to_string(testCam.getHeight());
 
-		std::string dText2 = "Secnum: " + std::to_string(testCam.getSectorNum());
+		//std::string dText2 = "Secnum: " + std::to_string(testCam.getSectorNum() + 1);
 
 		SDL_RenderDebugText(window.getRenderer(), 0, 359 - 8, dText.c_str());
-		SDL_RenderDebugText(window.getRenderer(), 0, 359 - 24, dText2.c_str());
+		//SDL_RenderDebugText(window.getRenderer(), 0, 359 - 24, dText2.c_str());
 
 		//End of rendering frame
 		window.presentRenderer();
