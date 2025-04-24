@@ -323,7 +323,10 @@ int main(int argc, char* args[])
 		std::string dText = "Position: " + std::to_string(testCam.getPosition().x) + ", " + std::to_string(testCam.getPosition().y) + " Angle: "
 			+ std::to_string(testCam.getAngle()) + " Height: " + std::to_string(testCam.getHeight());
 
+		std::string dText2 = "Secnum: " + std::to_string(testCam.getSectorNum());
+
 		SDL_RenderDebugText(window.getRenderer(), 0, 359 - 8, dText.c_str());
+		SDL_RenderDebugText(window.getRenderer(), 0, 359 - 24, dText2.c_str());
 
 		//End of rendering frame
 		window.presentRenderer();

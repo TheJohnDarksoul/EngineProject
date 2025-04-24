@@ -76,10 +76,27 @@ Vector2 Utils::intersectLines(float x1, float y1, float x2, float y2, float x3, 
 	return i;
 }
 
-bool Utils::doRaysIntersect(Vector2 p1, Vector2 d1, Vector2 p2, Vector2 d2)
+bool Utils::doRaySegmentIntersect(Vector2 p1, Vector2 p2, Vector2 origin, Vector2 direction)
 {
-	//Implement
-	
+	Vector2 v1 = Utils::subVec(origin, p1);
+	Vector2 v2 = Utils::subVec(p2, p1);
+	Vector2 v3{ -direction.y, direction.x };
+
+	float dot = v2.x * v3.x + v2.y * v3.y;
+
+	if (dot < EPS) 
+	{
+		return false;
+	}
+
+	float t1 = Utils::cross2d(v2, v1) / dot;
+	float t2 = (v1.x * v3.x + v1.y * v3.y) / dot;
+
+	if (t1 >= 0.f && (t2 >= 0.f && t2 <= 1.f)) 
+	{
+		return true;
+	}
+
 	return false;
 }
 
@@ -123,6 +140,12 @@ float Utils::lerp(float start, float end, float t)
 bool Utils::isOnFront(Vector2 v1, Vector2 v2)
 {
 	return v1.x * v2.y < v2.x * v1.y;
+}
+
+int Utils::isOnSide(Vector2 a, Vector2 b, Vector2 p)
+{
+	return -(((p.x - a.x) * (b.y - a.y)) - ((p.y - a.y) * (b.x - a.x)));
+	//return 0;
 }
 
 void Utils::clipBehindCamera(float* ax, float* ay, float bx, float by)

@@ -139,6 +139,10 @@ void Camera::render2d(SDL_Renderer* renderer)
 	SDL_FRect rect;
 	rect.x = position.x - 5;
 	rect.y = position.y - 5;
+
+	//rect.x = (640 / 2) - 1 - 5;
+	//rect.y = (360 / 2) - 1 - 5;
+
 	rect.h = 10.f;
 	rect.w = 10.f;
 
@@ -148,8 +152,8 @@ void Camera::render2d(SDL_Renderer* renderer)
 
 	SDL_SetRenderDrawColor(renderer, 0xb2, 0xff, 0xb2, 0xff);
 
-	SDL_RenderLine(renderer, position.x, position.y,
-		position.x + 10 * cosf(Utils::degToRad(angle)), position.y + 10 * sinf(Utils::degToRad(angle)));
+	SDL_RenderLine(renderer, rect.x + 5, rect.y + 5,
+		rect.x + 5 + 10 * cosf(Utils::degToRad(angle)), rect.y + 5 + 10 * sinf(Utils::degToRad(angle)));
 
 	//Camera fov visualization
 	//SDL_RenderLine(renderer, position.x, position.y, position.x + 50 * cosf((angle + Utils::degToRad(45))), 

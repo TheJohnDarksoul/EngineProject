@@ -22,10 +22,12 @@ public:
 	static float normalizeAngle(float angle);
 	static float diagonalDistance(float x1, float y1, float x2, float y2);
 	static Vector2 midpt(Vector2 p1, Vector2 p2);
+
 	/*
 	* Returns the distance between two points squared
 	*/
 	static float distanceSquared(Vector2 p1, Vector2 p2);
+
 	/*
 	* Returns the distance between two points
 	*/
@@ -35,7 +37,7 @@ public:
 	* Calculates and returns the intersection between two lines
 	*/
 	static Vector2 intersectLines(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
-	static bool doRaysIntersect(Vector2 p1, Vector2 d1, Vector2 p2, Vector2 d2);
+	static bool doRaySegmentIntersect(Vector2 p1, Vector2 p2, Vector2 origin, Vector2 direction);
 
 	/*
 	* Rotates a vec2 by an angle given in degrees
@@ -48,6 +50,11 @@ public:
 	static float lerp(float start, float end, float t);
 
 	static bool isOnFront(Vector2 v1, Vector2 v2);
+
+	/*
+	* Returns -1 if p is on the right of a->b, 0 if on, and 1 if on the left
+	*/
+	static int isOnSide(Vector2 a, Vector2 b, Vector2 p);
 	static void clipBehindCamera(float* ax, float* ay, float bx, float by);
 
 	static void calcLineStep(float x1, float y1, float x2, float y2, int* x, int* y);

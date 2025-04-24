@@ -166,3 +166,7 @@ Did some research into GLM
 4/22/25
 [In class]
 Tried doing some stuff with GLM, could not find in depth documentation
+
+4/23/25
+Implemented backface culling
+Did some work on player sector identification

@@ -7,14 +7,14 @@
 #include <queue>
 
 //GLM stuff
-#include "../libraries/glm/vec2.hpp"
-#include "../libraries/glm/vec3.hpp"
-#include "../libraries/glm/mat3x3.hpp"
-#include "../libraries/glm/mat4x4.hpp"
-#include "../libraries/glm/trigonometric.hpp"
+//#include "../libraries/glm/vec2.hpp"
+//#include "../libraries/glm/vec3.hpp"
+//#include "../libraries/glm/mat3x3.hpp"
+//#include "../libraries/glm/mat4x4.hpp"
+//#include "../libraries/glm/trigonometric.hpp"
 
-#include "../libraries/glm/ext/matrix_transform.hpp"
-#include "../libraries/glm/ext/matrix_clip_space.hpp"
+//#include "../libraries/glm/ext/matrix_transform.hpp"
+//#include "../libraries/glm/ext/matrix_clip_space.hpp"
 
 //My stuff
 #include "Utils.h"
@@ -55,36 +55,32 @@ void Level::sortWallsAtSectorNum(unsigned sectorNum, Vector2 cameraPos)
 */
 uint32_t Level::camInSector(Camera* cam)
 {
-	//Implement a ray-segment intersection test
-	const Vector2 infLeft{ -2000000000.f, cam->getPosition().y };
+	//Direction of the ray. Origin is the camera position.
+	const Vector2 leftRay{ -1.0f, 0 };
 
 	Sector* sec = &sectors.at(cam->getSectorNum());
 	uint32_t secnum = sec->getID();
 
 	unsigned count = 0;
 
-	for (uint32_t i = 0; i < sec->getNumWalls(); ++i) 
+	/*
+	for (unsigned i = 0; i < sec->getNumWalls(); ++i) 
 	{
 		Line* line = &lines.at(sec->getWallIndices()->at(i));
 
-		//check line intersection
-		//if intersection is true increment count
-
-		//if count is odd you are in the sector, if not, you are outside
+		if (Utils::doRaySegmentIntersect(line->getStart(), line->getEnd(), cam->getPosition(), leftRay)) 
+		{
+			++count;
+		}
 	}
 
-	//if odd
 	if ((count & 1) == 1) 
 	{
-		//Return current sector num
-		return secnum;
+		return secnum - 1;
 	}
-	else 
-	{
-		//check adjacent sectors
-	}
+	*/
 
-	return 0;
+	return (int)secnum - 1;
 }
 
 Level::Level()
@@ -269,7 +265,8 @@ int Level::loadLevel(std::string filepath)
 }
 
 void Level::updatePlayerSector(Camera* cam)
-{
+{	
+	cam->setSectorNum(camInSector(cam));
 	sectorQueue.push(&sectors.at(cam->getSectorNum()));
 	for (unsigned i = 0; i < drawnSectors.size(); ++i) 
 	{
@@ -293,7 +290,20 @@ void Level::renderMap(SDL_Renderer* renderer, SDL_Surface* surf, Camera* cam)
 {
 	for (unsigned i = 0; i < lines.size(); ++i) 
 	{
-		lines.at(i).render2d(renderer, lines.at(i).getColor());
+		//lines.at(i).render2d(renderer, lines.at(i).getColor());
+		Vector2 p1 = lines[i].getStart();
+		Vector2 p2 = lines[i].getEnd();
+
+		SDL_Color color = lines[i].getColor();
+
+		p1.x = cam->getPosition().x + p1.x;
+		p1.y = cam->getPosition().y + p1.y;
+
+		p2.x = cam->getPosition().x + p2.x;
+		p2.y = cam->getPosition().y + p2.y;
+
+		SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255);
+		SDL_RenderLine(renderer, p1.x, p1.y, p2.x, p2.y);
 	}
 }
 
@@ -417,6 +427,8 @@ void Level::render(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam)
 
 void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam)
 {
+	setDrawBounds(surface);
+
 	unsigned halfWidth = surface->w / 2;
 	unsigned halfHeight = surface->h / 2;
 
@@ -440,6 +452,12 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 		for (unsigned j = 0; j < sec->getNumWalls(); ++j) 
 		{
 			Line* ln = &lines.at(sec->getWallIndices()->at(j));
+
+			//Back face culling
+			if (Utils::isOnSide(ln->getStart(), ln->getEnd(), cam->getPosition()) < 1) 
+			{
+				continue;
+			}
 
 			//Convert world coords
 			float dx1 = ln->getStart().x - cam->getPosition().x;
@@ -523,6 +541,7 @@ void Level::renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* 
 
 void Level::renderSectorsGLM(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam)
 {
+	/*
 	float fov = cam->getFovRad();
 
 	//Might be what I want to do
@@ -585,6 +604,7 @@ void Level::renderSectorsGLM(SDL_Renderer* renderer, SDL_Surface* surface, Camer
 
 		sectorQueue.pop();
 	}
+	*/
 }
 
 void Level::renderWall(SDL_Renderer* renderer, SDL_Surface* surface, float x1, float x2, float y1a, float y1b, float y2a, float y2b, SDL_FColor color)
