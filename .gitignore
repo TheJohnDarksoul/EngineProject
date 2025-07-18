@@ -65,7 +65,9 @@
 .lib/
 .x64/
 /libraries/include/SDL3
+/x64
 /x64/Debug
+/x64/Release
 /lib
 /build
 /install

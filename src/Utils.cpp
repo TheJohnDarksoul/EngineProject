@@ -3,6 +3,76 @@
 #include <math.h>
 #include <iostream>
 
+void Utils::drawLineLow(SDL_Surface* surface, int x1, int y1, int x2, int y2, uint32_t color)
+{
+	uint32_t* pixels = (uint32_t*)surface->pixels;
+
+	int dx = x2 - x1;
+	int dy = y2 - y1;
+
+	int yi = 1;
+
+	if (dy < 0)
+	{
+		yi = -1;
+		dy = -dy;
+	}
+
+	int D = 2 * dy - dx;
+
+	int y = y1;
+
+	for (int x = x1; x < x2; ++x)
+	{
+		pixels[y * surface->w + x] = color;
+
+		if (D > 0)
+		{
+			y = y + yi;
+			D = D + (2 * (dy - dx));
+		}
+		else
+		{
+			D = D + 2 * dy;
+		}
+	}
+}
+
+void Utils::drawLineHigh(SDL_Surface* surface, int x1, int y1, int x2, int y2, uint32_t color)
+{
+	uint32_t* pixels = (uint32_t*)surface->pixels;
+
+	int dx = x2 - x1;
+	int dy = y2 - y1;
+
+	int xi = 1;
+
+	if (dx < 0)
+	{
+		xi = -1;
+		dx = -dx;
+	}
+
+	int D = 2 * dx - dy;
+
+	int x = x1;
+
+	for (int y = y1; y < y2; ++y)
+	{
+		pixels[y * surface->w + x] = color;
+
+		if (D > 0)
+		{
+			x = x + xi;
+			D = D + (2 * (dx - dy));
+		}
+		else
+		{
+			D = D + 2 * dx;
+		}
+	}
+}
+
 float Utils::degToRad(float deg)
 {
 	return deg * (PI / 180);
@@ -196,6 +266,38 @@ float Utils::calcLineSlope(float x1, float y1, float x2, float y2)
 		return y2 - y1;
 	}
 	return (y2 - y1) / (x2 - x1);
+}
+
+void Utils::drawLine(SDL_Surface* surface, int x1, int y1, int x2, int y2, uint32_t color)
+{
+	x1 = SDL_clamp(x1, 0, surface->w - 1);
+	x2 = SDL_clamp(x2, 0, surface->w - 1);
+
+	y1 = SDL_clamp(y1, 0, surface->h - 1);
+	y2 = SDL_clamp(y2, 0, surface->h - 1);
+
+	if (labs(y2 - y1) < labs(x2 - x1)) 
+	{
+		if (x1 > x2) 
+		{
+			drawLineLow(surface, x2, y2, x1, y1, color);
+		}
+		else 
+		{
+			drawLineLow(surface, x1, y1, x2, y2, color);
+		}
+	}
+	else 
+	{
+		if (y1 > y2) 
+		{
+			drawLineHigh(surface, x2, y2, x1, y1, color);
+		}
+		else 
+		{
+			drawLineHigh(surface, x1, y1, x2, y2, color);
+		}
+	}
 }
 
 void Utils::drawVertLineColor(SDL_Surface* surface, int x, int y1, int y2, uint32_t color)

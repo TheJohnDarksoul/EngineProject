@@ -11,6 +11,9 @@
 
 static class Utils
 {
+private:
+	static void drawLineLow(SDL_Surface* surface, int x1, int y1, int x2, int y2, uint32_t color);
+	static void drawLineHigh(SDL_Surface* surface, int x1, int y1, int x2, int y2, uint32_t color);
 public:
 	//Math utils
 
@@ -62,6 +65,11 @@ public:
 	static float calcLineSlope(float x1, float y1, float x2, float y2);
 
 	//Drawing utils
+
+	/*
+	* Software rendering of arbitrary lines. Might use in automap feature.
+	*/
+	static void drawLine(SDL_Surface* surface, int x1, int y1, int x2, int y2, uint32_t color);
 
 	/*
 	* Draws a solid color vertical line to the surface at position x from y1 to y2 inclusive

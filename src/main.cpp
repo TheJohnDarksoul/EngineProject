@@ -319,6 +319,11 @@ int main(int argc, char* args[])
 			window.getWindowSurface()->w / 2 - 1, window.getWindowSurface()->h / 2 - 1 + 5);
 		
 
+		//Testing
+		Utils::drawLine(window.getWindowSurface(), 100, 100, 200, 200, 0xffff0000);
+		Utils::drawLine(window.getWindowSurface(), 200, 100, 100, 200, 0xff00ff00);
+		Utils::drawLine(window.getWindowSurface(), 500, 300, 200, 400, 0xff0000ff);
+
 		//Debug display
 		SDL_SetRenderDrawColor(window.getRenderer(), 0xff, 0xff, 0xff, 0xff);
 
