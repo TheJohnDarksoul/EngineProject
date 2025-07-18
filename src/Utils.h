@@ -77,5 +77,13 @@ public:
 	*/
 	static void drawVertLineColor(SDL_Surface* surface, int x, int y1, int y2, uint32_t color);
 	static void drawVertLineColors(SDL_Surface* surface, int x, int y1, int y2, uint32_t topColor, uint32_t midColor, uint32_t bottomColor);
+
+	//Misc Utils
+
+	/*
+	* Converts SDL_Color to an unsigned 32bit int in ARGB format
+	* This is the format used when directly writing to the pixel buffer in an SDL_Surface
+	*/
+	static uint32_t SDLcolorToARGB(SDL_Color color);
 };
 

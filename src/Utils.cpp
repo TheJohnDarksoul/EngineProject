@@ -346,3 +346,14 @@ void Utils::drawVertLineColors(SDL_Surface* surface, int x, int y1, int y2, uint
 		}
 	}
 }
+
+uint32_t Utils::SDLcolorToARGB(SDL_Color color)
+{
+	uint32_t argbcolor = 0;
+	argbcolor |= ((uint32_t)color.a << 24);
+	argbcolor |= ((uint32_t)color.r << 16);
+	argbcolor |= ((uint32_t)color.g << 8);
+	argbcolor |= ((uint32_t)color.b);
+
+	return argbcolor;
+}
