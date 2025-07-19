@@ -359,6 +359,19 @@ void Level::renderMap(SDL_Renderer* renderer, SDL_Surface* surf, Camera* cam)
 	}
 }
 
+void Level::drawMap(SDL_Surface* surface, Camera* cam)
+{
+	for (unsigned i = 0; i < lines.size(); ++i) 
+	{
+		Vector2 p1 = lines[i].getStart();
+		Vector2 p2 = lines[i].getEnd();
+
+		uint32_t color = Utils::SDLcolorToARGB(lines[i].getColor());
+
+		Utils::drawLine(surface, (int)p1.x, (int)p1.y, (int)p2.x, (int)p2.y, color);
+	}
+}
+
 void Level::render(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam)
 {
 	Sector* sec = &sectors.at(cam->getSectorNum());
