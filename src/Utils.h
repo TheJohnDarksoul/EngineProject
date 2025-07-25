@@ -44,9 +44,10 @@ public:
 	static bool doRaySegmentIntersect(Vector2 p1, Vector2 p2, Vector2 origin, Vector2 direction);
 
 	/*
-	* Rotates a vec2 by an angle given in degrees
+	* Rotates a vec2 by an angle given in radians
 	*/
 	static Vector2 rotateVec(Vector2 v, float a);
+	static Vector2 rotateVecAroundPoint(Vector2 v, Vector2 p, float a);
 	static Vector2 addVec(Vector2 v1, Vector2 v2);
 	static Vector2 subVec(Vector2 v1, Vector2 v2);
 	static Vector2 multVec(Vector2 vec, float scalar);

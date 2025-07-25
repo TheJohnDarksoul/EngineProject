@@ -164,3 +164,38 @@ void Camera::render2d(SDL_Renderer* renderer)
 	//SDL_RenderLine(renderer, position.x, position.y, position.x + 50 * cosf((angle - Utils::degToRad(45))),
 	//	position.y + 50 * sinf((Utils::degToRad(angle) - fov / 2)));
 }
+
+void Camera::draw2d(SDL_Surface* surface, uint32_t color)
+{
+	float radAngle = Utils::degToRad(angle + 90.f);
+
+	Vector2 points[6];
+	points[0].x = position.x;
+	points[0].y = position.y - 5.f;
+
+	points[1].x = position.x - 3.f;
+	points[1].y = position.y - 0.5f;
+
+	points[2].x = position.x + 3.f;
+	points[2].y = position.y - 0.5f;
+
+	points[3].x = position.x;
+	points[3].y = position.y + 5.f;
+
+	points[4].x = position.x - 2.f;
+	points[4].y = position.y + 7.f;
+
+	points[5].x = position.x + 2.f;
+	points[5].y = position.y + 7.f;
+
+	for (char i = 0; i < 6; ++i) 
+	{
+		points[i] = Utils::rotateVecAroundPoint(points[i], position, radAngle);
+	}
+
+	Utils::drawLine(surface, points[0].x, points[0].y, points[1].x, points[1].y, color);
+	Utils::drawLine(surface, points[0].x, points[0].y, points[2].x, points[2].y, color);
+	Utils::drawLine(surface, points[0].x, points[0].y, points[3].x, points[3].y, color);
+	Utils::drawLine(surface, points[3].x, points[3].y, points[4].x, points[4].y, color);
+	Utils::drawLine(surface, points[3].x, points[3].y, points[5].x, points[5].y, color);
+}

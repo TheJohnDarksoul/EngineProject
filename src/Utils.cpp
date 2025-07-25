@@ -198,6 +198,20 @@ Vector2 Utils::rotateVec(Vector2 v, float a)
 	return temp;
 }
 
+Vector2 Utils::rotateVecAroundPoint(Vector2 v, Vector2 p, float a)
+{
+	Vector2 temp;
+	temp.x = v.x - p.x;
+	temp.y = v.y - p.y;
+
+	temp = rotateVec(temp, a);
+
+	temp.x += p.x;
+	temp.y += p.y;
+
+	return temp;
+}
+
 Vector2 Utils::addVec(Vector2 v1, Vector2 v2)
 {
 	Vector2 sum;

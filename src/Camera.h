@@ -46,5 +46,6 @@ public:
 	void rotate(float delta);
 
 	void render2d(SDL_Renderer* renderer);
+	void draw2d(SDL_Surface* surface, uint32_t color);
 };
 

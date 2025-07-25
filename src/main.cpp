@@ -307,7 +307,8 @@ int main(int argc, char* args[])
 			//SDL_Color testcolor{ 0xb2, 0xb2, 0xff, 0xff };
 			//level.render2d(window.getRenderer(), testcolor);
 			level.drawMap(window.getWindowSurface(), &testCam);
-			testCam.render2d(window.getRenderer());
+			//testCam.render2d(window.getRenderer());
+			testCam.draw2d(window.getWindowSurface(), 0xffff2200);
 		}	
 
 		SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
