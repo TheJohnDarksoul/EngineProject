@@ -732,3 +732,8 @@ void Level::renderWall(SDL_Renderer* renderer, SDL_Surface* surface, float x1, f
 	SDL_RenderGeometry(renderer, NULL, verts, 4, indices, 6);
 #endif
 }
+
+void Level::drawWallSolidColor(SDL_Surface* surface, Camera* cam, float x1, float x2, float y1a, float y1b, float y2a, float y2b, uint32_t color)
+{
+	
+}

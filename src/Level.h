@@ -71,5 +71,9 @@ public:
 	void renderSectors(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam);
 	void renderSectorsGLM(SDL_Renderer* renderer, SDL_Surface* surface, Camera* cam);
 	void renderWall(SDL_Renderer* renderer, SDL_Surface* surface, float x1, float x2, float y1a, float y1b, float y2a, float y2b, SDL_FColor color);
+	/*
+	* Draws solid color walls using software rendering
+	*/
+	void drawWallSolidColor(SDL_Surface* surface, Camera* cam, float x1, float x2, float y1a, float y1b, float y2a, float y2b, uint32_t color);
 };
 
